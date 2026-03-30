@@ -3,7 +3,7 @@ import AnimateIn from "./AnimateIn";
 
 function ShopifyBtn() {
   return (
-    <Link href="https://apps.shopify.com/" className="inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-semibold bg-brand-green text-white hover:bg-green-700 hover:-translate-y-px transition-all shadow-[0_0_16px_rgba(80,184,60,0.3)] hover:shadow-[0_0_24px_rgba(80,184,60,0.5)]" target="_blank" rel="noopener noreferrer">
+    <Link href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp" className="inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-semibold bg-brand-green text-white hover:bg-green-700 hover:-translate-y-px transition-all shadow-[0_0_16px_rgba(80,184,60,0.3)] hover:shadow-[0_0_24px_rgba(80,184,60,0.5)]" target="_blank" rel="noopener noreferrer">
       Get the App on Shopify
     </Link>
   );
@@ -167,7 +167,7 @@ export default function Features() {
               <span className="text-amber-400">★★★★★</span>
               <strong className="text-white">350+ reviews</strong>
               <span className="text-white/35">·</span>
-              <Link href="https://apps.shopify.com/" target="_blank" rel="noopener noreferrer" className="text-primary-light hover:text-accent transition-colors">Get on Shopify</Link>
+              <Link href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp" target="_blank" rel="noopener noreferrer" className="text-primary-light hover:text-accent transition-colors">Get on Shopify</Link>
               <span className="text-white/35 text-[12px]">· Free plan · 7-Day Trial</span>
             </div>
           </div>

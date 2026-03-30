@@ -36,7 +36,7 @@ export default function StatsBanner() {
           <div className="text-center w-full md:w-auto">
             <p className="text-white/65 mb-4 text-sm">Free plan available · 7-Day Trial</p>
             <Link
-              href="https://apps.shopify.com/"
+              href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp"
               className="inline-flex items-center px-7 py-3.5 rounded-xl bg-white text-primary font-bold text-sm hover:bg-white/90 hover:-translate-y-px hover:shadow-xl transition-all"
               target="_blank"
               rel="noopener noreferrer"

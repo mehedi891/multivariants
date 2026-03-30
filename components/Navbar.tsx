@@ -11,7 +11,13 @@ const navItems = [
   { href: "#pricing", label: "Pricing" },
   { href: "#reviews", label: "Clients" },
   { href: "#contact", label: "Contact" },
-  { href: "#blogs",   label: "Resources" },
+];
+
+const resourceItems = [
+  { href: "#partners", label: "Partners" },
+  { href: "#blogs", label: "Blog" },
+  { href: "#docs", label: "Docs" },
+  { href: "#changelog", label: "Changelog" },
 ];
 
 export default function Navbar() {
@@ -69,6 +75,37 @@ export default function Navbar() {
               </li>
             );
           })}
+
+          <li className="relative group">
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 text-sm font-medium px-3 py-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
+            >
+              Resources
+              <svg
+                className="h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
+                <path d="M5 7.5L10 12.5L15 7.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+
+            <div className="pointer-events-none invisible absolute left-0 top-full z-50 w-44 translate-y-2 rounded-xl border border-white/20 bg-[#111a2f]/95 p-1.5 opacity-0 shadow-[0_16px_35px_rgba(0,0,0,0.45)] transition-all duration-200 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+              {resourceItems.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="block rounded-lg px-3.5 py-2.5 text-sm font-medium text-white/80 hover:bg-white/10 hover:text-white transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </li>
         </ul>
 
         {/* Desktop CTAs */}
@@ -80,7 +117,7 @@ export default function Navbar() {
             Book a Demo
           </Link>
           <Link
-            href="https://apps.shopify.com/"
+            href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp"
             className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white hover:bg-primary-dark hover:-translate-y-px hover:shadow-[0_0_20px_rgba(92,106,196,0.5)] transition-all"
             target="_blank"
             rel="noopener noreferrer"
@@ -121,6 +158,36 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
+
+            <li>
+              <details className="group rounded-xl">
+                <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-2.5 text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all">
+                  Resources
+                  <svg
+                    className="h-4 w-4 transition-transform duration-200 group-open:rotate-180"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 7.5L10 12.5L15 7.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </summary>
+                <div className="mt-1 flex flex-col gap-1 pl-3">
+                  {resourceItems.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className="rounded-lg px-4 py-2 text-sm text-white/65 hover:bg-white/10 hover:text-white transition-all"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </details>
+            </li>
           </ul>
           <div className="flex flex-col gap-2 pt-3 border-t border-white/10">
             <Link
@@ -131,7 +198,7 @@ export default function Navbar() {
               Book a Demo
             </Link>
             <Link
-              href="https://apps.shopify.com/"
+              href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp"
               className="block text-center py-2.5 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-all"
               target="_blank"
               rel="noopener noreferrer"

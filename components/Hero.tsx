@@ -65,7 +65,7 @@ export default function Hero() {
           <AnimateIn direction="up" delay={300}>
             <div className="mb-12 flex flex-wrap items-center gap-3">
               <Link
-                href="https://apps.shopify.com/"
+                href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp"
                 className="inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-primary px-7 py-3.5 text-base font-semibold text-white shadow-[0_0_30px_rgba(92,106,196,0.5)] hover:bg-primary-dark hover:-translate-y-px hover:shadow-[0_0_40px_rgba(92,106,196,0.7)] transition-all sm:w-auto"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -74,8 +74,10 @@ export default function Hero() {
                 <span aria-hidden="true">→</span>
               </Link>
               <Link
-                href="#features"
+                href="https://multivariant.myshopify.com/collections/all"
                 className="inline-flex w-full items-center justify-center gap-2.5 rounded-xl px-7 py-3.5 text-base font-semibold text-white/80 glass hover:bg-white/15 transition-all sm:w-auto"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-white/30">
                   <svg className="h-2.5 w-2.5 translate-x-[1px]" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">

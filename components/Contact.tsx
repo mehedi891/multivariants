@@ -127,7 +127,7 @@ export default function Contact() {
                   Start with our free plan — no credit card required. Upgrade any time as your business grows.
                 </p>
                 <Link
-                  href="https://apps.shopify.com/"
+                  href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp"
                   className="block text-center py-3 bg-accent text-white rounded-lg text-sm font-bold hover:bg-accent/80 shadow-[0_0_16px_rgba(71,193,191,0.4)] hover:shadow-[0_0_24px_rgba(71,193,191,0.6)] transition-all"
                   target="_blank"
                   rel="noopener noreferrer"
