@@ -1,78 +1,69 @@
-const featureCards = [
+import AnimateIn from "./AnimateIn";
+
+const cards = [
   {
-    icon: "🛒",
-    iconBg: "bg-[#eaf0ff]",
-    title: "Allow Variants Bulk Add to Cart",
-    description:
-      "MultiVariants lets customers quickly buy products with variations in bulk. Add multiple colors, sizes, or other options to the cart with just one click — reducing cart abandonment chances dramatically.",
+    icon: "🛒", title: "Allow Variants Bulk Add to Cart",
+    grad: "from-blue-500/20 to-indigo-500/20", border: "border-blue-500/20 hover:border-blue-400/40",
+    glow: "hover:shadow-[0_16px_40px_rgba(99,102,241,0.2)]",
+    desc: "Customers quickly buy products with variations in bulk. Add multiple colors, sizes, or other options to the cart with just one click — reducing cart abandonment dramatically.",
   },
   {
-    icon: "📈",
-    iconBg: "bg-[#eaf8ef]",
-    title: "Increase Sales and Conversion",
-    description:
-      "Makes the bulk ordering process quick so customers can easily buy multiple product variants without hassle. B2B customers love paying your prices, driving increased wholesale sales and revenue growth.",
+    icon: "📈", title: "Increase Sales and Conversion",
+    grad: "from-emerald-500/20 to-teal-500/20", border: "border-emerald-500/20 hover:border-emerald-400/40",
+    glow: "hover:shadow-[0_16px_40px_rgba(52,211,153,0.2)]",
+    desc: "Makes the bulk ordering process quick so customers can easily buy multiple product variants without hassle. Drives increased wholesale sales and revenue growth.",
   },
   {
-    icon: "⚡",
-    iconBg: "bg-[#fff3e4]",
-    title: "Simple Installation",
-    description:
-      "A top-notch app with a simple, hassle-free setup. MultiVariants works seamlessly with all the top eCommerce platforms and integrates without a single line of coding.",
+    icon: "⚡", title: "Simple Installation",
+    grad: "from-amber-500/20 to-orange-500/20", border: "border-amber-500/20 hover:border-amber-400/40",
+    glow: "hover:shadow-[0_16px_40px_rgba(251,191,36,0.2)]",
+    desc: "A top-notch app with a simple, hassle-free setup. MultiVariants works seamlessly with all top eCommerce platforms and integrates without a single line of coding.",
   },
   {
-    icon: "🌎",
-    iconBg: "bg-[#eaf2ff]",
-    title: "Multi-Language Support",
-    description:
-      "MultiVariants makes international expansion easy with its multi-language capabilities. Now you can easily localize your store for customers worldwide and grow beyond borders.",
+    icon: "🌎", title: "Multi-Language Support",
+    grad: "from-purple-500/20 to-pink-500/20", border: "border-purple-500/20 hover:border-purple-400/40",
+    glow: "hover:shadow-[0_16px_40px_rgba(168,85,247,0.2)]",
+    desc: "MultiVariants makes international expansion easy with multi-language capabilities. Easily localize your store for customers worldwide and grow beyond borders.",
   },
 ];
 
 export default function WhyMultivariantsSection() {
   return (
     <section
-      className="bg-[#f6f8fc] px-[5%] py-14 sm:py-16 lg:py-20"
+      className="relative overflow-hidden px-[5%] py-16 lg:py-24"
+      style={{ background: "linear-gradient(170deg, #0a0f1e 0%, #0f172a 40%, #1a1040 100%)" }}
       id="why-multivariants"
-      aria-labelledby="why-multivariants-heading"
+      aria-labelledby="why-mv-heading"
     >
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-12">
-          <p className="text-xs font-semibold uppercase tracking-[1.2px] text-[#5c6ac4] sm:text-sm">
-            Why MultiVariants?
-          </p>
-          <h2
-            id="why-multivariants-heading"
-            className="mt-3 text-3xl font-black leading-tight tracking-tight text-[#1f2438] sm:text-4xl lg:text-[2.9rem]"
-          >
-            Variants Bulk Add to Cart for Shopify
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#626f86] sm:text-base">
-            Everything you need to streamline bulk ordering and grow your
-            Shopify store&apos;s revenue.
-          </p>
-        </div>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute -right-40 top-1/4 h-[500px] w-[500px] rounded-full bg-accent/10 blur-[120px]" />
+        <div className="absolute -left-40 bottom-0 h-[400px] w-[400px] rounded-full bg-primary/15 blur-[100px]" />
+      </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4 xl:gap-6">
-          {featureCards.map((card) => (
-            <article
-              key={card.title}
-              className="rounded-3xl border border-[#dbe3ee] bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-[#b9c8df] hover:shadow-[0_20px_36px_rgba(15,23,42,0.12)] sm:p-6"
-            >
-              <span
-                className={`mb-5 inline-flex h-11 w-11 items-center justify-center rounded-2xl text-xl ${card.iconBg}`}
-                aria-hidden="true"
-              >
-                {card.icon}
-              </span>
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <AnimateIn direction="up">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <p className="mb-3 text-[13px] font-semibold uppercase tracking-widest text-primary-light">Why MultiVariants?</p>
+            <h2 id="why-mv-heading" className="text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-[2.8rem]">
+              Variants Bulk Add to Cart for Shopify
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">
+              Everything you need to streamline bulk ordering and grow your Shopify store&apos;s revenue.
+            </p>
+          </div>
+        </AnimateIn>
 
-              <h3 className="text-[1.45rem] font-black leading-tight text-[#1f2438] sm:text-[1.65rem]">
-                {card.title}
-              </h3>
-              <p className="mt-3 text-base leading-relaxed text-[#5d6b82] sm:text-[1.03rem]">
-                {card.description}
-              </p>
-            </article>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {cards.map((c, i) => (
+            <AnimateIn key={c.title} direction="up" delay={i * 100}>
+              <article className={`h-full rounded-3xl p-6 glass ${c.border} ${c.glow} hover:-translate-y-1.5 transition-all duration-300`}>
+                <div className={`mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${c.grad} text-2xl border border-white/10`} aria-hidden="true">
+                  {c.icon}
+                </div>
+                <h3 className="mb-3 text-lg font-black leading-tight text-white">{c.title}</h3>
+                <p className="text-sm leading-relaxed text-white/55">{c.desc}</p>
+              </article>
+            </AnimateIn>
           ))}
         </div>
       </div>
