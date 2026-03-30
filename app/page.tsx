@@ -1,66 +1,41 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import type { Metadata } from "next";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import WhySection from "@/components/WhySection";
+import VariantTableDemoSection from "@/components/VariantTableDemoSection";
+import WhyMultivariantsSection from "@/components/WhyMultivariantsSection";
+import IntegrationsSection from "@/components/IntegrationsSection";
+import StatsBanner from "@/components/StatsBanner";
+import Features from "@/components/Features";
+import Testimonials from "@/components/Testimonials";
+import Blogs from "@/components/Blogs";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "MultiVariants – One-Click Bulk Add to Cart for Shopify Variants",
+  description:
+    "MultiVariants lets Shopify merchants allow customers to bulk add multiple product variants to cart in one click. Boost B2B & B2C sales with Mix n Match, order restrictions, and incremental quantities. 13,000+ merchants · 120+ countries · Free plan.",
+  alternates: { canonical: "https://multivariants.com" },
+};
+
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <Navbar />
+      <main id="main-content">
+        <Hero />
+        <WhySection />
+        <VariantTableDemoSection />
+        <WhyMultivariantsSection />
+        <IntegrationsSection />
+        <StatsBanner />
+        <Features />
+        <Testimonials />
+        <Blogs />
+        <Contact />
       </main>
-    </div>
+      <Footer />
+    </>
   );
 }
