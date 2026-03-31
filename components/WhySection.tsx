@@ -56,7 +56,7 @@ export default function WhySection() {
         <AnimateIn direction="up">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <p className="mb-3 text-[13px] font-semibold uppercase tracking-widest text-accent">The Problem</p>
-            <h2 id="problem-heading" className="text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.8rem]">
+            <h2 id="problem-heading" className="text-3xl font-black leading-[1.26] tracking-tight text-white sm:text-4xl lg:text-[2.8rem]">
               The Problem with Default Shopify Ordering
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">

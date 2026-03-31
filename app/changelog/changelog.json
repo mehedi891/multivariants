@@ -1,0 +1,153 @@
+[
+  {
+    "id": "2026-03-28-advanced-pricing-rules",
+    "date": "Mar 28, 2026",
+    "version": "v4.9.0",
+    "tag": "Major",
+    "title": "Advanced Pricing & Rule Engine",
+    "summary": "Released smarter quantity and value rules for B2B checkout workflows.",
+    "highlights": [
+      "Set min/max quantity by product and variant",
+      "Configure min/max cart value restrictions",
+      "Improved validation messaging for buyers"
+    ],
+    "imageSrc": "/images/features/apply-restriction-minmax-value.webp"
+  },
+  {
+    "id": "2026-03-05-bundle-quantity-improvements",
+    "date": "Mar 05, 2026",
+    "version": "v4.8.0",
+    "tag": "Feature",
+    "title": "Bundle Quantity Enhancements",
+    "summary": "Expanded bundle logic with easier setup and better storefront compatibility.",
+    "highlights": [
+      "Bundle dropdown performance improvements",
+      "More flexible quantity presets",
+      "Faster rendering on variant-heavy products"
+    ],
+    "imageSrc": "/images/features/bundle-qty-demo.webp"
+  },
+  {
+    "id": "2026-02-14-mobile-ordering-refresh",
+    "date": "Feb 14, 2026",
+    "version": "v4.7.2",
+    "tag": "Improvement",
+    "title": "Mobile Bulk Ordering Refresh",
+    "summary": "Redesigned mobile interactions for speed and cleaner quantity input handling.",
+    "highlights": [
+      "Larger touch targets on quantity controls",
+      "Smoother sticky action buttons",
+      "Reduced accidental quantity changes"
+    ],
+    "imageSrc": "/images/features/any-device.webp"
+  },
+  {
+    "id": "2026-01-25-cart-restrictions-update",
+    "date": "Jan 25, 2026",
+    "version": "v4.7.0",
+    "tag": "Feature",
+    "title": "Cart Restrictions 2.0",
+    "summary": "Introduced deeper cart validation controls for wholesale merchants.",
+    "highlights": [
+      "Support for combined restriction sets",
+      "Improved error visibility at checkout",
+      "Safer handling for mixed variant carts"
+    ],
+    "imageSrc": "/images/features/cart-estrictions.webp"
+  },
+  {
+    "id": "2025-12-10-ux-performance",
+    "date": "Dec 10, 2025",
+    "version": "v4.6.4",
+    "tag": "Performance",
+    "title": "UX & Performance Optimization",
+    "summary": "General app speed and table rendering improvements across storefront themes.",
+    "highlights": [
+      "Faster initial load for large variant tables",
+      "Reduced script overhead in theme editor",
+      "More stable behavior with third-party apps"
+    ]
+  },
+  {
+    "id": "2025-11-18-fractional-quantity",
+    "date": "Nov 18, 2025",
+    "version": "v4.6.0",
+    "tag": "Feature",
+    "title": "Fractional Quantity Support",
+    "summary": "Enabled decimal quantity ordering for merchants selling measured goods.",
+    "highlights": [
+      "Configurable decimal precision",
+      "Consistent rounding behavior",
+      "Compatibility with custom quantity rules"
+    ],
+    "imageSrc": "/images/features/fractional-qty.webp"
+  },
+  {
+    "id": "2025-10-06-layout-customizer",
+    "date": "Oct 06, 2025",
+    "version": "v4.5.0",
+    "tag": "Major",
+    "title": "Variant Layout Customizer",
+    "summary": "Launched new layout presets to better match diverse catalog structures.",
+    "highlights": [
+      "List and table presets",
+      "Improved readability for multi-color catalogs",
+      "Cleaner mobile fallback layout"
+    ],
+    "imageSrc": "/images/features/customize-variants-display-layout.webp"
+  },
+  {
+    "id": "2025-08-22-incremental-controls",
+    "date": "Aug 22, 2025",
+    "version": "v4.4.0",
+    "tag": "Feature",
+    "title": "Incremental Quantity Controls",
+    "summary": "Added step-based quantity increments for pack-size and wholesale use cases.",
+    "highlights": [
+      "Quantity intervals by product",
+      "Better pack-size ordering behavior",
+      "Cleaner quantity input validation"
+    ],
+    "imageSrc": "/images/features/incremental-inc.webp"
+  },
+  {
+    "id": "2025-07-09-support-quality",
+    "date": "Jul 09, 2025",
+    "version": "v4.3.3",
+    "tag": "Support",
+    "title": "Support Workflow Upgrade",
+    "summary": "Improved issue resolution flow with faster merchant response handling.",
+    "highlights": [
+      "New support categorization",
+      "Faster turnaround for setup requests",
+      "Improved issue triage internally"
+    ]
+  },
+  {
+    "id": "2025-05-31-theme-compatibility",
+    "date": "May 31, 2025",
+    "version": "v4.2.1",
+    "tag": "Improvement",
+    "title": "Theme Compatibility Expansion",
+    "summary": "Expanded compatibility across modern Shopify themes and page builders.",
+    "highlights": [
+      "Better integration with custom templates",
+      "Improved support for dynamic product sections",
+      "Reduced style conflicts with theme CSS"
+    ]
+  },
+  {
+    "id": "2025-04-16-mix-and-match",
+    "date": "Apr 16, 2025",
+    "version": "v4.1.0",
+    "tag": "Major",
+    "title": "Mix & Match Ordering Experience",
+    "summary": "Released guided bundle-building for customers ordering multiple variants together.",
+    "highlights": [
+      "Bundle-first product experience",
+      "Faster multi-variant cart building",
+      "Improved checkout completion for wholesale buyers"
+    ],
+    "imageSrc": "/images/features/mix-n-match-box.webp"
+  }
+]

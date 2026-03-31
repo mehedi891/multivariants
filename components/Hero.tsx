@@ -46,7 +46,7 @@ export default function Hero() {
           </AnimateIn>
 
           <AnimateIn direction="up" delay={100}>
-            <h1 className="mb-6 text-4xl font-black leading-[1.07] tracking-tight text-white sm:text-5xl md:text-[3.4rem]">
+            <h1 className="mb-6 text-4xl font-black leading-[1.22] tracking-tight text-white sm:text-5xl md:text-[3.4rem]">
               Bulk Variant Ordering
               <br />
               for{" "}

@@ -284,7 +284,7 @@ export default function FeaturesPage() {
                 <span className="inline-flex rounded-full border border-accent/30 bg-accent/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-accent">
                   Features
                 </span>
-                <h1 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+                <h1 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-[1.38] tracking-tight text-white sm:text-4xl lg:text-5xl">
                   Powerful Bulk Ordering Features for Shopify Stores
                 </h1>
                 <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/60 sm:text-lg">
@@ -333,7 +333,7 @@ export default function FeaturesPage() {
                 <span className="inline-flex rounded-full border border-primary/35 bg-primary/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-light">
                   Core Capabilities
                 </span>
-                <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-black tracking-tight text-white sm:text-4xl">
+                <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-black leading-[1.26] tracking-tight text-white sm:text-4xl">
                   Modern Features Built for High-Converting Bulk Orders
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
@@ -448,7 +448,7 @@ export default function FeaturesPage() {
                     <span className="inline-flex rounded-full border border-primary/35 bg-primary/12 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-light">
                       Premium Support
                     </span>
-                    <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl">
+                    <h2 className="mt-4 text-3xl font-black leading-[1.26] tracking-tight text-white sm:text-4xl">
                       Customer Support Is Our USP
                     </h2>
                     <p className="mx-auto mt-5 max-w-4xl text-[15px] leading-relaxed text-white/65 sm:text-base">
@@ -529,7 +529,7 @@ export default function FeaturesPage() {
         >
           <AnimateIn direction="up">
             <div className="mx-auto max-w-4xl text-center">
-              <h2 className="text-3xl font-black text-white sm:text-4xl">
+              <h2 className="text-3xl font-black leading-[1.26] text-white sm:text-4xl">
                 Built for Bulk Variant Ordering
               </h2>
               <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">

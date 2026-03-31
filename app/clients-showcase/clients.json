@@ -1,0 +1,128 @@
+[
+  {
+    "id": "customer-cure",
+    "logo": "CC",
+    "businessName": "Customer Cure",
+    "description": "Customer support and experience brand streamlining bulk service package purchases with variant controls.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "marathon",
+    "logo": "MA",
+    "businessName": "Marathon",
+    "description": "Commerce brand handling high-volume catalog purchases using flexible quantity and bundle logic.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "eyphone",
+    "logo": "EP",
+    "businessName": "EYPHONE",
+    "description": "Electronics retailer optimizing variant-heavy ordering flows to reduce cart drop-offs.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "tyrad-products",
+    "logo": "TY",
+    "businessName": "TYRAD Products",
+    "description": "Product supplier using MultiVariants to improve bulk checkout speed and order accuracy.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "fabric",
+    "logo": "FB",
+    "businessName": "FABRIC",
+    "description": "Lifestyle store improving variant selection with table-based ordering for faster conversions.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "cbd-vape-pen",
+    "logo": "CBD",
+    "businessName": "CBD Vape Pen",
+    "description": "Specialty category merchant managing quantity restrictions and variant bundles at scale.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "pk-corporate",
+    "logo": "PK",
+    "businessName": "PK Corporate",
+    "description": "Corporate supplier using structured min/max rules to ensure valid bulk cart submissions.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "three-trees",
+    "logo": "TT",
+    "businessName": "Three Trees",
+    "description": "Consumer goods business creating cleaner multi-variant ordering journeys for returning buyers.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "burni",
+    "logo": "BU",
+    "businessName": "burni",
+    "description": "Growth-stage merchant leveraging responsive bulk ordering across desktop and mobile storefronts.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "approved-cbd",
+    "logo": "AC",
+    "businessName": "Approved CBD",
+    "description": "Health and wellness store using quantity intervals to support repeat wholesale purchases.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "american-cancer-society",
+    "logo": "ACS",
+    "businessName": "American Cancer Society",
+    "description": "Nonprofit commerce initiative simplifying merchandise ordering with configurable variant layouts.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "acorn",
+    "logo": "AN",
+    "businessName": "ACORN",
+    "description": "Brand using MultiVariants to organize complex product sets and improve checkout completion rates.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "snacks-coffee",
+    "logo": "SC",
+    "businessName": "Snacks & Coffee",
+    "description": "Food and beverage merchant enabling faster repeat orders with variant quantity presets.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "cell-wholesale-mall",
+    "logo": "CWM",
+    "businessName": "Cell Wholesale Mall",
+    "description": "Wholesale mobile accessories seller reducing manual cart edits through rule-based ordering.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "bargain-boxes",
+    "logo": "BB",
+    "businessName": "Bargain Boxes",
+    "description": "Discount retailer improving order value with bundled variant purchasing experiences.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "upp-store",
+    "logo": "UPP",
+    "businessName": "UPP Store",
+    "description": "Direct-to-consumer store using custom variant display and action buttons for better UX.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "air-carter-sales",
+    "logo": "ACS2",
+    "businessName": "Air Carter Sales",
+    "description": "Sales-focused business using bulk ordering forms to speed up multi-item purchases.",
+    "readMoreUrl": "#"
+  },
+  {
+    "id": "kickass-reds",
+    "logo": "KR",
+    "businessName": "Kickass Reds",
+    "description": "Fast-moving brand streamlining catalog ordering with controlled quantity selection.",
+    "readMoreUrl": "#"
+  }
+]

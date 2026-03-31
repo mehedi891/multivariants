@@ -223,7 +223,7 @@ export default function PricingPage() {
               <span className="inline-flex rounded-full border border-accent/30 bg-accent/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-accent">
                 Pricing
               </span>
-              <h1 className="mx-auto mt-4 max-w-3xl text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+              <h1 className="mx-auto mt-4 max-w-3xl text-3xl font-black leading-[1.38] tracking-tight text-white sm:text-4xl lg:text-5xl">
                 Simple Pricing for Every Shopify Store
               </h1>
               <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/65 sm:text-lg">
@@ -405,7 +405,7 @@ export default function PricingPage() {
                 <span className="inline-flex rounded-full border border-primary/35 bg-primary/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-light">
                   Plan Comparison
                 </span>
-                <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-black text-white sm:text-4xl">
+                <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-black leading-[1.26] text-white sm:text-4xl">
                   Compare Features Across Plans
                 </h2>
                 <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-white/65 sm:text-base">
@@ -492,7 +492,7 @@ export default function PricingPage() {
         <section className="bg-[#16243a] px-[5%] py-16">
           <AnimateIn direction="up">
             <div className="mx-auto max-w-4xl text-center">
-              <h2 className="text-3xl font-black leading-tight text-white sm:text-4xl">
+              <h2 className="text-3xl font-black leading-[1.26] text-white sm:text-4xl">
                 Trusted by Shopify Merchants Worldwide
               </h2>
               <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-white/65 sm:text-lg">
@@ -526,7 +526,7 @@ export default function PricingPage() {
 
           <AnimateIn direction="up">
             <div className="relative z-10 mx-auto max-w-4xl">
-              <h2 className="text-center text-3xl font-black text-white sm:text-4xl">
+              <h2 className="text-center text-3xl font-black leading-[1.26] text-white sm:text-4xl">
                 Frequently Asked Questions
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-white/60 sm:text-base">

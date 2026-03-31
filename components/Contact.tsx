@@ -37,7 +37,7 @@ export default function Contact() {
             <p className="text-[13px] font-semibold text-primary-light uppercase tracking-widest mb-3">
               Reach Out to Us
             </p>
-            <h2 id="contact-heading" className="text-3xl font-black tracking-tight text-white mb-4 md:text-4xl">
+            <h2 id="contact-heading" className="text-3xl font-black leading-[1.32] tracking-tight text-white mb-4 md:text-4xl">
               Write to Us
             </h2>
             <p className="text-[17px] text-white/55 max-w-lg mx-auto leading-relaxed">

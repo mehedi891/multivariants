@@ -9,15 +9,15 @@ const navItems = [
   { href: "/",        label: "Home" },
   { href: "/features",label: "Features" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/#reviews", label: "Clients" },
+  { href: "/clients-showcase", label: "Clients" },
   { href: "/contact", label: "Contact" },
 ];
 
 const resourceItems = [
-  { href: "/#partners", label: "Partners" },
+  { href: "/partners", label: "Partners" },
   { href: "/#blogs", label: "Blog" },
   { href: "/#docs", label: "Docs" },
-  { href: "/#changelog", label: "Changelog" },
+  { href: "/changelog", label: "Changelog" },
 ];
 
 export default function Navbar() {
@@ -63,6 +63,7 @@ export default function Navbar() {
               (href === "/" && pathname === "/") ||
               (href === "/features" && pathname === "/features") ||
               (href === "/pricing" && pathname === "/pricing") ||
+              (href === "/clients-showcase" && pathname === "/clients-showcase") ||
               (href === "/contact" && pathname === "/contact");
             return (
               <li key={href + label}>

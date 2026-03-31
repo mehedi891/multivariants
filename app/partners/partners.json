@@ -1,0 +1,242 @@
+[
+  {
+    "id": "synctrack-paypal-tracking-sync",
+    "businessName": "Synctrack PayPal Tracking Sync",
+    "description": "Automates order tracking updates and improves post-purchase trust for PayPal transactions.",
+    "logoText": "ST",
+    "theme": "blue",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "hkc-ccc-invoice",
+    "businessName": "HKC CCC Invoice",
+    "description": "Invoice and billing assistant for merchants who need fast document generation at scale.",
+    "logoText": "IN",
+    "theme": "orange",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "sad-automated-discounts",
+    "businessName": "SAD Automated Discounts",
+    "description": "Creates dynamic discount rules to increase conversion while protecting margins.",
+    "logoText": "AD",
+    "theme": "lime",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "tranzer-language-currency",
+    "businessName": "Tranzer Language & Currency Solution",
+    "description": "Localization toolkit for global stores with multilingual and currency-aware experiences.",
+    "logoText": "TR",
+    "theme": "cyan",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "write-invoice-integration",
+    "businessName": "Write - Invoice Integration",
+    "description": "Flexible invoice workflows with customizable templates for business operations.",
+    "logoText": "WR",
+    "theme": "slate",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "forward-delivery-date",
+    "businessName": "Forward Delivery Date - ETA",
+    "description": "Delivery date and ETA visibility to reduce support load and improve buyer confidence.",
+    "logoText": "FD",
+    "theme": "amber",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "stky-anti-theft",
+    "businessName": "STKY Anti Theft",
+    "description": "Helps protect storefront assets and reduce unwanted data or content scraping attempts.",
+    "logoText": "SK",
+    "theme": "rose",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "file-cart-drawer-upsell",
+    "businessName": "File Cart Drawer Cart Upsell",
+    "description": "Advanced cart drawer with cross-sell and upsell opportunities for higher order value.",
+    "logoText": "CU",
+    "theme": "indigo",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "zolo-facebook-pixel-tiktok-pixel",
+    "businessName": "Zolo Facebook Pixel TikTok Pixel",
+    "description": "Marketing pixel management and event optimization for social ad performance.",
+    "logoText": "ZL",
+    "theme": "emerald",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "joy-loyalty-rewards",
+    "businessName": "Joy Loyalty and Rewards",
+    "description": "Loyalty points, rewards, and retention experiences for repeat purchases.",
+    "logoText": "JY",
+    "theme": "violet",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "bogos-free-gift-upsell",
+    "businessName": "BOGOS Free Gift Bundle Upsell",
+    "description": "Buy-one-get-one and free-gift strategies to increase cart size and conversion.",
+    "logoText": "BG",
+    "theme": "blue",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "rivyo-reviews-loyalty",
+    "businessName": "Rivyo Reviews & Loyalty",
+    "description": "Review collection and loyalty tooling to strengthen social proof and repeat revenue.",
+    "logoText": "RV",
+    "theme": "purple",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "easy-subscription-app",
+    "businessName": "Easy Subscription App",
+    "description": "Subscription lifecycle management for recurring product delivery businesses.",
+    "logoText": "ES",
+    "theme": "violet",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "utterbond-subscriptions-app",
+    "businessName": "Utterbond Subscriptions App",
+    "description": "Recurring billing automation and subscriber experience improvements.",
+    "logoText": "UB",
+    "theme": "slate",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "qstomly",
+    "businessName": "Qstomly",
+    "description": "Product personalization and customization workflows for modern storefronts.",
+    "logoText": "QS",
+    "theme": "cyan",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "deco-product-labels-badges",
+    "businessName": "DECO Product Labels & Badges",
+    "description": "Visual labels and badges to highlight promos, stock states, and urgency cues.",
+    "logoText": "DE",
+    "theme": "blue",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "a-for-product-variants-bundles",
+    "businessName": "A for Product Variants & Bundles",
+    "description": "Enhanced variant and bundle merchandising controls for large catalogs.",
+    "logoText": "AV",
+    "theme": "violet",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "subi-subscriptions-app",
+    "businessName": "Subi Subscriptions App",
+    "description": "Subscription logic and member-centric checkout features.",
+    "logoText": "SU",
+    "theme": "emerald",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "ecomposer-landing-page-builder",
+    "businessName": "Ecomposer Landing Page Builder",
+    "description": "Visual page building for faster storefront experiments and conversion optimization.",
+    "logoText": "EC",
+    "theme": "cyan",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "checkout-blocs",
+    "businessName": "Checkout Blocs",
+    "description": "Checkout UI extension blocks and customization controls for optimized flows.",
+    "logoText": "CB",
+    "theme": "amber",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "xotix-all-in-one-upsell-app",
+    "businessName": "Xotix All-In-One Upsell App",
+    "description": "Comprehensive upsell and cross-sell toolkit to increase revenue per session.",
+    "logoText": "XO",
+    "theme": "purple",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "tranzer-stars",
+    "businessName": "Tranzer",
+    "description": "Customer-facing storefront enhancements focused on conversion and usability.",
+    "logoText": "TZ",
+    "theme": "blue",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "wefulfil-shipping",
+    "businessName": "wefulfil Shipping",
+    "description": "Fulfillment and logistics operations support for scalable shipping workflows.",
+    "logoText": "WF",
+    "theme": "emerald",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "easyads-recommendation",
+    "businessName": "easyads Recommendation",
+    "description": "Recommendation engine and campaign support for improved product discovery.",
+    "logoText": "EA",
+    "theme": "blue",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "trackingmore-order-tracking",
+    "businessName": "Trackingmore Order Tracking",
+    "description": "Unified tracking visibility across carriers with automatic status syncing.",
+    "logoText": "TM",
+    "theme": "orange",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "checkout-conversion-pro",
+    "businessName": "Checkout Conversion Pro",
+    "description": "Conversion-focused checkout enhancements to reduce friction and increase completion.",
+    "logoText": "CP",
+    "theme": "amber",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "aodc-b2b-discount-manager",
+    "businessName": "AODC - B2B Discount Manager",
+    "description": "Tiered and account-specific discount controls for wholesale and B2B buyers.",
+    "logoText": "AO",
+    "theme": "lime",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "searchn-seo-speed-optimizer",
+    "businessName": "Search'n SEO & Speed Optimizer",
+    "description": "SEO tooling and performance optimizations to improve discovery and page speed.",
+    "logoText": "SS",
+    "theme": "orange",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "sale-pop-up-tool-bar",
+    "businessName": "Sale Pop Up - Tool Bar",
+    "description": "On-site urgency and promotional messaging to improve conversion rates.",
+    "logoText": "SP",
+    "theme": "blue",
+    "websiteUrl": "#"
+  },
+  {
+    "id": "discountray",
+    "businessName": "DiscountRay",
+    "description": "Discount automation and pricing workflows that complement bulk order strategies.",
+    "logoText": "DR",
+    "theme": "cyan",
+    "websiteUrl": "#"
+  }
+]

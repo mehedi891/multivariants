@@ -3,8 +3,27 @@ import Image from "next/image";
 import AnimateIn from "./AnimateIn";
 import NewsletterForm from "./NewsletterForm";
 
-const usefulLinks = ["Changelog", "FAQ", "Privacy Policy", "DiscountRay – Discounted Pricing", "PushBundle"];
-const integrationLinks = ["Discount Ray", "Shopify", "All Integrations", "Book a Demo", "Support"];
+const usefulLinks = [
+  { label: "Changelog", href: "/changelog" },
+  { label: "FAQ", href: "#" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "DiscountRay – Discounted Pricing", href: "#" },
+  { label: "PushBundle", href: "#" },
+];
+
+const integrationLinks = [
+  { label: "Discount Ray", href: "#" },
+  { label: "Shopify", href: "#" },
+  { label: "All Integrations", href: "#" },
+  { label: "Book a Demo", href: "/contact" },
+  { label: "Support", href: "mailto:support@multivariants.com" },
+];
+
+const legalLinks = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: "#" },
+  { label: "Changelog", href: "/changelog" },
+];
 
 export default function Footer() {
   return (
@@ -57,8 +76,8 @@ export default function Footer() {
               <h3 className="text-[14px] font-bold text-white mb-4">Useful Links</h3>
               <ul className="list-none flex flex-col gap-2.5" role="list">
                 {usefulLinks.map((l) => (
-                  <li key={l}>
-                    <Link href="#" className="text-[14px] text-white/55 hover:text-accent transition-colors">{l}</Link>
+                  <li key={l.label}>
+                    <Link href={l.href} className="text-[14px] text-white/55 hover:text-accent transition-colors">{l.label}</Link>
                   </li>
                 ))}
               </ul>
@@ -71,8 +90,8 @@ export default function Footer() {
               <h3 className="text-[14px] font-bold text-white mb-4">Integration</h3>
               <ul className="list-none flex flex-col gap-2.5" role="list">
                 {integrationLinks.map((l) => (
-                  <li key={l}>
-                    <Link href="#" className="text-[14px] text-white/55 hover:text-accent transition-colors">{l}</Link>
+                  <li key={l.label}>
+                    <Link href={l.href} className="text-[14px] text-white/55 hover:text-accent transition-colors">{l.label}</Link>
                   </li>
                 ))}
               </ul>
@@ -99,9 +118,9 @@ export default function Footer() {
           </p>
           <nav aria-label="Legal links">
             <ul className="flex gap-5 list-none" role="list">
-              {["Privacy Policy", "Terms of Service", "Changelog"].map((l) => (
-                <li key={l}>
-                  <Link href="#" className="text-white/50 hover:text-accent transition-colors">{l}</Link>
+              {legalLinks.map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className="text-white/50 hover:text-accent transition-colors">{l.label}</Link>
                 </li>
               ))}
             </ul>
