@@ -7,17 +7,17 @@ import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/",        label: "Home" },
-  { href: "#features",label: "Features" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#reviews", label: "Clients" },
-  { href: "#contact", label: "Contact" },
+  { href: "/features",label: "Features" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/#reviews", label: "Clients" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const resourceItems = [
-  { href: "#partners", label: "Partners" },
-  { href: "#blogs", label: "Blog" },
-  { href: "#docs", label: "Docs" },
-  { href: "#changelog", label: "Changelog" },
+  { href: "/#partners", label: "Partners" },
+  { href: "/#blogs", label: "Blog" },
+  { href: "/#docs", label: "Docs" },
+  { href: "/#changelog", label: "Changelog" },
 ];
 
 export default function Navbar() {
@@ -59,7 +59,11 @@ export default function Navbar() {
         {/* Desktop links */}
         <ul className="hidden md:flex items-center gap-1 flex-1 justify-center list-none" role="list">
           {navItems.map(({ href, label }) => {
-            const isActive = href === "/" && pathname === "/";
+            const isActive =
+              (href === "/" && pathname === "/") ||
+              (href === "/features" && pathname === "/features") ||
+              (href === "/pricing" && pathname === "/pricing") ||
+              (href === "/contact" && pathname === "/contact");
             return (
               <li key={href + label}>
                 <Link
@@ -111,7 +115,7 @@ export default function Navbar() {
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-2.5 flex-shrink-0">
           <Link
-            href="#contact"
+            href="/contact"
             className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold border border-white/20 text-white/70 hover:border-primary hover:text-primary transition-all"
           >
             Book a Demo
@@ -191,7 +195,7 @@ export default function Navbar() {
           </ul>
           <div className="flex flex-col gap-2 pt-3 border-t border-white/10">
             <Link
-              href="#contact"
+              href="/contact"
               onClick={() => setOpen(false)}
               className="block text-center py-2.5 rounded-xl text-sm font-semibold border border-white/20 text-white/70 hover:border-primary hover:text-primary transition-all"
             >
