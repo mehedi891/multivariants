@@ -4,12 +4,25 @@ import {
   type BlogPost,
 } from "@/app/blog/posts-data";
 
+function normalizeEnvUrl(value: string | undefined) {
+  const trimmed = value?.trim();
+  if (!trimmed) return undefined;
+  const unquoted =
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+      ? trimmed.slice(1, -1).trim()
+      : trimmed;
+  return unquoted || undefined;
+}
+
 const BLOG_API_BASE_URL =
-  process.env.BLOG_API_BASE_URL ?? "https://admin.yourdomain.com";
+  normalizeEnvUrl(process.env.BLOG_API_BASE_URL) ??
+  "https://admin.yourdomain.com";
 const BLOG_SITE = process.env.BLOG_SITE ?? "multivariants";
-const BLOG_API_POSTS_URL = process.env.BLOG_API_POSTS_URL;
+const BLOG_API_POSTS_URL = normalizeEnvUrl(process.env.BLOG_API_POSTS_URL);
 const BLOG_API_FALLBACK_ENABLED =
   process.env.BLOG_API_FALLBACK_ENABLED === "true";
+const BLOG_API_FORWARD_AUTH = process.env.BLOG_API_FORWARD_AUTH === "true";
 
 const FALLBACK_IMAGE = "/images/features/easy-to-use-and-configure.webp";
 
@@ -88,6 +101,34 @@ function buildListUrl() {
   return new URL("/api/public/posts", BLOG_API_BASE_URL);
 }
 
+function buildListUrlCandidates() {
+  const candidates: URL[] = [];
+  const seen = new Set<string>();
+
+  const addCandidate = (url: URL) => {
+    const key = url.toString();
+    if (seen.has(key)) return;
+    seen.add(key);
+    candidates.push(url);
+  };
+
+  if (BLOG_API_POSTS_URL) {
+    const postsUrl = new URL(BLOG_API_POSTS_URL);
+    addCandidate(postsUrl);
+
+    if (!postsUrl.pathname.includes("/api/public/posts")) {
+      addCandidate(new URL("/api/public/posts", postsUrl));
+    }
+  }
+
+  addCandidate(buildListUrl());
+
+  const baseUrl = new URL(BLOG_API_BASE_URL);
+  addCandidate(new URL("/api/public/posts", baseUrl));
+
+  return candidates;
+}
+
 function buildSinglePostUrl(slug: string) {
   if (!BLOG_API_POSTS_URL) {
     return new URL(`/api/public/posts/${slug}`, BLOG_API_BASE_URL);
@@ -99,6 +140,35 @@ function buildSinglePostUrl(slug: string) {
   return url;
 }
 
+function buildSinglePostUrlCandidates(slug: string) {
+  const candidates: URL[] = [];
+  const seen = new Set<string>();
+
+  const addCandidate = (url: URL) => {
+    const key = url.toString();
+    if (seen.has(key)) return;
+    seen.add(key);
+    candidates.push(url);
+  };
+
+  if (BLOG_API_POSTS_URL) {
+    const postsUrl = new URL(BLOG_API_POSTS_URL);
+    const cleanPath = postsUrl.pathname.replaceAll(/\/+$/g, "");
+    const withSlug = new URL(postsUrl.toString());
+    withSlug.pathname = `${cleanPath}/${encodeURIComponent(slug)}`;
+    addCandidate(withSlug);
+
+    if (!postsUrl.pathname.includes("/api/public/posts")) {
+      addCandidate(new URL(`/api/public/posts/${encodeURIComponent(slug)}`, postsUrl));
+    }
+  }
+
+  addCandidate(buildSinglePostUrl(slug));
+  addCandidate(new URL(`/api/public/posts/${encodeURIComponent(slug)}`, BLOG_API_BASE_URL));
+
+  return candidates;
+}
+
 function buildFetchInit(
   revalidateSeconds: number,
   requestHeaders?: BlogRequestHeaders
@@ -107,14 +177,17 @@ function buildFetchInit(
     Accept: "application/json",
   };
 
-  if (requestHeaders?.cookie) {
+  if (BLOG_API_FORWARD_AUTH && requestHeaders?.cookie) {
     headers.cookie = requestHeaders.cookie;
   }
-  if (requestHeaders?.authorization) {
+  if (BLOG_API_FORWARD_AUTH && requestHeaders?.authorization) {
     headers.authorization = requestHeaders.authorization;
   }
 
-  if (requestHeaders?.cookie || requestHeaders?.authorization) {
+  if (
+    BLOG_API_FORWARD_AUTH &&
+    (requestHeaders?.cookie || requestHeaders?.authorization)
+  ) {
     return { cache: "no-store" as const, headers };
   }
 
@@ -360,52 +433,65 @@ export async function getPublicBlogPosts({
   requestHeaders?: BlogRequestHeaders;
 }): Promise<PublicBlogListResult> {
   try {
-    const url = buildListUrl();
-    url.searchParams.set("site", BLOG_SITE);
-    url.searchParams.set("page", String(page));
-    url.searchParams.set("limit", String(limit));
-    if (category && category !== "All") {
-      url.searchParams.set("category", category);
+    const errors: string[] = [];
+
+    for (const baseUrl of buildListUrlCandidates()) {
+      try {
+        const url = new URL(baseUrl.toString());
+        url.searchParams.set("site", BLOG_SITE);
+        url.searchParams.set("page", String(page));
+        url.searchParams.set("limit", String(limit));
+        if (category && category !== "All") {
+          url.searchParams.set("category", category);
+        }
+
+        const res = await fetch(
+          url.toString(),
+          buildFetchInit(60, requestHeaders)
+        );
+        if (!res.ok) {
+          errors.push(`${url}: ${res.status}`);
+          continue;
+        }
+
+        const payload = normalizeListPayload(
+          await parseJsonPayload(res, "list request")
+        );
+        const posts = payload.posts
+          .filter(
+            (raw): raw is Record<string, unknown> =>
+              typeof raw === "object" && raw !== null
+          )
+          .map(mapApiPostToListItem)
+          .filter((post) => Boolean(post.slug));
+
+        const categoriesFromApi = payload.categories
+          .filter(
+            (raw): raw is Record<string, unknown> =>
+              typeof raw === "object" && raw !== null
+          )
+          .map((item) => ({
+            name: String(item.name ?? item.title ?? item.slug ?? ""),
+            slug: String(item.slug ?? "").trim() || undefined,
+            count:
+              item.count === undefined ? undefined : asNumber(item.count, 0),
+          }))
+          .filter((item) => Boolean(item.name));
+
+        return {
+          posts,
+          totalPages: payload.totalPages,
+          currentPage: payload.currentPage,
+          categories:
+            categoriesFromApi.length > 0 ? categoriesFromApi : deriveCategoryStats(posts),
+          error: undefined,
+        };
+      } catch (attemptError) {
+        errors.push(toErrorMessage(attemptError));
+      }
     }
 
-    const res = await fetch(
-      url.toString(),
-      buildFetchInit(60, requestHeaders)
-    );
-    if (!res.ok) throw new Error(`List request failed: ${res.status}`);
-
-    const payload = normalizeListPayload(
-      await parseJsonPayload(res, "list request")
-    );
-    const posts = payload.posts
-      .filter(
-        (raw): raw is Record<string, unknown> =>
-          typeof raw === "object" && raw !== null
-      )
-      .map(mapApiPostToListItem)
-      .filter((post) => Boolean(post.slug));
-
-    const categoriesFromApi = payload.categories
-      .filter(
-        (raw): raw is Record<string, unknown> =>
-          typeof raw === "object" && raw !== null
-      )
-      .map((item) => ({
-        name: String(item.name ?? item.title ?? item.slug ?? ""),
-        slug: String(item.slug ?? "").trim() || undefined,
-        count:
-          item.count === undefined ? undefined : asNumber(item.count, 0),
-      }))
-      .filter((item) => Boolean(item.name));
-
-    return {
-      posts,
-      totalPages: payload.totalPages,
-      currentPage: payload.currentPage,
-      categories:
-        categoriesFromApi.length > 0 ? categoriesFromApi : deriveCategoryStats(posts),
-      error: undefined,
-    };
+    throw new Error(errors.join(" | "));
   } catch (error) {
     logApiError("list fetch failed", error);
     const errorMessage = toErrorMessage(error);
@@ -440,50 +526,55 @@ export async function getPublicBlogPost(
   requestHeaders?: BlogRequestHeaders
 ): Promise<PublicBlogPost | null> {
   try {
-    const url = buildSinglePostUrl(slug);
-    url.searchParams.set("site", BLOG_SITE);
+    const errors: string[] = [];
 
-    const res = await fetch(
-      url.toString(),
-      buildFetchInit(3600, requestHeaders)
-    );
-    if (!res.ok) {
-      if (BLOG_API_FALLBACK_ENABLED) {
-        return fallbackPost(slug);
+    for (const baseUrl of buildSinglePostUrlCandidates(slug)) {
+      try {
+        const url = new URL(baseUrl.toString());
+        url.searchParams.set("site", BLOG_SITE);
+
+        const res = await fetch(
+          url.toString(),
+          buildFetchInit(3600, requestHeaders)
+        );
+        if (!res.ok) {
+          errors.push(`${url}: ${res.status}`);
+          continue;
+        }
+
+        const payload = await parseJsonPayload(res, "single request");
+        const root =
+          typeof payload === "object" && payload !== null
+            ? (payload as Record<string, unknown>)
+            : {};
+        const data =
+          typeof root.data === "object" && root.data !== null
+            ? (root.data as Record<string, unknown>)
+            : root;
+        const postData =
+          typeof data.post === "object" && data.post !== null
+            ? (data.post as Record<string, unknown>)
+            : data;
+
+        const listItem = mapApiPostToListItem(postData);
+        if (!listItem.slug) {
+          errors.push(`${url}: missing slug in response`);
+          continue;
+        }
+
+        const contentHtml = String(
+          postData.contentHtml ?? postData.content ?? postData.html ?? ""
+        );
+
+        return {
+          ...listItem,
+          contentHtml: contentHtml || "<p>No content available.</p>",
+        };
+      } catch (attemptError) {
+        errors.push(toErrorMessage(attemptError));
       }
-      return null;
     }
-
-    const payload = await parseJsonPayload(res, "single request");
-    const root =
-      typeof payload === "object" && payload !== null
-        ? (payload as Record<string, unknown>)
-        : {};
-    const data =
-      typeof root.data === "object" && root.data !== null
-        ? (root.data as Record<string, unknown>)
-        : root;
-    const postData =
-      typeof data.post === "object" && data.post !== null
-        ? (data.post as Record<string, unknown>)
-        : data;
-
-    const listItem = mapApiPostToListItem(postData);
-    if (!listItem.slug) {
-      if (BLOG_API_FALLBACK_ENABLED) {
-        return fallbackPost(slug);
-      }
-      return null;
-    }
-
-    const contentHtml = String(
-      postData.contentHtml ?? postData.content ?? postData.html ?? ""
-    );
-
-    return {
-      ...listItem,
-      contentHtml: contentHtml || "<p>No content available.</p>",
-    };
+    throw new Error(errors.join(" | "));
   } catch (error) {
     logApiError(`single fetch failed for slug "${slug}"`, error);
 
@@ -497,24 +588,35 @@ export async function getPublicBlogPost(
 
 export async function getPublicBlogSlugs(limit = 100): Promise<string[]> {
   try {
-    const url = buildListUrl();
-    url.searchParams.set("site", BLOG_SITE);
-    url.searchParams.set("limit", String(limit));
-    url.searchParams.set("page", "1");
+    const errors: string[] = [];
+    for (const baseUrl of buildListUrlCandidates()) {
+      try {
+        const url = new URL(baseUrl.toString());
+        url.searchParams.set("site", BLOG_SITE);
+        url.searchParams.set("limit", String(limit));
+        url.searchParams.set("page", "1");
 
-    const res = await fetch(url.toString(), { next: { revalidate: 3600 } });
-    if (!res.ok) throw new Error(`Slug request failed: ${res.status}`);
+        const res = await fetch(url.toString(), { next: { revalidate: 3600 } });
+        if (!res.ok) {
+          errors.push(`${url}: ${res.status}`);
+          continue;
+        }
 
-    const payload = normalizeListPayload(
-      await parseJsonPayload(res, "slug request")
-    );
-    return payload.posts
-      .filter(
-        (raw): raw is Record<string, unknown> =>
-          typeof raw === "object" && raw !== null
-      )
-      .map((raw) => String(raw.slug ?? ""))
-      .filter(Boolean);
+        const payload = normalizeListPayload(
+          await parseJsonPayload(res, "slug request")
+        );
+        return payload.posts
+          .filter(
+            (raw): raw is Record<string, unknown> =>
+              typeof raw === "object" && raw !== null
+          )
+          .map((raw) => String(raw.slug ?? ""))
+          .filter(Boolean);
+      } catch (attemptError) {
+        errors.push(toErrorMessage(attemptError));
+      }
+    }
+    throw new Error(errors.join(" | "));
   } catch (error) {
     logApiError("slug fetch failed", error);
 
