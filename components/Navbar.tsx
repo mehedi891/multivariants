@@ -15,8 +15,8 @@ const navItems = [
 
 const resourceItems = [
   { href: "/partners", label: "Partners" },
-  { href: "/#blogs", label: "Blog" },
-  { href: "/#docs", label: "Docs" },
+  { href: "/blog", label: "Blog" },
+  { href: "/academy", label: "Docs" },
   { href: "/changelog", label: "Changelog" },
 ];
 

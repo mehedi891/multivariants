@@ -1,37 +1,23 @@
 import Link from "next/link";
+import Image from "next/image";
 import AnimateIn from "./AnimateIn";
+import { getPublicBlogPosts } from "@/app/blog/public-api";
 
-const posts = [
-  {
-    emoji: "🛒",
-    grad: "from-primary/30 to-accent/20",
-    tag: "Bulk Ordering",
-    title: "How Bulk Add to Cart Reduces Cart Abandonment by Up to 50%",
-    excerpt: "Learn how simplifying the variant selection process with a single-click bulk add experience keeps customers engaged and converts more visits into sales.",
-    date: "March 20, 2026",
-    read: "5 min read",
-  },
-  {
-    emoji: "📦",
-    grad: "from-emerald-500/25 to-teal-500/20",
-    tag: "B2B Strategies",
-    title: "Top 7 Strategies to Increase Wholesale Sales on Shopify in 2026",
-    excerpt: "Discover actionable tactics B2B merchants use to grow their wholesale revenue, from smart pricing to streamlined ordering workflows powered by MultiVariants.",
-    date: "March 10, 2026",
-    read: "7 min read",
-  },
-  {
-    emoji: "🌍",
-    grad: "from-amber-500/25 to-orange-500/20",
-    tag: "International Growth",
-    title: "Expanding Your Shopify Store Globally with Multi-Language Support",
-    excerpt: "A step-by-step guide on using MultiVariants' localization features to enter new markets, configure translations, and serve international customers seamlessly.",
-    date: "February 25, 2026",
-    read: "6 min read",
-  },
-];
+function formatDate(dateISO: string) {
+  return new Date(dateISO).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 
-export default function Blogs() {
+function isRemoteImage(src: string) {
+  return src.startsWith("http://") || src.startsWith("https://");
+}
+
+export default async function Blogs() {
+  const { posts } = await getPublicBlogPosts({ page: 1, limit: 3 });
+
   return (
     <section
       className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -55,29 +41,48 @@ export default function Blogs() {
                 Latest News and Blogs
               </h2>
             </div>
-            <Link href="#" className="inline-flex items-center px-5 py-2 rounded-lg text-sm font-semibold border-[1.5px] border-white/25 text-white/70 hover:border-primary hover:text-primary transition-all whitespace-nowrap glass">
+            <Link href="/blog" className="inline-flex items-center px-5 py-2 rounded-lg text-sm font-semibold border-[1.5px] border-white/25 text-white/70 hover:border-primary hover:text-primary transition-all whitespace-nowrap glass">
               See All Blogs
             </Link>
           </div>
         </AnimateIn>
 
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 list-none" role="list">
-          {posts.map((p, i) => (
-            <AnimateIn key={p.title} direction="up" delay={i * 100}>
-              <li className="h-full glass rounded-[20px] overflow-hidden border-white/10 hover:border-primary/40 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(92,106,196,0.2)] transition-all duration-300 flex flex-col">
-                <div className={`h-[180px] bg-gradient-to-br ${p.grad} flex items-center justify-center text-5xl border-b border-white/10`} aria-hidden="true">
-                  {p.emoji}
-                </div>
-                <article className="p-6 flex flex-col flex-1">
-                  <p className="text-[12px] font-semibold text-primary-light uppercase tracking-[0.5px] mb-2">{p.tag}</p>
-                  <h3 className="text-[17px] font-bold mb-2.5 leading-snug text-white">{p.title}</h3>
-                  <p className="text-[13px] text-white/55 leading-relaxed mb-4 flex-1">{p.excerpt}</p>
-                  <p className="text-[12px] text-white/35 flex items-center gap-1.5">
-                    <time>{p.date}</time>
-                    <span aria-hidden="true">·</span>
-                    {p.read}
-                  </p>
-                </article>
+          {posts.map((post, i) => (
+            <AnimateIn key={post.slug} direction="up" delay={i * 100}>
+              <li className="h-full">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="group block h-full glass rounded-[20px] overflow-hidden border-white/10 hover:border-primary/40 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(92,106,196,0.2)] transition-all duration-300"
+                >
+                  <div className="relative h-[180px] overflow-hidden border-b border-white/10">
+                    <Image
+                      src={post.coverImage}
+                      alt={post.coverImageAlt}
+                      fill
+                      unoptimized={isRemoteImage(post.coverImage)}
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(min-width: 1024px) 31vw, (min-width: 768px) 46vw, 92vw"
+                    />
+                  </div>
+
+                  <article className="p-6 flex flex-col flex-1">
+                    <p className="text-[12px] font-semibold text-primary-light uppercase tracking-[0.5px] mb-2">
+                      {post.category}
+                    </p>
+                    <h3 className="text-[17px] font-bold mb-2.5 leading-snug text-white group-hover:text-primary-light transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-[13px] text-white/55 leading-relaxed mb-4 flex-1">
+                      {post.excerpt}
+                    </p>
+                    <p className="text-[12px] text-white/35 flex items-center gap-1.5">
+                      <time>{formatDate(post.publishedAt)}</time>
+                      <span aria-hidden="true">|</span>
+                      {post.readingTimeMinutes} min read
+                    </p>
+                  </article>
+                </Link>
               </li>
             </AnimateIn>
           ))}

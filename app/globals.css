@@ -56,6 +56,82 @@
   ::-webkit-scrollbar-thumb:hover { background: rgba(92,106,196,0.7); }
 }
 
+@layer components {
+  .blog-post-content .post-table-wrap {
+    margin: 1.75rem 0;
+    overflow-x: auto;
+    border-radius: 18px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(92, 106, 196, 0.78), rgba(71, 193, 191, 0.45));
+    box-shadow: 0 18px 44px rgba(4, 10, 26, 0.45);
+  }
+
+  .blog-post-content .post-table-wrap > table {
+    min-width: 920px;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 17px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(8, 16, 36, 0.95), rgba(13, 25, 52, 0.95));
+  }
+
+  .blog-post-content .post-table-wrap thead th {
+    padding: 0.9rem 1rem;
+    border-right: 1px solid rgba(176, 191, 255, 0.2);
+    border-bottom: 1px solid rgba(176, 191, 255, 0.3);
+    background: linear-gradient(180deg, rgba(92, 106, 196, 0.26), rgba(92, 106, 196, 0.08));
+    color: rgba(235, 242, 255, 0.98);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    vertical-align: top;
+  }
+
+  .blog-post-content .post-table-wrap thead th:last-child {
+    border-right: none;
+  }
+
+  .blog-post-content .post-table-wrap tbody td {
+    padding: 0.95rem 1rem;
+    border-right: 1px solid rgba(176, 191, 255, 0.14);
+    border-bottom: 1px solid rgba(176, 191, 255, 0.12);
+    color: rgba(236, 242, 255, 0.92);
+    vertical-align: top;
+    background: rgba(8, 16, 36, 0.42);
+  }
+
+  .blog-post-content .post-table-wrap tbody td:last-child {
+    border-right: none;
+  }
+
+  .blog-post-content .post-table-wrap tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .blog-post-content .post-table-wrap tbody tr:nth-child(even) td {
+    background: rgba(12, 23, 48, 0.6);
+  }
+
+  .blog-post-content .post-table-wrap tbody tr:hover td {
+    background: rgba(92, 106, 196, 0.16);
+  }
+
+  .blog-post-content .post-table-wrap td:first-child,
+  .blog-post-content .post-table-wrap th:first-child {
+    width: 58px;
+    min-width: 58px;
+    text-align: center;
+  }
+
+  .blog-post-content .post-table-wrap td svg {
+    width: 16px;
+    height: 16px;
+    vertical-align: -2px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
