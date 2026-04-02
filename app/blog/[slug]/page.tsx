@@ -9,7 +9,6 @@ import AnimateIn from "@/components/AnimateIn";
 import {
   getPublicBlogPost,
   getPublicBlogPosts,
-  getPublicBlogSlugs,
   type PublicBlogPost,
 } from "@/app/blog/public-api";
 
@@ -267,11 +266,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       images: imageUrl ? [imageUrl] : undefined,
     },
   };
-}
-
-export async function generateStaticParams() {
-  const slugs = await getPublicBlogSlugs(100);
-  return slugs.map((slug) => ({ slug }));
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
