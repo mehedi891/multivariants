@@ -41,6 +41,8 @@ type PageProps = {
 };
 
 const PAGE_SIZE = 9;
+const SHOW_BLOG_API_ERROR =
+  process.env.NEXT_PUBLIC_BLOG_API_DEBUG === "true";
 
 function pickFirst(value: string | string[] | undefined) {
   if (Array.isArray(value)) return value[0];
@@ -208,6 +210,11 @@ export default async function BlogPage({ searchParams }: PageProps) {
                     ? "Blog API is not returning valid JSON. Check BLOG_API_POSTS_URL / BLOG_API_BASE_URL."
                     : "Try another category."}
                 </p>
+                {error && SHOW_BLOG_API_ERROR && (
+                  <p className="mt-3 text-xs text-amber-300/90">
+                    {error}
+                  </p>
+                )}
               </div>
             ) : (
               <ul className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3" role="list">

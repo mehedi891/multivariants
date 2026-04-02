@@ -23,6 +23,10 @@ const BLOG_API_POSTS_URL = normalizeEnvUrl(process.env.BLOG_API_POSTS_URL);
 const BLOG_API_FALLBACK_ENABLED =
   process.env.BLOG_API_FALLBACK_ENABLED === "true";
 const BLOG_API_FORWARD_AUTH = process.env.BLOG_API_FORWARD_AUTH === "true";
+const BLOG_API_BEARER_TOKEN = normalizeEnvUrl(process.env.BLOG_API_BEARER_TOKEN);
+const BLOG_API_PROTECTION_BYPASS = normalizeEnvUrl(
+  process.env.BLOG_API_PROTECTION_BYPASS
+);
 
 const FALLBACK_IMAGE = "/images/features/easy-to-use-and-configure.webp";
 
@@ -182,6 +186,14 @@ function buildFetchInit(
   }
   if (BLOG_API_FORWARD_AUTH && requestHeaders?.authorization) {
     headers.authorization = requestHeaders.authorization;
+  }
+
+  if (!headers.authorization && BLOG_API_BEARER_TOKEN) {
+    headers.authorization = `Bearer ${BLOG_API_BEARER_TOKEN}`;
+  }
+
+  if (BLOG_API_PROTECTION_BYPASS) {
+    headers["x-vercel-protection-bypass"] = BLOG_API_PROTECTION_BYPASS;
   }
 
   if (
