@@ -284,7 +284,7 @@ export default function FeaturesPage() {
                 <span className="inline-flex rounded-full border border-accent/30 bg-accent/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-accent">
                   Features
                 </span>
-                <h1 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-[1.38] tracking-tight text-white sm:text-4xl lg:text-5xl">
+                <h1 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-[1.38] tracking-tight text-white sm:text-4xl lg:text-5xl/tight">
                   Powerful Bulk Ordering Features for Shopify Stores
                 </h1>
                 <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/60 sm:text-lg">

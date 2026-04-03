@@ -207,7 +207,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
                 <p className="text-lg font-bold text-white">No posts found</p>
                 <p className="mt-2 text-sm text-white/[0.62]">
                   {error
-                    ? "Blog API is not returning valid JSON. Check BLOG_API_POSTS_URL / BLOG_API_BASE_URL."
+                    ? "Blog API is not returning valid JSON. Check CMS_API_BASE_URL / BLOG_API_PATH."
                     : "Try another category."}
                 </p>
                 {error && SHOW_BLOG_API_ERROR && (

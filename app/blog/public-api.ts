@@ -15,11 +15,10 @@ function normalizeEnvUrl(value: string | undefined) {
   return unquoted || undefined;
 }
 
-const BLOG_API_BASE_URL =
-  normalizeEnvUrl(process.env.BLOG_API_BASE_URL) ??
-  "https://admin.yourdomain.com";
+const CMS_API_BASE_URL =
+  normalizeEnvUrl(process.env.CMS_API_BASE_URL) ?? "https://admin.yourdomain.com";
 const BLOG_SITE = process.env.BLOG_SITE ?? "multivariants";
-const BLOG_API_POSTS_URL = normalizeEnvUrl(process.env.BLOG_API_POSTS_URL);
+const BLOG_API_PATH = normalizeEnvUrl(process.env.BLOG_API_PATH) ?? "/api/public/posts";
 const BLOG_API_FALLBACK_ENABLED =
   process.env.BLOG_API_FALLBACK_ENABLED === "true";
 const BLOG_API_FORWARD_AUTH = process.env.BLOG_API_FORWARD_AUTH === "true";
@@ -100,9 +99,19 @@ async function parseJsonPayload(res: Response, scope: string) {
   }
 }
 
+function normalizeApiPath(pathValue: string, fallback: string) {
+  const trimmed = pathValue.trim();
+  if (!trimmed) return fallback;
+  return trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
+}
+
+function buildApiUrl(pathValue: string) {
+  const path = normalizeApiPath(pathValue, "/api/public/posts");
+  return new URL(path, CMS_API_BASE_URL);
+}
+
 function buildListUrl() {
-  if (BLOG_API_POSTS_URL) return new URL(BLOG_API_POSTS_URL);
-  return new URL("/api/public/posts", BLOG_API_BASE_URL);
+  return buildApiUrl(BLOG_API_PATH);
 }
 
 function buildListUrlCandidates() {
@@ -116,30 +125,15 @@ function buildListUrlCandidates() {
     candidates.push(url);
   };
 
-  if (BLOG_API_POSTS_URL) {
-    const postsUrl = new URL(BLOG_API_POSTS_URL);
-    addCandidate(postsUrl);
-
-    if (!postsUrl.pathname.includes("/api/public/posts")) {
-      addCandidate(new URL("/api/public/posts", postsUrl));
-    }
-  }
-
   addCandidate(buildListUrl());
-
-  const baseUrl = new URL(BLOG_API_BASE_URL);
-  addCandidate(new URL("/api/public/posts", baseUrl));
+  addCandidate(buildApiUrl("/api/public/posts"));
 
   return candidates;
 }
 
 function buildSinglePostUrl(slug: string) {
-  if (!BLOG_API_POSTS_URL) {
-    return new URL(`/api/public/posts/${slug}`, BLOG_API_BASE_URL);
-  }
-
-  const url = new URL(BLOG_API_POSTS_URL);
-  const cleanPath = url.pathname.replaceAll(/\/+$/g, "");
+  const url = buildApiUrl(BLOG_API_PATH);
+  const cleanPath = url.pathname.replaceAll(/\/+$/g, "") || "/api/public/posts";
   url.pathname = `${cleanPath}/${encodeURIComponent(slug)}`;
   return url;
 }
@@ -155,20 +149,10 @@ function buildSinglePostUrlCandidates(slug: string) {
     candidates.push(url);
   };
 
-  if (BLOG_API_POSTS_URL) {
-    const postsUrl = new URL(BLOG_API_POSTS_URL);
-    const cleanPath = postsUrl.pathname.replaceAll(/\/+$/g, "");
-    const withSlug = new URL(postsUrl.toString());
-    withSlug.pathname = `${cleanPath}/${encodeURIComponent(slug)}`;
-    addCandidate(withSlug);
-
-    if (!postsUrl.pathname.includes("/api/public/posts")) {
-      addCandidate(new URL(`/api/public/posts/${encodeURIComponent(slug)}`, postsUrl));
-    }
-  }
-
   addCandidate(buildSinglePostUrl(slug));
-  addCandidate(new URL(`/api/public/posts/${encodeURIComponent(slug)}`, BLOG_API_BASE_URL));
+  addCandidate(
+    new URL(`/api/public/posts/${encodeURIComponent(slug)}`, CMS_API_BASE_URL)
+  );
 
   return candidates;
 }

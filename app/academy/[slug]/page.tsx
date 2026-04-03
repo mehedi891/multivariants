@@ -6,9 +6,9 @@ import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import AcademySidebar from "@/components/AcademySidebar";
 import {
-  getAcademyCategories,
-  getAcademyDocBySlug,
-} from "@/app/academy/docs-data";
+  getPublicAcademyCategories,
+  getPublicAcademyDoc,
+} from "@/app/academy/public-api";
 
 type PageProps = {
   params: Promise<{
@@ -18,33 +18,54 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const entry = getAcademyDocBySlug(slug);
+  const doc = await getPublicAcademyDoc(slug);
 
-  if (!entry) {
+  if (!doc) {
     return {
       title: "Academy Doc",
       description: "MultiVariants help documentation.",
-      alternates: { canonical: "https://multivariants.com/academy" },
+      alternates: { canonical: "/academy" },
     };
   }
 
   return {
-    title: `${entry.doc.title} | Academy`,
-    description: entry.doc.excerpt,
+    title: `${doc.seoTitle ?? doc.title} | Academy`,
+    description: doc.seoDescription ?? doc.excerpt,
     alternates: {
-      canonical: `https://multivariants.com/academy/${slug}`,
+      canonical: `/academy/${slug}`,
     },
   };
 }
 
 export default async function AcademyDocPage({ params }: PageProps) {
   const { slug } = await params;
-  const entry = getAcademyDocBySlug(slug);
+  const [{ categories }, doc] = await Promise.all([
+    getPublicAcademyCategories(),
+    getPublicAcademyDoc(slug),
+  ]);
 
-  if (!entry) notFound();
+  if (!doc) notFound();
 
-  const categories = getAcademyCategories();
-  const { category: currentCategory, doc } = entry;
+  const currentCategory =
+    categories.find((category) => category.docs.some((item) => item.slug === doc.slug)) ??
+    categories.find((category) => category.slug === doc.categorySlug) ??
+    (doc.categorySlug
+      ? {
+          slug: doc.categorySlug,
+          title: doc.categoryTitle ?? doc.categorySlug,
+          description: "",
+          docs: [{ ...doc, sections: [] }],
+        }
+      : {
+          slug: "docs",
+          title: "Docs",
+          description: "",
+          docs: [{ ...doc, sections: [] }],
+        });
+
+  const formattedDate = doc.lastUpdated || "Recently";
+  const contentHtml = doc.contentHtml ?? "";
+  const hasHtml = contentHtml.trim().length > 0;
 
   return (
     <>
@@ -81,7 +102,7 @@ export default async function AcademyDocPage({ params }: PageProps) {
                 {doc.excerpt}
               </p>
               <p className="mt-3 text-xs text-white/45 sm:text-sm">
-                {doc.readTime} | Updated {doc.lastUpdated}
+                {doc.readTime} | Updated {formattedDate}
               </p>
             </AnimateIn>
           </div>
@@ -110,38 +131,45 @@ export default async function AcademyDocPage({ params }: PageProps) {
 
             <AnimateIn direction="left" delay={80}>
               <article className="rounded-2xl border border-white/16 bg-gradient-to-b from-white/[0.12] to-white/[0.04] p-5 shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl sm:p-7">
-                <div className="space-y-8">
-                  {doc.sections.map((section) => (
-                    <section key={section.heading}>
-                      <h2 className="text-2xl font-black leading-tight text-white">
-                        {section.heading}
-                      </h2>
-                      <div className="mt-3 space-y-3">
-                        {section.paragraphs.map((paragraph) => (
-                          <p
-                            key={paragraph}
-                            className="text-sm leading-relaxed text-white/80 sm:text-[15px]"
-                          >
-                            {paragraph}
-                          </p>
-                        ))}
-                      </div>
-                      {section.points && section.points.length > 0 && (
-                        <ul className="mt-4 space-y-2.5">
-                          {section.points.map((point) => (
-                            <li
-                              key={point}
-                              className="flex items-start gap-2.5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px]"
+                {hasHtml ? (
+                  <div
+                    className="space-y-5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px] [&_h2]:mt-7 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:leading-tight [&_h2]:text-white [&_h3]:mt-6 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-white [&_p]:text-white/[0.82] [&_ul]:ml-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_li]:text-white/[0.82] [&_a]:font-medium [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_a:hover]:decoration-accent [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-xl [&_img]:border [&_img]:border-white/14 [&_img]:shadow-[0_14px_30px_rgba(0,0,0,0.35)]"
+                    dangerouslySetInnerHTML={{ __html: contentHtml }}
+                  />
+                ) : (
+                  <div className="space-y-8">
+                    {doc.sections.map((section) => (
+                      <section key={section.heading}>
+                        <h2 className="text-2xl font-black leading-tight text-white">
+                          {section.heading}
+                        </h2>
+                        <div className="mt-3 space-y-3">
+                          {section.paragraphs.map((paragraph) => (
+                            <p
+                              key={paragraph}
+                              className="text-sm leading-relaxed text-white/80 sm:text-[15px]"
                             >
-                              <span className="mt-1 text-accent">+</span>
-                              <span>{point}</span>
-                            </li>
+                              {paragraph}
+                            </p>
                           ))}
-                        </ul>
-                      )}
-                    </section>
-                  ))}
-                </div>
+                        </div>
+                        {section.points && section.points.length > 0 && (
+                          <ul className="mt-4 space-y-2.5">
+                            {section.points.map((point) => (
+                              <li
+                                key={point}
+                                className="flex items-start gap-2.5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px]"
+                              >
+                                <span className="mt-1 text-accent">+</span>
+                                <span>{point}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </section>
+                    ))}
+                  </div>
+                )}
               </article>
             </AnimateIn>
           </div>

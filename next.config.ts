@@ -13,8 +13,7 @@ function toUploadPattern(urlValue: string | undefined) {
 }
 
 const envUploadPatterns = [
-  toUploadPattern(process.env.BLOG_API_POSTS_URL),
-  toUploadPattern(process.env.BLOG_API_BASE_URL),
+  toUploadPattern(process.env.CMS_API_BASE_URL),
 ].filter((value): value is URL => Boolean(value));
 
 const nextConfig: NextConfig = {

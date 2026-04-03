@@ -3,17 +3,17 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import AcademyExplorer from "@/components/AcademyExplorer";
-import { getAcademyCategories } from "@/app/academy/docs-data";
+import { getPublicAcademyCategories } from "@/app/academy/public-api";
 
 export const metadata: Metadata = {
   title: "Academy",
   description:
     "Browse MultiVariants help docs by category. Learn setup, quantity rules, layout customization, and integrations.",
-  alternates: { canonical: "https://multivariants.com/academy" },
+  alternates: { canonical: "/academy" },
 };
 
-export default function AcademyPage() {
-  const categories = getAcademyCategories();
+export default async function AcademyPage() {
+  const { categories, error } = await getPublicAcademyCategories();
 
   return (
     <>
@@ -46,6 +46,15 @@ export default function AcademyPage() {
             </AnimateIn>
           </div>
         </section>
+
+        {categories.length === 0 && (
+          <section className="bg-[#101830] px-[5%] py-4">
+            <div className="mx-auto max-w-6xl rounded-xl border border-white/14 bg-white/[0.04] px-4 py-3 text-sm text-white/72">
+              No docs found from API. Check `CMS_API_BASE_URL`, `DOCS_API_PATH`, and `DOCS_SITE`.
+              {error ? ` (${error})` : ""}
+            </div>
+          </section>
+        )}
 
         <AcademyExplorer categories={categories} />
       </main>
