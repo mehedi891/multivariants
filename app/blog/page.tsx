@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
+import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicBlogPosts } from "@/app/blog/public-api";
 
 export const metadata: Metadata = {
@@ -203,18 +204,18 @@ export default async function BlogPage({ searchParams }: PageProps) {
             </AnimateIn>
 
             {posts.length === 0 ? (
-              <div className="mt-8 rounded-2xl border border-white/14 bg-white/[0.04] px-5 py-8 text-center backdrop-blur-lg">
-                <p className="text-lg font-bold text-white">No posts found</p>
-                <p className="mt-2 text-sm text-white/[0.62]">
-                  {error
-                    ? "Blog API is not returning valid JSON. Check CMS_API_BASE_URL / BLOG_API_PATH."
-                    : "Try another category."}
-                </p>
-                {error && SHOW_BLOG_API_ERROR && (
-                  <p className="mt-3 text-xs text-amber-300/90">
-                    {error}
-                  </p>
-                )}
+              <div className="mt-8">
+                <ApiEmptyState
+                  title="No blog posts available"
+                  description={
+                    selectedCategory.toLowerCase() !== "all"
+                      ? "No articles are published in this category yet."
+                      : "We're preparing new blog content for this page."
+                  }
+                  helpText="Try another category or check back soon."
+                  error={error}
+                  showDebugDetails={SHOW_BLOG_API_ERROR}
+                />
               </div>
             ) : (
               <ul className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3" role="list">

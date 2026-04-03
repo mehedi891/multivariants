@@ -4,6 +4,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
+import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicChangelogs } from "@/app/changelog/public-api";
 
 export const metadata: Metadata = {
@@ -105,16 +106,6 @@ export default async function ChangelogPage({ searchParams }: PageProps) {
           </div>
         </section>
 
-        {changelogs.length === 0 && (
-          <section className="bg-[#101830] px-[5%] py-4">
-            <div className="mx-auto max-w-6xl rounded-xl border border-white/14 bg-white/[0.04] px-4 py-3 text-sm text-white/72">
-              No changelogs found from API. Check `CMS_API_BASE_URL`,
-              `CHANGELOG_API_PATH`, and `CHANGELOG_SITE`.
-              {error ? ` (${error})` : ""}
-            </div>
-          </section>
-        )}
-
         <section
           className="relative overflow-hidden px-[5%] py-14 lg:py-20"
           style={{
@@ -131,74 +122,84 @@ export default async function ChangelogPage({ searchParams }: PageProps) {
             <div className="relative">
               <div className="absolute bottom-2 left-3 top-2 w-px bg-gradient-to-b from-primary/70 via-primary/45 to-transparent" />
 
-              <ul className="space-y-6">
-                {changelogs.map((entry, index) => (
-                  <li key={entry.id} className="group relative pl-10">
-                    <AnimateIn direction="up" delay={index * 55}>
-                      <span
-                        className="absolute left-0 top-6 inline-flex h-6 w-6 items-center justify-center rounded-full border border-primary/55 bg-[#1b2448] text-[10px] font-bold text-primary-light shadow-[0_0_18px_rgba(92,106,196,0.55)] transition-all duration-500 ease-out group-hover:scale-110 group-hover:border-primary"
-                        aria-hidden="true"
-                      >
-                        {index + 1}
-                      </span>
+              {changelogs.length === 0 ? (
+                <ApiEmptyState
+                  title="No changelog entries yet"
+                  description="New updates, improvements, and fixes will appear here once published."
+                  helpText="Please check back shortly."
+                  error={error}
+                  showDebugDetails={process.env.NODE_ENV !== "production"}
+                />
+              ) : (
+                <ul className="space-y-6">
+                  {changelogs.map((entry, index) => (
+                    <li key={entry.id} className="group relative pl-10">
+                      <AnimateIn direction="up" delay={index * 55}>
+                        <span
+                          className="absolute left-0 top-6 inline-flex h-6 w-6 items-center justify-center rounded-full border border-primary/55 bg-[#1b2448] text-[10px] font-bold text-primary-light shadow-[0_0_18px_rgba(92,106,196,0.55)] transition-all duration-500 ease-out group-hover:scale-110 group-hover:border-primary"
+                          aria-hidden="true"
+                        >
+                          {index + 1}
+                        </span>
 
-                      <article className="group relative overflow-hidden rounded-3xl border border-white/20 bg-gradient-to-b from-[#1b2440]/96 to-[#0f1830]/96 p-5 shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl transition-all duration-500 ease-out hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_22px_50px_rgba(28,118,188,0.28)] sm:p-6">
-                        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/55 to-transparent" />
+                        <article className="group relative overflow-hidden rounded-3xl border border-white/20 bg-gradient-to-b from-[#1b2440]/96 to-[#0f1830]/96 p-5 shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl transition-all duration-500 ease-out hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_22px_50px_rgba(28,118,188,0.28)] sm:p-6">
+                          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/55 to-transparent" />
 
-                        <div className="flex flex-wrap items-center gap-2.5">
-                          <span className="rounded-full border border-white/25 bg-white/[0.06] px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white/70">
-                            {formatDate(entry.publishedAt)}
-                          </span>
-                          <span className="rounded-full border border-primary/40 bg-primary/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-primary-light">
-                            {entry.version}
-                          </span>
-                          <span
-                            className="rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide"
-                            style={{
-                              color: entry.labelColor,
-                              borderColor: hexToRgba(entry.labelColor, 0.55),
-                              backgroundColor: hexToRgba(entry.labelColor, 0.17),
-                            }}
-                          >
-                            {entry.labelName}
-                          </span>
-                        </div>
-
-                        <h2 className="mt-3 text-xl font-black leading-[1.3] text-white sm:text-2xl">
-                          {entry.title}
-                        </h2>
-
-                        {entry.contentHtml ? (
-                          <div
-                            className="mt-3 space-y-5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px] [&_p]:text-white/[0.82] [&_ul]:ml-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_li]:text-white/[0.86] [&_a]:font-medium [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_a:hover]:decoration-accent [&_img]:my-4 [&_img]:h-auto [&_img]:w-full [&_img]:max-w-full [&_img]:rounded-xl [&_img]:border [&_img]:border-white/16 [&_img]:bg-white/[0.03] [&_img]:object-contain"
-                            dangerouslySetInnerHTML={{ __html: entry.contentHtml }}
-                          />
-                        ) : (
-                          <p className="mt-3 text-sm leading-relaxed text-white/80 sm:text-[15px]">
-                            {entry.summary}
-                          </p>
-                        )}
-
-                        {entry.imageSrc && !hasInlineImage(entry.contentHtml) && (
-                          <div className="mt-5 rounded-xl border border-white/20 bg-white/[0.04] p-2.5 sm:p-3">
-                            <div className="relative aspect-[16/8] w-full overflow-hidden rounded-lg bg-[#0b1120]">
-                              <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-[#0b1120]/30 to-transparent" />
-                              <Image
-                                src={entry.imageSrc}
-                                alt={`${entry.title} preview`}
-                                fill
-                                unoptimized={isRemoteImage(entry.imageSrc)}
-                                className="object-contain object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                                sizes="(min-width: 1024px) 52vw, 92vw"
-                              />
-                            </div>
+                          <div className="flex flex-wrap items-center gap-2.5">
+                            <span className="rounded-full border border-white/25 bg-white/[0.06] px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white/70">
+                              {formatDate(entry.publishedAt)}
+                            </span>
+                            <span className="rounded-full border border-primary/40 bg-primary/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-primary-light">
+                              {entry.version}
+                            </span>
+                            <span
+                              className="rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide"
+                              style={{
+                                color: entry.labelColor,
+                                borderColor: hexToRgba(entry.labelColor, 0.55),
+                                backgroundColor: hexToRgba(entry.labelColor, 0.17),
+                              }}
+                            >
+                              {entry.labelName}
+                            </span>
                           </div>
-                        )}
-                      </article>
-                    </AnimateIn>
-                  </li>
-                ))}
-              </ul>
+
+                          <h2 className="mt-3 text-xl font-black leading-[1.3] text-white sm:text-2xl">
+                            {entry.title}
+                          </h2>
+
+                          {entry.contentHtml ? (
+                            <div
+                              className="mt-3 space-y-5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px] [&_p]:text-white/[0.82] [&_ul]:ml-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_li]:text-white/[0.86] [&_a]:font-medium [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_a:hover]:decoration-accent [&_img]:my-4 [&_img]:h-auto [&_img]:w-full [&_img]:max-w-full [&_img]:rounded-xl [&_img]:border [&_img]:border-white/16 [&_img]:bg-white/[0.03] [&_img]:object-contain"
+                              dangerouslySetInnerHTML={{ __html: entry.contentHtml }}
+                            />
+                          ) : (
+                            <p className="mt-3 text-sm leading-relaxed text-white/80 sm:text-[15px]">
+                              {entry.summary}
+                            </p>
+                          )}
+
+                          {entry.imageSrc && !hasInlineImage(entry.contentHtml) && (
+                            <div className="mt-5 rounded-xl border border-white/20 bg-white/[0.04] p-2.5 sm:p-3">
+                              <div className="relative aspect-[16/8] w-full overflow-hidden rounded-lg bg-[#0b1120]">
+                                <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-[#0b1120]/30 to-transparent" />
+                                <Image
+                                  src={entry.imageSrc}
+                                  alt={`${entry.title} preview`}
+                                  fill
+                                  unoptimized={isRemoteImage(entry.imageSrc)}
+                                  className="object-contain object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                                  sizes="(min-width: 1024px) 52vw, 92vw"
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </article>
+                      </AnimateIn>
+                    </li>
+                  ))}
+                </ul>
+              )}
 
               {totalPages > 1 && (
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">

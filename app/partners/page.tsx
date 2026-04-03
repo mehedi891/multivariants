@@ -3,6 +3,7 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
+import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicPartners } from "@/app/partners/public-api";
 
 export const metadata: Metadata = {
@@ -74,15 +75,6 @@ export default async function PartnersPage() {
           </div>
         </section>
 
-        {partnerItems.length === 0 && (
-          <section className="bg-[#101830] px-[5%] py-4">
-            <div className="mx-auto max-w-6xl rounded-xl border border-white/14 bg-white/[0.04] px-4 py-3 text-sm text-white/72">
-              No partners found from API. Check `CMS_API_BASE_URL`, `PARTNERS_API_PATH`, and `PARTNERS_SITE`.
-              {error ? ` (${error})` : ""}
-            </div>
-          </section>
-        )}
-
         <section
           className="relative overflow-hidden px-[5%] py-14 lg:py-20"
           style={{
@@ -106,54 +98,66 @@ export default async function PartnersPage() {
               </p>
             </AnimateIn>
 
-            <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-              {partnerItems.map((partner, index) => (
-                <li key={partner.id}>
-                  <AnimateIn direction="up" delay={(index % 3) * 70}>
-                    <article className="group relative h-full overflow-hidden rounded-2xl border border-white/18 bg-gradient-to-b from-white/[0.12] to-white/[0.04] p-4 shadow-[0_14px_30px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_18px_42px_rgba(28,118,188,0.3)] sm:p-5">
-                      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent" />
-                      <div className="flex min-h-[250px] flex-col">
-                        {partner.logoUrl ? (
-                          <div className="relative inline-flex h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-white/18 bg-white/10 shadow-[0_0_18px_rgba(255,255,255,0.08)]">
-                            <Image
-                              src={partner.logoUrl}
-                              alt={partner.title}
-                              fill
-                              unoptimized={isRemoteImage(partner.logoUrl)}
-                              sizes="56px"
-                              className="object-contain p-1.5"
-                            />
-                          </div>
-                        ) : (
-                          <span
-                            className={`inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border text-sm font-black tracking-wide shadow-[0_0_18px_rgba(255,255,255,0.08)] ${themeClassMap[index % themeClassMap.length]}`}
-                          >
-                            {getInitials(partner.title)}
-                          </span>
-                        )}
-                        <h3 className="mt-3 break-words text-lg font-black leading-[1.26] text-white sm:text-xl">
-                          {partner.title}
-                        </h3>
-                        <p className="mt-2 text-sm leading-relaxed text-white/65 sm:text-[15px]">
-                          {partner.description}
-                        </p>
+            {partnerItems.length === 0 ? (
+              <div className="mt-8">
+                <ApiEmptyState
+                  title="No partners available yet"
+                  description="Partner listings will appear here once they are published."
+                  helpText="Please check back shortly."
+                  error={error}
+                  showDebugDetails={process.env.NODE_ENV !== "production"}
+                />
+              </div>
+            ) : (
+              <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+                {partnerItems.map((partner, index) => (
+                  <li key={partner.id}>
+                    <AnimateIn direction="up" delay={(index % 3) * 70}>
+                      <article className="group relative h-full overflow-hidden rounded-2xl border border-white/18 bg-gradient-to-b from-white/[0.12] to-white/[0.04] p-4 shadow-[0_14px_30px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_18px_42px_rgba(28,118,188,0.3)] sm:p-5">
+                        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent" />
+                        <div className="flex min-h-[250px] flex-col">
+                          {partner.logoUrl ? (
+                            <div className="relative inline-flex h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-white/18 bg-white/10 shadow-[0_0_18px_rgba(255,255,255,0.08)]">
+                              <Image
+                                src={partner.logoUrl}
+                                alt={partner.title}
+                                fill
+                                unoptimized={isRemoteImage(partner.logoUrl)}
+                                sizes="56px"
+                                className="object-contain p-1.5"
+                              />
+                            </div>
+                          ) : (
+                            <span
+                              className={`inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border text-sm font-black tracking-wide shadow-[0_0_18px_rgba(255,255,255,0.08)] ${themeClassMap[index % themeClassMap.length]}`}
+                            >
+                              {getInitials(partner.title)}
+                            </span>
+                          )}
+                          <h3 className="mt-3 break-words text-lg font-black leading-[1.26] text-white sm:text-xl">
+                            {partner.title}
+                          </h3>
+                          <p className="mt-2 text-sm leading-relaxed text-white/65 sm:text-[15px]">
+                            {partner.description}
+                          </p>
 
-                        <div className="mt-auto pt-4">
-                          <a
-                            href={partner.link || "#"}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center rounded-lg border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/85 transition-all hover:border-primary hover:text-primary-light"
-                          >
-                            View More
-                          </a>
+                          <div className="mt-auto pt-4">
+                            <a
+                              href={partner.link || "#"}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center rounded-lg border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/85 transition-all hover:border-primary hover:text-primary-light"
+                            >
+                              View More
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </article>
-                  </AnimateIn>
-                </li>
-              ))}
-            </ul>
+                      </article>
+                    </AnimateIn>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </section>
       </main>

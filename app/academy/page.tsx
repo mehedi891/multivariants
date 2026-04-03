@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import AcademyExplorer from "@/components/AcademyExplorer";
+import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicAcademyCategories } from "@/app/academy/public-api";
 
 export const metadata: Metadata = {
@@ -47,16 +48,25 @@ export default async function AcademyPage() {
           </div>
         </section>
 
-        {categories.length === 0 && (
-          <section className="bg-[#101830] px-[5%] py-4">
-            <div className="mx-auto max-w-6xl rounded-xl border border-white/14 bg-white/[0.04] px-4 py-3 text-sm text-white/72">
-              No docs found from API. Check `CMS_API_BASE_URL`, `DOCS_API_PATH`, and `DOCS_SITE`.
-              {error ? ` (${error})` : ""}
-            </div>
+        {categories.length > 0 ? (
+          <AcademyExplorer categories={categories} />
+        ) : (
+          <section
+            className="relative overflow-hidden px-[5%] py-12 lg:py-16"
+            style={{
+              background:
+                "linear-gradient(180deg, #0d1327 0%, #111b33 52%, #181238 100%)",
+            }}
+          >
+            <ApiEmptyState
+              title="No docs available yet"
+              description="Academy guides will appear here once documents are published."
+              helpText="Please check back shortly."
+              error={error}
+              showDebugDetails={process.env.NODE_ENV !== "production"}
+            />
           </section>
         )}
-
-        <AcademyExplorer categories={categories} />
       </main>
       <Footer />
     </>
