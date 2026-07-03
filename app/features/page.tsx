@@ -195,18 +195,18 @@ const supportItems: SupportItem[] = [
 ];
 
 const merchantBenefits = [
-  "Faster ordering for B2B and wholesale",
-  "Higher average order value",
-  "Reduced cart abandonment",
-  "Flexible quantity and bundle control",
-  "Works with modern Shopify themes",
-  "Mobile-friendly purchasing flow",
-  "Cleaner variant selection experience",
-  "Lower operational error rate",
-  "Customizable layouts and rules",
-  "Strong support and onboarding",
-  "Simple install and fast go-live",
-  "Built to scale with growth",
+  { icon: "⚡", text: "Faster ordering for B2B and wholesale" },
+  { icon: "💰", text: "Higher average order value" },
+  { icon: "🛒", text: "Reduced cart abandonment" },
+  { icon: "🎛️", text: "Flexible quantity and bundle control" },
+  { icon: "🎨", text: "Works with modern Shopify themes" },
+  { icon: "📱", text: "Mobile-friendly purchasing flow" },
+  { icon: "✨", text: "Cleaner variant selection experience" },
+  { icon: "🎯", text: "Lower operational error rate" },
+  { icon: "⚙️", text: "Customizable layouts and rules" },
+  { icon: "🤝", text: "Strong support and onboarding" },
+  { icon: "🚀", text: "Simple install and fast go-live" },
+  { icon: "📈", text: "Built to scale with growth" },
 ];
 
 export const metadata: Metadata = {
@@ -474,11 +474,13 @@ export default function FeaturesPage() {
                     </div>
                   </div>
 
-                  <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {supportItems.map((item) => (
+                  <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
+                    {supportItems.map((item, i) => (
                       <li
                         key={item.label}
-                        className="group rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.02] p-4 shadow-[0_12px_26px_rgba(0,0,0,0.28)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_16px_34px_rgba(28,118,188,0.28)] lg:min-h-[210px]"
+                        className={`group rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.02] p-4 shadow-[0_12px_26px_rgba(0,0,0,0.28)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_16px_34px_rgba(28,118,188,0.28)] lg:col-span-2 lg:min-h-[210px] ${
+                          i === 3 ? "lg:col-start-2" : ""
+                        }`}
                       >
                         <div className="flex h-full items-start gap-3">
                           <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-primary/35 bg-primary/15 transition-all duration-300 group-hover:scale-105 group-hover:border-primary/50 group-hover:bg-primary/25">
@@ -508,11 +510,18 @@ export default function FeaturesPage() {
               <h2 className="text-center text-2xl font-black text-white sm:text-3xl">
                 Why Merchants Choose MultiVariants
               </h2>
-              <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {merchantBenefits.map((b) => (
-                  <li key={b} className="flex items-start gap-2.5 text-sm text-white/70 sm:text-[15px]">
-                    <span className="mt-1.5 text-accent">✓</span>
-                    <span>{b}</span>
+                  <li
+                    key={b.text}
+                    className="group flex items-center gap-3.5 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.02] p-4 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_16px_34px_rgba(28,118,188,0.25)]"
+                  >
+                    <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-primary/35 bg-primary/15 text-lg transition-all duration-300 group-hover:scale-105 group-hover:border-primary/50 group-hover:bg-primary/25">
+                      {b.icon}
+                    </span>
+                    <span className="text-sm font-semibold text-white/85 sm:text-[15px]">
+                      {b.text}
+                    </span>
                   </li>
                 ))}
               </ul>
