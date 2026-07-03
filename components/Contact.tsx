@@ -37,9 +37,9 @@ export default function Contact() {
             <p className="text-[13px] font-semibold text-primary-light uppercase tracking-widest mb-3">
               Reach Out to Us
             </p>
-            <h2 id="contact-heading" className="text-3xl font-black leading-[1.32] tracking-tight text-white mb-4 md:text-4xl">
+            <h1 id="contact-heading" className="text-3xl font-black leading-[1.32] tracking-tight text-white mb-4 md:text-4xl">
               Write to Us
-            </h2>
+            </h1>
             <p className="text-[17px] text-white/55 max-w-lg mx-auto leading-relaxed">
               Have questions or want a personalized demo? Our team is happy to help you get started.
             </p>
@@ -51,7 +51,7 @@ export default function Contact() {
           {/* Form */}
           <AnimateIn direction="right">
             <div className="glass rounded-[24px] p-8 sm:p-10 border-white/15">
-              <h3 className="text-[22px] font-black mb-2 text-white">Send a Message</h3>
+              <h2 className="text-[22px] font-black mb-2 text-white">Send a Message</h2>
               <p className="text-sm text-white/50 mb-7">
                 Fill in the form and we&apos;ll get back to you within 24 hours.
               </p>
@@ -87,7 +87,7 @@ export default function Contact() {
           <AnimateIn direction="left" delay={150}>
             <div className="flex flex-col gap-7 justify-center">
               <div>
-                <h3 className="text-2xl font-black tracking-tight mb-2 text-white">Contact Information</h3>
+                <h2 className="text-2xl font-black tracking-tight mb-2 text-white">Contact Information</h2>
                 <p className="text-[15px] text-white/55 leading-relaxed">
                   We&apos;re here to help your Shopify store grow. Reach out through any channel that&apos;s convenient for you.
                 </p>

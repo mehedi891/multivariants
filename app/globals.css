@@ -13,6 +13,28 @@
 }
 
 @layer utilities {
+  /* Skip-to-content link: off-screen until keyboard-focused (WCAG 2.4.1) */
+  .skip-link {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 100;
+    transform: translateY(-150%);
+    background: #5C6AC4;
+    color: #fff;
+    padding: 0.625rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease;
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
   /* Glass card on dark background */
   .glass {
     background: rgba(255,255,255,0.07);
