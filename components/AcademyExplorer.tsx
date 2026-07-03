@@ -210,7 +210,7 @@ export default function AcademyExplorer({ categories }: Props) {
 
               return (
                 <li key={category.slug}>
-                  <article className="group relative overflow-hidden rounded-[26px] border border-white/14 bg-gradient-to-b from-[#1a2543]/88 via-[#16213b]/90 to-[#111c34]/95 p-5 shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl transition-all duration-300 hover:border-primary/45 hover:shadow-[0_24px_52px_rgba(42,121,212,0.3)] sm:p-6">
+                  <article className="group relative overflow-hidden rounded-[26px] border border-primary/25 bg-gradient-to-b from-[#1a2543]/88 via-[#16213b]/90 to-[#111c34]/95 p-5 shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl transition-all duration-300 hover:border-primary/45 hover:shadow-[0_24px_52px_rgba(42,121,212,0.3)] sm:p-6">
                     <div className="pointer-events-none absolute -top-20 -right-16 h-56 w-56 rounded-full bg-primary/18 blur-3xl" />
                     <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
 
@@ -234,7 +234,7 @@ export default function AcademyExplorer({ categories }: Props) {
                         <li key={`${category.slug}-${doc.slug}`}>
                           <Link
                             href={`/academy/${doc.slug}`}
-                            className="group/doc block rounded-2xl border border-white/14 bg-[#0f1933]/65 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/45 hover:shadow-[0_14px_34px_rgba(71,193,191,0.24)]"
+                            className="group/doc block rounded-2xl border border-white/20 bg-[#0f1933]/65 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/45 hover:shadow-[0_14px_34px_rgba(71,193,191,0.24)]"
                           >
                             <div className="flex items-start justify-between gap-3">
                               <p className="text-base font-bold leading-snug text-white group-hover/doc:text-accent">

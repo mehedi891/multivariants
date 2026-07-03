@@ -3,14 +3,19 @@ import AnimateIn from "./AnimateIn";
 
 function ShopifyBtn() {
   return (
-    <Link href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp" className="inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-semibold bg-brand-green text-white hover:bg-green-700 hover:-translate-y-px transition-all shadow-[0_0_16px_rgba(80,184,60,0.3)] hover:shadow-[0_0_24px_rgba(80,184,60,0.5)]" target="_blank" rel="noopener noreferrer">
+    <Link href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp" className="inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary-dark hover:-translate-y-px transition-all shadow-[0_0_16px_rgba(92,106,196,0.3)] hover:shadow-[0_0_24px_rgba(92,106,196,0.5)]" target="_blank" rel="noopener noreferrer">
       Get the App on Shopify
     </Link>
   );
 }
-function DemoBtn() {
+function DemoBtn({ href = "#" }: { href?: string }) {
+  const external = href.startsWith("http");
   return (
-    <Link href="#" className="inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-semibold border border-white/25 text-white/70 hover:border-primary hover:text-primary transition-all">
+    <Link
+      href={href}
+      className="inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-semibold border border-white/25 text-white/70 hover:border-primary hover:text-primary transition-all"
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       Live Demo
     </Link>
   );
@@ -19,6 +24,7 @@ function DemoBtn() {
 const features = [
   {
     badge: "Mix n Match",
+    demoUrl: "https://multivariant.myshopify.com/products/box-of-12-items",
     title: "Let Your Customers Build Their Own Box",
     body: "Mix and Match allows clients to submit orders that meet minimum or maximum order limits. A great way to increase sales by enabling customers to create a more personalized shopping experience.",
     demo: (
@@ -52,6 +58,7 @@ const features = [
   },
   {
     badge: "Apply Multiple Restrictions",
+    demoUrl: "https://multivariant.myshopify.com/products/box-of-12-items",
     title: "Minimum Order Value Restriction",
     body: "Apply multiple restrictions to a single product page, including per product and per variant restrictions. Set maximum order quantities, enforce minimums per color or size, and prevent overselling effortlessly.",
     highlight: { label: "Example:", text: "Max 5 T-shirts total, min 3 red. Customers must order 3 red + at least 2 of any other color." },
@@ -80,6 +87,7 @@ const features = [
   },
   {
     badge: "Incremental Quantity",
+    demoUrl: "https://multivariant.myshopify.com/products/minimum-order-quantity-increase-quantity-in-multiples",
     title: "Add Incremental Quantity for Product Variants",
     body: "Set product quantity increments with the MultiVariants Professional plan. For a quantity of 12, specify increments of 12, 24, 36, 48, and 60. Perfect for bulk product sellers — prevents overselling of limited-stock items.",
     demo: (
@@ -147,7 +155,7 @@ export default function Features() {
                     </p>
                   )}
                   <div className="flex gap-3 flex-wrap">
-                    <ShopifyBtn /><DemoBtn />
+                    <ShopifyBtn /><DemoBtn href={f.demoUrl} />
                   </div>
                 </div>
               </AnimateIn>
@@ -160,7 +168,7 @@ export default function Features() {
 
         <AnimateIn direction="up" delay={100}>
           <div className="text-center mt-16 flex flex-col items-center gap-5">
-            <Link href="#" className="inline-flex items-center px-7 py-3.5 rounded-xl text-base font-semibold border-[1.5px] border-white/25 text-white/70 hover:border-primary hover:text-primary transition-all glass">
+            <Link href="/features" className="inline-flex items-center px-7 py-3.5 rounded-xl text-base font-semibold border-[1.5px] border-white/25 text-white/70 hover:border-primary hover:text-primary transition-all glass">
               See All Features
             </Link>
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2.5 text-[13px] font-semibold flex-wrap justify-center border-white/20">

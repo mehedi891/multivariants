@@ -70,7 +70,7 @@ export default async function Blogs() {
                     <p className="text-[12px] font-semibold text-primary-light uppercase tracking-[0.5px] mb-2">
                       {post.category}
                     </p>
-                    <h3 className="text-[20px] font-bold mb-2.5 leading-snug text-white group-hover:text-primary-light transition-colors">
+                    <h3 className="text-[20px] font-bold mb-2.5 leading-snug text-white group-hover:text-primary-light transition-colors line-clamp-2">
                       {post.title}
                     </h3>
                     <p className="text-[13px] text-white/55 leading-relaxed mb-4 flex-1 line-clamp-3">

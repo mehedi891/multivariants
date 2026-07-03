@@ -244,10 +244,10 @@ export default async function BlogPage({ searchParams }: PageProps) {
                       </div>
 
                       <article className="p-4">
-                        <h2 className="text-lg font-black leading-snug text-white transition-colors group-hover/card:text-primary-light">
+                        <h2 className="text-lg font-black leading-snug text-white transition-colors group-hover/card:text-primary-light line-clamp-2">
                           {post.title}
                         </h2>
-                        <p className="mt-2 text-sm leading-relaxed text-white/[0.7]">
+                        <p className="mt-2 text-sm leading-relaxed text-white/[0.7] line-clamp-3">
                           {post.excerpt}
                         </p>
 

@@ -44,7 +44,7 @@ export default function WhyMultivariantsSection() {
         <AnimateIn direction="up">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <p className="mb-3 text-[13px] font-semibold uppercase tracking-widest text-primary-light">Why MultiVariants?</p>
-            <h2 id="why-mv-heading" className="text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-[2.8rem]">
+            <h2 id="why-mv-heading" className="text-3xl font-black tracking-tight text-white leading-[1.2] sm:text-4xl lg:text-[2.8rem]">
               Variants Bulk Add to Cart for Shopify
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">
