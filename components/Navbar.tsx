@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import BookDemoButton from "./BookDemoButton";
 
 const navItems = [
   { href: "/",        label: "Home" },
@@ -57,7 +58,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-1 flex-1 justify-center list-none" role="list">
+        <ul className="hidden lg:flex items-center gap-1 flex-1 justify-center list-none" role="list">
           {navItems.map(({ href, label }) => {
             const isActive =
               (href === "/" && pathname === "/") ||
@@ -114,13 +115,10 @@ export default function Navbar() {
         </ul>
 
         {/* Desktop CTAs */}
-        <div className="hidden md:flex items-center gap-2.5 flex-shrink-0">
-          <Link
-            href="/contact"
-            className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold border border-white/20 text-white/70 hover:border-primary hover:text-primary transition-all"
-          >
+        <div className="hidden lg:flex items-center gap-2.5 flex-shrink-0">
+          <BookDemoButton className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold border border-white/20 text-white/70 hover:border-primary hover:text-primary transition-all cursor-pointer">
             Book a Demo
-          </Link>
+          </BookDemoButton>
           <Link
             href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp"
             className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white hover:bg-primary-dark hover:-translate-y-px hover:shadow-[0_0_20px_rgba(92,106,196,0.5)] transition-all"
@@ -133,7 +131,7 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden flex flex-col gap-[5px] p-2 rounded-lg hover:bg-white/10 transition-colors"
+          className="lg:hidden flex flex-col gap-[5px] p-2 rounded-lg hover:bg-white/10 transition-colors"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -146,7 +144,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           open ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
@@ -195,13 +193,9 @@ export default function Navbar() {
             </li>
           </ul>
           <div className="flex flex-col gap-2 pt-3 border-t border-white/10">
-            <Link
-              href="/contact"
-              onClick={() => setOpen(false)}
-              className="block text-center py-2.5 rounded-xl text-sm font-semibold border border-white/20 text-white/70 hover:border-primary hover:text-primary transition-all"
-            >
+            <BookDemoButton className="block w-full text-center py-2.5 rounded-xl text-sm font-semibold border border-white/20 text-white/70 hover:border-primary hover:text-primary transition-all cursor-pointer">
               Book a Demo
-            </Link>
+            </BookDemoButton>
             <Link
               href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp"
               className="block text-center py-2.5 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-all"

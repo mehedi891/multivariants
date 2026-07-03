@@ -3,24 +3,13 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
-
-type Plan = {
-  name: string;
-  price: string;
-  subtitle: string;
-  description: string;
-  discount?: string;
-  note?: string;
-  icon: string;
-  popular?: boolean;
-  bullets: string[];
-};
+import PricingPlans from "@/components/PricingPlans";
 
 type ComparisonCell = string | boolean;
 
 type ComparisonRow = {
   feature: string;
-  development: ComparisonCell;
+  starter: ComparisonCell;
   standard: ComparisonCell;
   professional: ComparisonCell;
 };
@@ -29,68 +18,10 @@ const appLink =
   "https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp";
 const demoLink = "https://multivariant.myshopify.com/collections/all";
 
-const plans: Plan[] = [
-  {
-    name: "Development Stores",
-    price: "Free",
-    subtitle: "Perfect for testing before go-live",
-    description:
-      "For developers and merchants who want to test MultiVariants before launching their store.",
-    icon: "⭐",
-    bullets: [
-      "Free for development stores",
-      "Access all features for development and testing",
-      "Full feature preview before launch",
-      "24/7 live support",
-    ],
-  },
-  {
-    name: "Standard Plan",
-    price: "$12.99",
-    subtitle: "/ month",
-    description:
-      "Ideal for Shopify stores that want to simplify variant ordering and enable bulk purchases.",
-    discount: "20% discount on annual plans",
-    note: "Example: Minimum cart value $100 • Minimum order items 12",
-    icon: "⚡",
-    bullets: [
-      "Display all variants with quantity input",
-      "Variant combination list display",
-      "Variant inventory validation",
-      "Show total order price",
-      "Product rule management",
-      "Custom out-of-stock badges",
-      "Sticky action buttons",
-      "Global cart restrictions",
-    ],
-  },
-  {
-    name: "Professional Plan",
-    price: "$29.99",
-    subtitle: "/ month",
-    description:
-      "Includes all Standard features with advanced controls for scaling B2B and wholesale stores.",
-    discount: "20% discount on annual plans",
-    note: "Example: Bundle quantities of 10, 20, 50, 100 units",
-    icon: "👑",
-    popular: true,
-    bullets: [
-      "Everything in Standard",
-      "Variant custom text fields",
-      "Direct checkout button",
-      "Variant bundle quantity dropdown",
-      "Advanced variant display modes",
-      "Theme customization and custom CSS",
-      "Min/max quantity rules per variant",
-      "Min/max order value restrictions",
-    ],
-  },
-];
-
 const faqs = [
   {
     q: "Do you offer a free plan?",
-    a: "Yes. Development stores can use MultiVariants for free to test all major capabilities before launch.",
+    a: "Yes. The Starter plan is free forever and includes core variant display features, so you can start using MultiVariants at no cost.",
   },
   {
     q: "Do you offer a free trial?",
@@ -112,59 +43,119 @@ const faqs = [
 
 const comparisonRows: ComparisonRow[] = [
   {
-    feature: "Bulk variant ordering table",
-    development: true,
+    feature: "Variant image icons & display",
+    starter: true,
     standard: true,
     professional: true,
   },
   {
-    feature: "Min/Max quantity rules",
-    development: "Preview only",
+    feature: "Out-of-stock badge",
+    starter: true,
+    standard: "Custom",
+    professional: "Custom",
+  },
+  {
+    feature: "Hide out-of-stock variants",
+    starter: true,
     standard: true,
     professional: true,
   },
   {
-    feature: "Variant inventory validation",
-    development: false,
+    feature: "Add to Cart button customization",
+    starter: true,
     standard: true,
     professional: true,
   },
   {
-    feature: "Bundle quantity dropdown",
-    development: false,
-    standard: false,
+    feature: "Flexible price display",
+    starter: true,
+    standard: true,
+    professional: true,
+  },
+  {
+    feature: "Bulk variant ordering with quantity box",
+    starter: false,
+    standard: true,
+    professional: true,
+  },
+  {
+    feature: "Inventory tracking & stock validation",
+    starter: false,
+    standard: true,
+    professional: true,
+  },
+  {
+    feature: "B2B wholesale pricing",
+    starter: false,
+    standard: true,
+    professional: true,
+  },
+  {
+    feature: "Show total order price",
+    starter: false,
+    standard: true,
+    professional: true,
+  },
+  {
+    feature: "Apply to specific or grouped products",
+    starter: false,
+    standard: true,
+    professional: true,
+  },
+  {
+    feature: "Global cart restriction & customer eligibility",
+    starter: false,
+    standard: true,
     professional: true,
   },
   {
     feature: "Custom text fields per variant",
-    development: false,
+    starter: false,
     standard: false,
     professional: true,
   },
   {
-    feature: "Theme customization and custom CSS",
-    development: false,
+    feature: "Direct checkout button",
+    starter: false,
     standard: false,
     professional: true,
   },
   {
-    feature: "Global cart restrictions",
-    development: "Preview only",
-    standard: true,
+    feature: "Incremental / bundle quantity",
+    starter: false,
+    standard: false,
     professional: true,
   },
   {
-    feature: "Support level",
-    development: "24/7 chat",
-    standard: "Priority chat",
-    professional: "Priority + live call",
+    feature: "Swatch option display",
+    starter: false,
+    standard: false,
+    professional: true,
+  },
+  {
+    feature: "Custom CSS",
+    starter: false,
+    standard: false,
+    professional: true,
+  },
+  {
+    feature: "Min/Max quantity rules",
+    starter: false,
+    standard: false,
+    professional: true,
+  },
+  {
+    feature: "Product options (custom input fields)",
+    starter: false,
+    standard: false,
+    professional: true,
   },
 ];
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Simple pricing plans for every Shopify store. Start with free development access and scale with Standard or Professional plans.",
+    "Simple pricing plans for every Shopify store. Start free with the Starter plan and scale with Standard or Professional as your bulk ordering grows.",
   alternates: { canonical: "https://multivariants.com/pricing" },
 };
 
@@ -265,126 +256,7 @@ export default function PricingPage() {
             <div className="absolute right-[-80px] bottom-8 h-[260px] w-[260px] rounded-full bg-accent/10 blur-[75px]" />
           </div>
 
-          <div className="relative z-10 mx-auto max-w-6xl">
-            <ul className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-              {plans.map((plan, idx) => (
-                <li key={plan.name} className={plan.popular ? "lg:-mt-3" : ""}>
-                  <AnimateIn direction="up" delay={idx * 70}>
-                    <article
-                      className={`group relative flex h-full flex-col overflow-hidden rounded-[28px] border p-5 shadow-[0_14px_34px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 sm:p-6 ${
-                        plan.popular
-                          ? "border-[#6e72ff]/80 bg-gradient-to-b from-[#1c1f44]/95 to-[#0d1329]/98 shadow-[0_24px_46px_rgba(90,94,255,0.28)]"
-                          : "border-white/15 bg-gradient-to-b from-[#1a223e]/92 to-[#0c1328]/96 backdrop-blur-xl"
-                      }`}
-                    >
-                      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-                        <div
-                          className={`absolute -right-10 -top-8 h-28 w-28 rounded-full blur-2xl ${
-                            plan.popular ? "bg-[#6e72ff]/35" : "bg-primary/20"
-                          }`}
-                        />
-                        <div
-                          className={`absolute -left-8 bottom-8 h-24 w-24 rounded-full blur-2xl ${
-                            plan.popular ? "bg-accent/20" : "bg-[#6e72ff]/15"
-                          }`}
-                        />
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
-                      </div>
-
-                      {plan.popular && (
-                        <div className="absolute inset-x-0 top-0 z-20 h-14 border-b border-[#8d8fff]/55 bg-gradient-to-r from-[#5a5eff] via-[#6e72ff] to-[#6e72ff]">
-                          <p className="pt-3 text-center text-xl leading-none text-white/80">
-                            ✦
-                          </p>
-                          <p className="text-center text-[13px] font-semibold uppercase tracking-[0.08em] text-white">
-                            Most Popular
-                          </p>
-                        </div>
-                      )}
-
-                      <div
-                        className={`relative z-10 flex items-center gap-3 ${
-                          plan.popular ? "pt-11" : ""
-                        }`}
-                      >
-                        <span
-                          className={`inline-flex h-11 w-11 items-center justify-center rounded-xl text-lg ${
-                            plan.popular
-                              ? "border border-[#8d8fff]/40 bg-[#6e72ff]/20 shadow-[0_0_24px_rgba(110,114,255,0.28)]"
-                              : "border border-accent/35 bg-accent/15 shadow-[0_0_20px_rgba(16,185,129,0.18)]"
-                          }`}
-                        >
-                          {plan.icon}
-                        </span>
-                        <h2 className="text-[1.75rem] font-black leading-tight text-white">
-                          {plan.name}
-                        </h2>
-                      </div>
-
-                      <div className="relative z-10 mt-5 flex items-end gap-1">
-                        <p
-                          className={`text-4xl font-black leading-none ${
-                            plan.popular ? "text-[#8f95ff]" : "text-white"
-                          }`}
-                        >
-                          {plan.price}
-                        </p>
-                        {plan.price !== "Free" && (
-                          <span className="pb-1 text-sm text-white/55">
-                            {plan.subtitle}
-                          </span>
-                        )}
-                      </div>
-
-                      <p className="relative z-10 mt-3 text-sm leading-relaxed text-white/60 sm:text-[15px]">
-                        {plan.description}
-                      </p>
-
-                      {plan.discount && (
-                        <p className="relative z-10 mt-3 text-sm font-semibold text-accent">
-                          {plan.discount}
-                        </p>
-                      )}
-
-                      {plan.popular && (
-                        <div className="relative z-10 mt-4 h-2 w-full rounded-full bg-white/15">
-                          <div className="h-full w-[72%] rounded-full bg-gradient-to-r from-[#6e72ff] to-[#8f95ff]" />
-                        </div>
-                      )}
-
-                      <ul className="relative z-10 mt-5 space-y-2.5">
-                        {plan.bullets.map((b) => (
-                          <li key={b} className="flex items-start gap-2.5 text-sm text-white/75 sm:text-[15px]">
-                            <span className="mt-1 text-accent">✓</span>
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      {plan.note && (
-                        <p className="relative z-10 mt-5 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs leading-relaxed text-white/45">
-                          {plan.note}
-                        </p>
-                      )}
-
-                      <Link
-                        href={appLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`relative z-10 mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold transition-all ${
-                          plan.popular
-                            ? "bg-gradient-to-r from-[#5a5eff] to-[#6e72ff] text-white hover:brightness-110"
-                            : "border border-white/20 bg-white/5 text-white/80 hover:border-primary hover:text-primary-light"
-                        }`}
-                      >
-                        Get the App on Shopify
-                      </Link>
-                    </article>
-                  </AnimateIn>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <PricingPlans />
         </section>
 
         <section
@@ -424,8 +296,8 @@ export default function PricingPage() {
                         </p>
                         <dl className="mt-3 space-y-2.5 text-sm text-white/75">
                           <div className="flex items-center justify-between gap-3">
-                            <dt className="text-white/60">Development</dt>
-                            <dd>{renderComparisonCell(row.development)}</dd>
+                            <dt className="text-white/60">Starter</dt>
+                            <dd>{renderComparisonCell(row.starter)}</dd>
                           </div>
                           <div className="flex items-center justify-between gap-3">
                             <dt className="text-white/60">Standard</dt>
@@ -450,7 +322,7 @@ export default function PricingPage() {
                         Feature
                       </th>
                       <th className="border-b border-white/10 px-5 py-4 font-semibold sm:px-6">
-                        Development
+                        Starter
                       </th>
                       <th className="border-b border-white/10 px-5 py-4 font-semibold sm:px-6">
                         Standard
@@ -472,7 +344,7 @@ export default function PricingPage() {
                           {row.feature}
                         </td>
                         <td className="border-b border-white/10 px-5 py-4 text-sm text-white/70 sm:px-6 sm:text-[15px]">
-                          {renderComparisonCell(row.development)}
+                          {renderComparisonCell(row.starter)}
                         </td>
                         <td className="border-b border-white/10 px-5 py-4 text-sm text-white/70 sm:px-6 sm:text-[15px]">
                           {renderComparisonCell(row.standard)}
