@@ -152,6 +152,23 @@
     height: 16px;
     vertical-align: -2px;
   }
+
+  /* CMS content sometimes ships light/white callout boxes (e.g. a "Summary"
+     note) authored for a light theme. On this dark theme they'd render white
+     text on a white background. Force readable dark text inside any element
+     that sets its own white inline background, plus its descendants. */
+  .blog-post-content [style*="background:#fff" i],
+  .blog-post-content [style*="background: #fff" i],
+  .blog-post-content [style*="background-color:#fff" i],
+  .blog-post-content [style*="background-color: #fff" i] {
+    color: #1a1a2e;
+  }
+  .blog-post-content [style*="background:#fff" i] :where(p, li, strong, em, b, span, h1, h2, h3, h4, h5, h6, td, th, blockquote),
+  .blog-post-content [style*="background: #fff" i] :where(p, li, strong, em, b, span, h1, h2, h3, h4, h5, h6, td, th, blockquote),
+  .blog-post-content [style*="background-color:#fff" i] :where(p, li, strong, em, b, span, h1, h2, h3, h4, h5, h6, td, th, blockquote),
+  .blog-post-content [style*="background-color: #fff" i] :where(p, li, strong, em, b, span, h1, h2, h3, h4, h5, h6, td, th, blockquote) {
+    color: #1a1a2e;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
