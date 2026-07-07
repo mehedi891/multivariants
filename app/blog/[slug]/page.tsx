@@ -25,7 +25,7 @@ type TocItem = {
 };
 
 type SocialProfile = {
-  id: "facebook" | "linkedin" | "reddit" | "youtube"| "twitter";
+  id: "facebook" | "linkedin" | "reddit" | "twitter";
   label: string;
   href: string;
 };
@@ -73,8 +73,29 @@ function slugify(value: string) {
     .replaceAll(/-+/g, "-");
 }
 
+// Decode HTML entities so extracted text (TOC, meta description, summaries)
+// reads as real characters instead of raw "&#8217;" etc.
+function decodeHtmlEntities(value: string) {
+  return value
+    .replaceAll(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replaceAll(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
+    .replaceAll(/&nbsp;/g, " ")
+    .replaceAll(/&rsquo;/g, "’")
+    .replaceAll(/&lsquo;/g, "‘")
+    .replaceAll(/&rdquo;/g, "”")
+    .replaceAll(/&ldquo;/g, "“")
+    .replaceAll(/&hellip;/g, "…")
+    .replaceAll(/&mdash;/g, "—")
+    .replaceAll(/&ndash;/g, "–")
+    .replaceAll(/&quot;/g, '"')
+    .replaceAll(/&apos;/g, "'")
+    .replaceAll(/&lt;/g, "<")
+    .replaceAll(/&gt;/g, ">")
+    .replaceAll(/&amp;/g, "&");
+}
+
 function stripHtml(value: string) {
-  return value.replaceAll(/<[^>]*>/g, "");
+  return decodeHtmlEntities(value.replaceAll(/<[^>]*>/g, ""));
 }
 
 function buildMetaDescription(excerpt: string, contentHtml: string) {
@@ -188,6 +209,7 @@ function SocialIcon({ id }: { id: SocialProfile["id"] }) {
     );
   }
 
+  // Default: X (Twitter)
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -196,7 +218,7 @@ function SocialIcon({ id }: { id: SocialProfile["id"] }) {
       className="h-4 w-4"
       aria-hidden="true"
     >
-      <path d="M21.58 7.19a2.95 2.95 0 0 0-2.08-2.09C17.67 4.5 12 4.5 12 4.5s-5.67 0-7.5.6A2.95 2.95 0 0 0 2.42 7.2 30.98 30.98 0 0 0 1.82 12c0 1.62.2 3.23.6 4.8a2.95 2.95 0 0 0 2.08 2.08c1.83.62 7.5.62 7.5.62s5.67 0 7.5-.62a2.95 2.95 0 0 0 2.08-2.09c.4-1.56.6-3.17.6-4.79 0-1.62-.2-3.23-.6-4.8ZM10.2 15.02V8.98L15.55 12l-5.35 3.02Z" />
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
 }
@@ -317,31 +339,30 @@ export default async function BlogPostPage({ params }: PageProps) {
       },
     },
   };
+  // Share links are generated from the post's own URL + title (not stored in
+  // the CMS) — each is the network's share endpoint with the encoded post URL.
+  const shareUrl = encodeURIComponent(postCanonicalUrl);
+  const shareText = encodeURIComponent(post.title);
   const socialProfiles: SocialProfile[] = [
     {
       id: "facebook",
-      label: "Facebook",
-      href: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK_URL ?? postCanonicalUrl,
+      label: "Share on Facebook",
+      href: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
     },
     {
       id: "linkedin",
-      label: "LinkedIn",
-      href: process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN_URL ?? postCanonicalUrl,
-    },
-    {
-      id: "reddit",
-      label: "Reddit",
-      href: process.env.NEXT_PUBLIC_SOCIAL_REDDIT_URL ?? postCanonicalUrl,
-    },
-    {
-      id: "youtube",
-      label: "YouTube",
-      href: process.env.NEXT_PUBLIC_SOCIAL_YOUTUBE_URL ?? postCanonicalUrl,
+      label: "Share on LinkedIn",
+      href: `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`,
     },
     {
       id: "twitter",
-      label: "X",
-      href: process.env.NEXT_PUBLIC_SOCIAL_X_URL ?? postCanonicalUrl,
+      label: "Share on X",
+      href: `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`,
+    },
+    {
+      id: "reddit",
+      label: "Share on Reddit",
+      href: `https://www.reddit.com/submit?url=${shareUrl}&title=${shareText}`,
     },
   ];
 
@@ -451,11 +472,11 @@ export default async function BlogPostPage({ params }: PageProps) {
               </div>
 
               <section
-                aria-label="Social media links"
+                aria-label="Share this post"
                 className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-6 py-3 sm:px-8"
               >
                 <p className="text-xs uppercase tracking-[0.1em] text-white/[0.48]">
-                  Follow MultiVariants
+                  Share this post
                 </p>
                 <div className="flex items-center gap-2">
                   {socialProfiles.map((item) => (
