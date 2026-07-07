@@ -1,20 +1,55 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import AnimateIn from "./AnimateIn";
 
-export default function Contact() {
-  const [sent, setSent] = useState(false);
+type Status = "idle" | "submitting" | "sent" | "error";
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+export default function Contact() {
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
+  // When the form was mounted — used for bot-detection timing on the server.
+  const mountedAt = useRef(Date.now());
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-      (e.target as HTMLFormElement).reset();
-    }, 3000);
+    if (status === "submitting") return;
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    setStatus("submitting");
+    setError("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          email: data.get("email"),
+          phone: data.get("phone"),
+          message: data.get("message"),
+          company: data.get("company"), // honeypot
+          elapsed: Date.now() - mountedAt.current,
+        }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || !json.ok) {
+        setStatus("error");
+        setError(json.error || "Something went wrong. Please try again.");
+        return;
+      }
+      setStatus("sent");
+      form.reset();
+      setTimeout(() => setStatus("idle"), 4000);
+    } catch {
+      setStatus("error");
+      setError("Network error. Please try again.");
+    }
   }
+
+  const sent = status === "sent";
+  const submitting = status === "submitting";
 
   const inputCls = "w-full px-3.5 py-2.5 border border-white/15 rounded-lg text-sm font-[inherit] text-white bg-white/8 placeholder-white/30 transition-colors focus:outline-none focus:border-accent focus:bg-white/12";
   const labelCls = "block text-[13px] font-semibold mb-1.5 text-white/70";
@@ -73,11 +108,31 @@ export default function Contact() {
                   <label htmlFor="message" className={labelCls}>Message</label>
                   <textarea id="message" name="message" placeholder="Tell us how we can help you..." rows={5} required className={`${inputCls} resize-y`} />
                 </div>
+
+                {/* Honeypot — hidden from users, bots tend to fill it */}
+                <div className="absolute left-[-9999px] top-[-9999px]" aria-hidden="true">
+                  <label htmlFor="company">Company (leave this empty)</label>
+                  <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+                </div>
+
+                {status === "error" && (
+                  <p role="alert" className="mb-4 text-sm font-medium text-red-400">
+                    {error}
+                  </p>
+                )}
+
                 <button
                   type="submit"
-                  className={`w-full py-3.5 rounded-xl text-base font-bold text-white transition-all ${sent ? "bg-brand-green cursor-default" : "bg-primary hover:bg-primary-dark hover:-translate-y-px shadow-[0_0_20px_rgba(92,106,196,0.4)] hover:shadow-[0_0_30px_rgba(92,106,196,0.6)]"}`}
+                  disabled={submitting || sent}
+                  className={`w-full py-3.5 rounded-xl text-base font-bold text-white transition-all ${
+                    sent
+                      ? "bg-brand-green cursor-default"
+                      : submitting
+                        ? "bg-primary/70 cursor-wait"
+                        : "bg-primary hover:bg-primary-dark hover:-translate-y-px shadow-[0_0_20px_rgba(92,106,196,0.4)] hover:shadow-[0_0_30px_rgba(92,106,196,0.6)]"
+                  }`}
                 >
-                  {sent ? "Message Sent!" : "Send Message"}
+                  {sent ? "Message Sent!" : submitting ? "Sending…" : "Send Message"}
                 </button>
               </form>
             </div>
