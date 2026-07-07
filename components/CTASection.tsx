@@ -42,7 +42,7 @@ export default function CTASection() {
 
               <h2
                 id="cta-heading"
-                className="mt-5 text-3xl font-black leading-[1.28] tracking-tight text-white text-balance sm:text-4xl lg:text-[3.25rem]"
+                className="mt-5 text-3xl/[1.3] font-black tracking-tight text-white text-balance sm:text-4xl/[1.3] lg:text-[3.25rem]/[1.3]"
               >
                 Ready to Sell More with Bulk Variant Ordering?
               </h2>
