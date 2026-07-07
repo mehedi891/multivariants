@@ -354,7 +354,7 @@ export default function FeaturesPage() {
                         }`}
                       >
                         <div className={item.reverse ? "[direction:ltr]" : ""}>
-                          <div className="mb-4 flex items-start gap-3">
+                          <div className="mb-6 flex items-start gap-3">
                             <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent/15 text-xl ring-1 ring-accent/30">
                               {item.icon}
                             </span>
@@ -362,7 +362,7 @@ export default function FeaturesPage() {
                               <h3 className="break-words text-xl font-black leading-tight text-white sm:text-2xl lg:text-[1.85rem]">
                                 {item.title}
                               </h3>
-                              <p className="mt-0.5 text-xs text-white/45 sm:text-sm lg:text-base">
+                              <p className="mt-1.5 text-xs text-white/45 sm:text-sm lg:text-base">
                                 {item.subtitle}
                               </p>
                             </div>
@@ -385,7 +385,7 @@ export default function FeaturesPage() {
                               href={appLink}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#49a874] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#3f9968] transition-all sm:w-auto"
+                              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-all sm:w-auto"
                             >
                               Get the app on Shopify
                               <span aria-hidden="true">→</span>

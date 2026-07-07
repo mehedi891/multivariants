@@ -139,7 +139,7 @@ export default function Features() {
           </div>
         </AnimateIn>
 
-        <ul className="list-none flex flex-col gap-20" role="list">
+        <ul className="list-none flex flex-col gap-28 lg:gap-32" role="list">
           {features.map((f) => (
             <li key={f.badge} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${f.reverse ? "lg:[direction:rtl]" : ""}`}>
               <AnimateIn direction={f.reverse ? "left" : "right"} delay={100} className={f.reverse ? "[direction:ltr]" : ""}>

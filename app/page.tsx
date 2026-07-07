@@ -9,6 +9,7 @@ import StatsBanner from "@/components/StatsBanner";
 import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
 import Blogs from "@/components/Blogs";
+import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -32,6 +33,7 @@ export default function HomePage() {
         <Features />
         <Testimonials />
         <Blogs />
+        <CTASection />
       </main>
       <Footer />
     </>

@@ -138,7 +138,7 @@ export default function VariantTableDemoSection() {
                 </div>
                 <div className="sm:border-l sm:border-white/10 sm:pl-8">
                   <p className="text-xs font-medium text-white/40 mb-1">Total Price</p>
-                  <p className="text-4xl font-black text-accent leading-none">${formatCurrency(totalPrice)}</p>
+                  <p className="text-4xl font-black text-[#8f95ff] leading-none">${formatCurrency(totalPrice)}</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-3">
@@ -148,7 +148,7 @@ export default function VariantTableDemoSection() {
                 >
                   Reset
                 </button>
-                <button className="rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent/80 shadow-[0_0_20px_rgba(71,193,191,0.4)] hover:shadow-[0_0_30px_rgba(71,193,191,0.6)] transition-all">
+                <button className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark shadow-[0_0_20px_rgba(92,106,196,0.4)] hover:shadow-[0_0_30px_rgba(92,106,196,0.6)] transition-all">
                   Add All to Cart
                 </button>
               </div>

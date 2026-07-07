@@ -62,11 +62,11 @@ export default function Testimonials() {
               role="img"
               aria-label="4.9 out of 5 stars, 350+ reviews on Shopify"
             >
-              <div className="inline-flex items-center gap-1.5 glass-light rounded-full px-4 py-2 text-[13px] font-semibold border-white/30">
+              <div className="inline-flex items-center gap-1.5 glass rounded-full px-4 py-2 text-[13px] font-semibold border-white/20">
                 <span className="w-2.5 h-2.5 rounded-full bg-brand-green" aria-hidden="true" />
                 <span className="text-amber-400" aria-hidden="true">★★★★★</span>
-                <strong className="text-brand-text">4.9</strong>
-                <span className="text-brand-muted">on Shopify</span>
+                <strong className="text-white">4.9</strong>
+                <span className="text-white/60">on Shopify</span>
               </div>
               <span className="text-[13px] text-white/50">350+ verified reviews</span>
             </div>
