@@ -81,6 +81,21 @@ function toBlogHref(page: number, category: string) {
   return qs ? `/blog?${qs}` : "/blog";
 }
 
+// Condensed page list: first, last, and a window around the current page,
+// with "…" placeholders for the gaps. e.g. 1 … 5 6 7 … 14
+function getPageItems(current: number, total: number): (number | "ellipsis")[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const delta = 1;
+  const left = Math.max(2, current - delta);
+  const right = Math.min(total - 1, current + delta);
+  const items: (number | "ellipsis")[] = [1];
+  if (left > 2) items.push("ellipsis");
+  for (let i = left; i <= right; i++) items.push(i);
+  if (right < total - 1) items.push("ellipsis");
+  items.push(total);
+  return items;
+}
+
 function isRemoteImage(src: string) {
   return src.startsWith("http://") || src.startsWith("https://");
 }
@@ -285,20 +300,31 @@ export default async function BlogPage({ searchParams }: PageProps) {
                   Prev
                 </Link>
 
-                {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((p) => (
-                  <Link
-                    key={p}
-                    href={toBlogHref(p, selectedCategory)}
-                    aria-current={p === currentPage ? "page" : undefined}
-                    className={`h-9 w-9 rounded-full border text-center text-xs font-semibold leading-9 transition-all ${
-                      p === currentPage
-                        ? "border-primary/48 bg-primary/18 text-primary-light shadow-[0_0_16px_rgba(92,106,196,0.28)]"
-                        : "border-white/18 bg-white/[0.05] text-white/[0.78] hover:border-white/35 hover:text-white"
-                    }`}
-                  >
-                    {p}
-                  </Link>
-                ))}
+                {getPageItems(currentPage, totalPages).map((item, idx) =>
+                  item === "ellipsis" ? (
+                    <span
+                      key={`e${idx}`}
+                      aria-hidden="true"
+                      className="h-9 w-9 text-center text-xs font-semibold leading-9 text-white/[0.4]"
+                    >
+                      …
+                    </span>
+                  ) : (
+                    <Link
+                      key={item}
+                      href={toBlogHref(item, selectedCategory)}
+                      aria-current={item === currentPage ? "page" : undefined}
+                      aria-label={`Page ${item}`}
+                      className={`h-9 w-9 rounded-full border text-center text-xs font-semibold leading-9 transition-all ${
+                        item === currentPage
+                          ? "border-primary/48 bg-primary/18 text-primary-light shadow-[0_0_16px_rgba(92,106,196,0.28)]"
+                          : "border-white/18 bg-white/[0.05] text-white/[0.78] hover:border-white/35 hover:text-white"
+                      }`}
+                    >
+                      {item}
+                    </Link>
+                  )
+                )}
 
                 <Link
                   href={toBlogHref(Math.min(totalPages, currentPage + 1), selectedCategory)}
