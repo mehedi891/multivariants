@@ -1,10 +1,30 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicPartners } from "@/app/partners/public-api";
+
+const PAGE_SIZE = 12;
+
+function toPartnersHref(page: number) {
+  return page > 1 ? `/partners?page=${page}` : "/partners";
+}
+
+// Condensed page list: first, last, and a window around the current page.
+function getPageItems(current: number, total: number): (number | "ellipsis")[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const left = Math.max(2, current - 1);
+  const right = Math.min(total - 1, current + 1);
+  const items: (number | "ellipsis")[] = [1];
+  if (left > 2) items.push("ellipsis");
+  for (let i = left; i <= right; i++) items.push(i);
+  if (right < total - 1) items.push("ellipsis");
+  items.push(total);
+  return items;
+}
 
 export const metadata: Metadata = {
   title: "Partners",
@@ -40,8 +60,18 @@ function getInitials(name: string) {
     .join("");
 }
 
-export default async function PartnersPage() {
+export default async function PartnersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   const { partners: partnerItems, error } = await getPublicPartners();
+
+  const { page: pageParam } = await searchParams;
+  const totalPages = Math.max(1, Math.ceil(partnerItems.length / PAGE_SIZE));
+  const currentPage = Math.min(Math.max(1, Number(pageParam) || 1), totalPages);
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = partnerItems.slice(start, start + PAGE_SIZE);
 
   return (
     <>
@@ -109,8 +139,9 @@ export default async function PartnersPage() {
                 />
               </div>
             ) : (
+              <>
               <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-                {partnerItems.map((partner, index) => (
+                {pageItems.map((partner, index) => (
                   <li key={partner.id}>
                     <AnimateIn direction="up" delay={(index % 3) * 70}>
                       <article className="group relative h-full overflow-hidden rounded-2xl border border-white/18 bg-gradient-to-b from-white/[0.12] to-white/[0.04] p-4 shadow-[0_14px_30px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_18px_42px_rgba(28,118,188,0.3)] sm:p-5">
@@ -157,6 +188,64 @@ export default async function PartnersPage() {
                   </li>
                 ))}
               </ul>
+
+              {totalPages > 1 && (
+                <nav
+                  className="mt-10 flex flex-wrap items-center justify-center gap-2.5"
+                  aria-label="Partners pagination"
+                >
+                  <Link
+                    href={toPartnersHref(Math.max(1, currentPage - 1))}
+                    aria-disabled={currentPage === 1}
+                    className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] transition-all ${
+                      currentPage === 1
+                        ? "pointer-events-none border-white/12 bg-white/[0.03] text-white/[0.4]"
+                        : "border-white/18 bg-white/[0.05] text-white/[0.78] hover:border-white/35 hover:text-white"
+                    }`}
+                  >
+                    Prev
+                  </Link>
+
+                  {getPageItems(currentPage, totalPages).map((item, idx) =>
+                    item === "ellipsis" ? (
+                      <span
+                        key={`e${idx}`}
+                        aria-hidden="true"
+                        className="h-9 w-9 text-center text-xs font-semibold leading-9 text-white/[0.4]"
+                      >
+                        …
+                      </span>
+                    ) : (
+                      <Link
+                        key={item}
+                        href={toPartnersHref(item)}
+                        aria-current={item === currentPage ? "page" : undefined}
+                        aria-label={`Page ${item}`}
+                        className={`h-9 w-9 rounded-full border text-center text-xs font-semibold leading-9 transition-all ${
+                          item === currentPage
+                            ? "border-primary/48 bg-primary/18 text-primary-light shadow-[0_0_16px_rgba(92,106,196,0.28)]"
+                            : "border-white/18 bg-white/[0.05] text-white/[0.78] hover:border-white/35 hover:text-white"
+                        }`}
+                      >
+                        {item}
+                      </Link>
+                    )
+                  )}
+
+                  <Link
+                    href={toPartnersHref(Math.min(totalPages, currentPage + 1))}
+                    aria-disabled={currentPage === totalPages}
+                    className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] transition-all ${
+                      currentPage === totalPages
+                        ? "pointer-events-none border-white/12 bg-white/[0.03] text-white/[0.4]"
+                        : "border-white/18 bg-white/[0.05] text-white/[0.78] hover:border-white/35 hover:text-white"
+                    }`}
+                  >
+                    Next
+                  </Link>
+                </nav>
+              )}
+              </>
             )}
           </div>
         </section>
