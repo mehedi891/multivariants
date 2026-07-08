@@ -63,34 +63,51 @@ export default async function Testimonials() {
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 list-none" role="list">
           {opinions.map((o, i) => (
             <AnimateIn key={o.id} direction="up" delay={(i % 3) * 80}>
-              <li className="h-full glass border-white/10 hover:border-white/25 rounded-[20px] p-7 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition-all duration-300 flex flex-col">
-                <span className="font-serif text-5xl leading-none text-accent/70" aria-hidden="true">
-                  &ldquo;
+              <li className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.09] to-white/[0.025] p-6 shadow-[0_14px_34px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-[0_22px_48px_rgba(92,106,196,0.28)] sm:p-7">
+                {/* Top shine + oversized decorative quote */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent" />
+                <span className="pointer-events-none absolute right-4 top-2 select-none font-serif text-[86px] leading-none text-white/[0.06]" aria-hidden="true">
+                  &rdquo;
                 </span>
-                <blockquote className="mt-1 flex-1">
-                  <p className="text-sm leading-relaxed text-white/70">{o.description}</p>
+
+                {/* 5-star rating */}
+                <div className="relative z-10 flex gap-0.5" aria-label="5 out of 5 stars">
+                  {[0, 1, 2, 3, 4].map((s) => (
+                    <svg key={s} viewBox="0 0 24 24" className="h-[18px] w-[18px] text-amber-400" fill="currentColor" aria-hidden="true">
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                  ))}
+                </div>
+
+                <blockquote className="relative z-10 mt-4 flex-1">
+                  <p className="text-sm leading-relaxed text-white/75">{o.description}</p>
                 </blockquote>
+
                 {o.title && (
-                  <div className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
+                  <div className="relative z-10 mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
                     {o.logoUrl ? (
-                      <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/10">
-                        <Image
-                          src={o.logoUrl}
-                          alt=""
-                          fill
-                          unoptimized
-                          className="object-contain p-1"
-                        />
+                      <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/10">
+                        <Image src={o.logoUrl} alt="" fill unoptimized className="object-contain p-1.5" />
                       </span>
                     ) : (
                       <span
-                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${AVATAR_GRADIENTS[i % AVATAR_GRADIENTS.length]} text-sm font-black text-white`}
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${AVATAR_GRADIENTS[i % AVATAR_GRADIENTS.length]} text-sm font-black text-white shadow-[0_4px_14px_rgba(0,0,0,0.35)]`}
                         aria-hidden="true"
                       >
                         {initials(o.title)}
                       </span>
                     )}
-                    <p className="text-[14px] font-bold text-white">{o.title}</p>
+                    <div className="min-w-0">
+                      <p className="flex items-center gap-1.5 text-[14px] font-bold text-white">
+                        <span className="truncate">{o.title}</span>
+                        <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-accent" fill="currentColor" aria-hidden="true">
+                          <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1.1 14.2l-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4z" />
+                        </svg>
+                      </p>
+                      <p className="text-[11px] font-medium uppercase tracking-[0.06em] text-white/40">
+                        Verified customer
+                      </p>
+                    </div>
                   </div>
                 )}
               </li>
