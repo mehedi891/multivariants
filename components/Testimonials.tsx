@@ -1,39 +1,26 @@
+import Image from "next/image";
 import AnimateIn from "./AnimateIn";
+import { getPublicOpinions } from "@/lib/opinions";
 
-const reviews = [
-  {
-    text: "This app has completely transformed how our B2B customers order. They can now select multiple variants in one go — our average order value increased by 40% in the first month!",
-    initials: "JS", name: "James Sullivan", store: "FashionHub Pro · United States",
-    gradient: "from-primary to-accent",
-  },
-  {
-    text: "Installation was a breeze — literally 5 minutes and it was live. The Mix n Match feature is exactly what our wholesale customers needed. Highly recommend!",
-    initials: "ML", name: "Maria Lopes", store: "Wholesale Essentials · Brazil",
-    gradient: "from-amber-400 to-red-500",
-  },
-  {
-    text: "The multi-language support allowed us to expand into 3 new European markets. Support team is incredibly responsive and helpful. 10/10 app!",
-    initials: "AK", name: "Anna Kowalski", store: "EuroStyle Shop · Germany",
-    gradient: "from-green-400 to-cyan-500",
-  },
-  {
-    text: "Incremental quantity feature is a game-changer for our wholesale business. No more customers ordering non-pack quantities. Cart abandonment dropped significantly.",
-    initials: "RC", name: "Raj Chandra", store: "BulkMart India · India",
-    gradient: "from-violet-500 to-pink-500",
-  },
-  {
-    text: "We run a large uniforms store and the ability to set restrictions per variant is brilliant. Customers always order within our minimum requirements now.",
-    initials: "TN", name: "Tom Nguyen", store: "UniformWorld · Australia",
-    gradient: "from-orange-500 to-yellow-400",
-  },
-  {
-    text: "Absolutely the best bulk order app on Shopify. Our corporate clients love how easy it is to place large orders with multiple variants. Revenue up 60% since install!",
-    initials: "SK", name: "Sarah Kim", store: "CorpGear · Canada",
-    gradient: "from-cyan-500 to-blue-500",
-  },
+function initials(name: string) {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase();
+  return name.trim().slice(0, 2).toUpperCase();
+}
+
+const AVATAR_GRADIENTS = [
+  "from-primary to-accent",
+  "from-amber-400 to-red-500",
+  "from-green-400 to-cyan-500",
+  "from-violet-500 to-pink-500",
+  "from-orange-500 to-yellow-400",
+  "from-cyan-500 to-blue-500",
 ];
 
-export default function Testimonials() {
+export default async function Testimonials() {
+  const opinions = await getPublicOpinions();
+  if (opinions.length === 0) return null;
+
   return (
     <section
       className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -74,24 +61,38 @@ export default function Testimonials() {
         </AnimateIn>
 
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 list-none" role="list">
-          {reviews.map((r, i) => (
-            <AnimateIn key={r.name} direction="up" delay={i * 80}>
-              <li className="h-full glass border-white/10 hover:border-white/25 rounded-[20px] p-7 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition-all duration-300 flex flex-col gap-3">
-                <div className="text-amber-400 text-base tracking-widest" aria-label="5 out of 5 stars">★★★★★</div>
-                <blockquote className="flex-1">
-                  <p className="text-sm text-white/70 leading-relaxed italic">
-                    &ldquo;{r.text}&rdquo;
-                  </p>
+          {opinions.map((o, i) => (
+            <AnimateIn key={o.id} direction="up" delay={(i % 3) * 80}>
+              <li className="h-full glass border-white/10 hover:border-white/25 rounded-[20px] p-7 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition-all duration-300 flex flex-col">
+                <span className="font-serif text-5xl leading-none text-accent/70" aria-hidden="true">
+                  &ldquo;
+                </span>
+                <blockquote className="mt-1 flex-1">
+                  <p className="text-sm leading-relaxed text-white/70">{o.description}</p>
                 </blockquote>
-                <div className="flex items-center gap-3 mt-2">
-                  <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${r.gradient} flex items-center justify-center text-sm font-black text-white flex-shrink-0`} aria-hidden="true">
-                    {r.initials}
+                {o.title && (
+                  <div className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
+                    {o.logoUrl ? (
+                      <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/10">
+                        <Image
+                          src={o.logoUrl}
+                          alt=""
+                          fill
+                          unoptimized
+                          className="object-contain p-1"
+                        />
+                      </span>
+                    ) : (
+                      <span
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${AVATAR_GRADIENTS[i % AVATAR_GRADIENTS.length]} text-sm font-black text-white`}
+                        aria-hidden="true"
+                      >
+                        {initials(o.title)}
+                      </span>
+                    )}
+                    <p className="text-[14px] font-bold text-white">{o.title}</p>
                   </div>
-                  <div>
-                    <p className="text-[14px] font-bold text-white">{r.name}</p>
-                    <p className="text-[12px] text-white/45">{r.store}</p>
-                  </div>
-                </div>
+                )}
               </li>
             </AnimateIn>
           ))}
