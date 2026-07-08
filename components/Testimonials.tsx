@@ -105,7 +105,7 @@ export default async function Testimonials() {
                         </svg>
                       </p>
                       <p className="text-[11px] font-medium uppercase tracking-[0.06em] text-white/40">
-                        Verified customer
+                        Verified merchant
                       </p>
                     </div>
                   </div>
