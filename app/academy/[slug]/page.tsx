@@ -130,10 +130,10 @@ export default async function AcademyDocPage({ params }: PageProps) {
             </AnimateIn>
 
             <AnimateIn direction="left" delay={80}>
-              <article className="rounded-2xl border border-white/16 bg-gradient-to-b from-white/[0.12] to-white/[0.04] p-5 shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl sm:p-7">
+              <article className="rounded-2xl border border-white/[0.07] bg-[#0e1730]/85 p-5 shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl sm:p-8 lg:p-10">
                 {hasHtml ? (
                   <div
-                    className="space-y-5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px] [&_h2]:mt-7 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:leading-tight [&_h2]:text-white [&_h3]:mt-6 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-white [&_p]:text-white/[0.82] [&_ul]:ml-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_li]:text-white/[0.82] [&_a]:font-medium [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_a:hover]:decoration-accent [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-xl [&_img]:border [&_img]:border-white/14 [&_img]:shadow-[0_14px_30px_rgba(0,0,0,0.35)]"
+                    className="max-w-3xl space-y-5 text-[15px] leading-[1.78] text-white/80 sm:text-base [&_h2]:mt-9 [&_h2]:scroll-mt-24 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:leading-snug [&_h2]:text-white [&_h3]:mt-7 [&_h3]:scroll-mt-24 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-white [&_p]:text-white/80 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:space-y-2 [&_li]:text-white/80 [&_strong]:font-semibold [&_strong]:text-white [&_a]:font-medium [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_a:hover]:decoration-accent [&_img]:my-6 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-xl [&_img]:border [&_img]:border-white/[0.08] [&_img]:shadow-[0_14px_30px_rgba(0,0,0,0.35)] [&_blockquote]:border-l-2 [&_blockquote]:border-primary/50 [&_blockquote]:pl-4 [&_blockquote]:text-white/70"
                     dangerouslySetInnerHTML={{ __html: contentHtml }}
                   />
                 ) : (

@@ -41,7 +41,7 @@ export default function AcademySidebar({
   );
 
   return (
-    <aside className="relative h-fit overflow-hidden rounded-2xl border border-white/14 bg-gradient-to-b from-[#1d2a49]/92 to-[#121d37]/96 p-4 shadow-[0_18px_40px_rgba(0,0,0,0.38)] backdrop-blur-xl lg:sticky lg:top-[92px]">
+    <aside className="relative h-fit overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#151f3a]/92 to-[#101a32]/96 p-4 shadow-[0_18px_40px_rgba(0,0,0,0.38)] backdrop-blur-xl lg:sticky lg:top-[92px]">
       <div className="pointer-events-none absolute -top-20 -right-12 h-48 w-48 rounded-full bg-primary/20 blur-3xl" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_90%_8%,rgba(255,255,255,0.08),transparent_40%)]" />
@@ -65,7 +65,7 @@ export default function AcademySidebar({
 
       <label
         htmlFor="academy-sidebar-search"
-        className="relative z-10 mb-4 flex items-center gap-2 rounded-lg border border-white/16 bg-[#0f1933]/70 px-3 py-2 text-sm text-white/65 focus-within:border-primary/45"
+        className="relative z-10 mb-4 flex items-center gap-2 rounded-lg border border-white/[0.09] bg-[#0c1428]/70 px-3 py-2 text-sm text-white/65 focus-within:border-primary/45"
       >
         <svg
           className="h-4 w-4 text-white/45"
@@ -98,7 +98,7 @@ export default function AcademySidebar({
           return (
             <section
               key={category.slug}
-              className="rounded-xl border border-white/12 bg-white/[0.03] transition-all"
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all hover:border-white/10"
             >
               <button
                 type="button"
