@@ -204,51 +204,69 @@ export default function AcademyExplorer({ categories }: Props) {
           </div>
         ) : (
           <ul className="mt-8 space-y-6">
-            {categories.map((category, index) => {
-              const docs = docsByCategory.get(category.slug) ?? [];
-              if (docs.length === 0) return null;
-
-              return (
+            {categories
+              .map((category) => ({
+                category,
+                docs: docsByCategory.get(category.slug) ?? [],
+              }))
+              .filter(({ docs }) => docs.length > 0)
+              .map(({ category, docs }, index) => (
                 <li key={category.slug}>
-                  <article className="group relative overflow-hidden rounded-[26px] border border-primary/25 bg-gradient-to-b from-[#1a2543]/88 via-[#16213b]/90 to-[#111c34]/95 p-5 shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl transition-all duration-300 hover:border-primary/45 hover:shadow-[0_24px_52px_rgba(42,121,212,0.3)] sm:p-6">
-                    <div className="pointer-events-none absolute -top-20 -right-16 h-56 w-56 rounded-full bg-primary/18 blur-3xl" />
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+                  <article className="relative overflow-hidden rounded-[26px] border border-white/12 bg-gradient-to-b from-[#161f39]/90 to-[#0f1830]/95 p-5 shadow-[0_18px_42px_rgba(0,0,0,0.3)] backdrop-blur-xl sm:p-7">
+                    <div className="pointer-events-none absolute -top-24 -right-20 h-56 w-56 rounded-full bg-primary/12 blur-3xl" />
+                    <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-                    <div className="relative z-10 flex flex-wrap items-end justify-between gap-3">
-                      <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/45">
-                          Category {String(index + 1).padStart(2, "0")}
-                        </p>
-                        <h3 className="mt-1 text-2xl font-black text-white sm:text-[1.8rem]">
-                          {category.title}
-                        </h3>
-                        <p className="mt-2 text-sm text-white/60">{category.description}</p>
-                      </div>
-                      <span className="rounded-full border border-primary/35 bg-primary/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-primary-light">
-                        {docs.length} results
+                    {/* Category header */}
+                    <div className="relative z-10 flex items-start gap-4">
+                      <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-primary/35 bg-primary/15 text-base font-black text-primary-light sm:inline-flex">
+                        {String(index + 1).padStart(2, "0")}
                       </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                          <h3 className="text-xl font-black text-white sm:text-2xl">
+                            {category.title}
+                          </h3>
+                          <span className="rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-white/60">
+                            {docs.length} {docs.length === 1 ? "article" : "articles"}
+                          </span>
+                        </div>
+                        {category.description && (
+                          <p className="mt-1.5 text-sm text-white/55">{category.description}</p>
+                        )}
+                      </div>
                     </div>
 
-                    <ul className="relative z-10 mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                    {/* Docs */}
+                    <ul className="relative z-10 mt-6 grid grid-cols-1 items-stretch gap-3 md:grid-cols-2">
                       {docs.map((doc) => (
-                        <li key={`${category.slug}-${doc.slug}`}>
+                        <li key={`${category.slug}-${doc.slug}`} className="h-full">
                           <Link
                             href={`/academy/${doc.slug}`}
-                            className="group/doc block rounded-2xl border border-white/20 bg-[#0f1933]/65 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/45 hover:shadow-[0_14px_34px_rgba(71,193,191,0.24)]"
+                            className="group/doc flex h-full flex-col rounded-2xl border border-white/10 bg-[#0e182f]/70 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/45 hover:bg-[#0e182f] hover:shadow-[0_14px_32px_rgba(71,193,191,0.2)]"
                           >
-                            <div className="flex items-start justify-between gap-3">
-                              <p className="text-base font-bold leading-snug text-white group-hover/doc:text-accent">
-                                {doc.title}
-                              </p>
-                              <span className="text-white/35 transition-all group-hover/doc:translate-x-1 group-hover/doc:text-accent">
-                                →
+                            <div className="flex items-start gap-3">
+                              <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-accent/25 bg-accent/10 text-accent transition-colors group-hover/doc:border-accent/50 group-hover/doc:bg-accent/20">
+                                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                                  <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" strokeLinecap="round" strokeLinejoin="round" />
+                                  <path d="M14 3v5h5M9 13h6M9 17h4" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
                               </span>
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-start justify-between gap-2">
+                                  <p className="text-[15px] font-bold leading-snug text-white line-clamp-2 group-hover/doc:text-accent">
+                                    {doc.title}
+                                  </p>
+                                  <span className="shrink-0 text-white/30 transition-all group-hover/doc:translate-x-0.5 group-hover/doc:text-accent" aria-hidden="true">
+                                    →
+                                  </span>
+                                </div>
+                                <p className="mt-1.5 text-[13px] leading-relaxed text-white/55 line-clamp-2">
+                                  {doc.excerpt.replace(/\s*\[(?:\.\.\.|…)\]\s*$/u, "")}
+                                </p>
+                              </div>
                             </div>
-                            <p className="mt-2 text-sm leading-relaxed text-white/60">
-                              {doc.excerpt}
-                            </p>
-                            <p className="mt-3 text-xs uppercase tracking-[0.08em] text-white/45">
-                              {doc.readTime} | Updated {doc.lastUpdated}
+                            <p className="mt-auto pt-3 text-[11px] font-medium uppercase tracking-[0.07em] text-white/40">
+                              {doc.readTime} · Updated {doc.lastUpdated}
                             </p>
                           </Link>
                         </li>
@@ -256,8 +274,7 @@ export default function AcademyExplorer({ categories }: Props) {
                     </ul>
                   </article>
                 </li>
-              );
-            })}
+              ))}
           </ul>
         )}
       </div>
