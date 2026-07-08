@@ -51,8 +51,11 @@ export default function Contact() {
   const sent = status === "sent";
   const submitting = status === "submitting";
 
-  const inputCls = "w-full px-3.5 py-2.5 border border-white/15 rounded-lg text-sm font-[inherit] text-white bg-white/8 placeholder-white/30 transition-colors focus:outline-none focus:border-accent focus:bg-white/12";
-  const labelCls = "block text-[13px] font-semibold mb-1.5 text-white/70";
+  // Dark inputs; the -webkit-autofill overrides stop the browser from painting
+  // the field white on autofill.
+  const inputCls =
+    "w-full rounded-xl border border-white/12 bg-[#0c1428]/80 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all duration-200 focus:border-primary/55 focus:bg-[#0c1428] focus:ring-2 focus:ring-primary/25 [&:-webkit-autofill]:[box-shadow:inset_0_0_0_1000px_#0c1428] [&:-webkit-autofill]:[-webkit-text-fill-color:#fff]";
+  const labelCls = "mb-1.5 block text-[13px] font-semibold text-white/70";
 
   return (
     <section
@@ -91,20 +94,45 @@ export default function Contact() {
                 Fill in the form and we&apos;ll get back to you within 24 hours.
               </p>
 
-              <form onSubmit={handleSubmit} noValidate>
-                <div className="mb-4">
-                  <label htmlFor="name" className={labelCls}>Full Name</label>
-                  <input id="name" name="name" type="text" placeholder="John Doe" required autoComplete="name" className={inputCls} />
+              <form onSubmit={handleSubmit} noValidate className="space-y-5">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="name" className={labelCls}>Full Name</label>
+                    <div className="relative">
+                      <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35">
+                        <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+                          <circle cx="12" cy="8" r="3.5" /><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5" strokeLinecap="round" />
+                        </svg>
+                      </span>
+                      <input id="name" name="name" type="text" placeholder="John Doe" required autoComplete="name" className={`${inputCls} pl-11`} />
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="email" className={labelCls}>Email Address</label>
+                    <div className="relative">
+                      <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35">
+                        <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+                          <rect x="3" y="5" width="18" height="14" rx="2.5" /><path d="m4 7 8 5.5L20 7" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </span>
+                      <input id="email" name="email" type="email" placeholder="john@example.com" required autoComplete="email" className={`${inputCls} pl-11`} />
+                    </div>
+                  </div>
                 </div>
-                <div className="mb-4">
-                  <label htmlFor="email" className={labelCls}>Email Address</label>
-                  <input id="email" name="email" type="email" placeholder="john@example.com" required autoComplete="email" className={inputCls} />
-                </div>
-                <div className="mb-4">
+
+                <div>
                   <label htmlFor="phone" className={labelCls}>Phone No.</label>
-                  <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" autoComplete="tel" className={inputCls} />
+                  <div className="relative">
+                    <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35">
+                      <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+                        <path d="M6.5 3.5a1.8 1.8 0 0 1 1.8 1.4l.5 2.2a1.8 1.8 0 0 1-.5 1.7l-1.2 1.1a12 12 0 0 0 5.8 5.8l1.1-1.2a1.8 1.8 0 0 1 1.7-.5l2.2.5a1.8 1.8 0 0 1 1.4 1.8v2A1.8 1.8 0 0 1 18.6 21 15.5 15.5 0 0 1 3 5.4a1.8 1.8 0 0 1 1.9-1.9z" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" autoComplete="tel" className={`${inputCls} pl-11`} />
+                  </div>
                 </div>
-                <div className="mb-6">
+
+                <div>
                   <label htmlFor="message" className={labelCls}>Message</label>
                   <textarea id="message" name="message" placeholder="Tell us how we can help you..." rows={5} required className={`${inputCls} resize-y`} />
                 </div>
@@ -116,7 +144,7 @@ export default function Contact() {
                 </div>
 
                 {status === "error" && (
-                  <p role="alert" className="mb-4 text-sm font-medium text-red-400">
+                  <p role="alert" className="text-sm font-medium text-red-400">
                     {error}
                   </p>
                 )}
@@ -124,15 +152,31 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={submitting || sent}
-                  className={`w-full py-3.5 rounded-xl text-base font-bold text-white transition-all ${
+                  className={`inline-flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-base font-bold text-white transition-all ${
                     sent
-                      ? "bg-brand-green cursor-default"
+                      ? "cursor-default bg-brand-green"
                       : submitting
-                        ? "bg-primary/70 cursor-wait"
-                        : "bg-primary hover:bg-primary-dark hover:-translate-y-px shadow-[0_0_20px_rgba(92,106,196,0.4)] hover:shadow-[0_0_30px_rgba(92,106,196,0.6)]"
+                        ? "cursor-wait bg-primary/70"
+                        : "bg-gradient-to-r from-[#5a5eff] to-primary hover:-translate-y-px hover:brightness-110 shadow-[0_10px_28px_rgba(92,106,196,0.4)]"
                   }`}
                 >
-                  {sent ? "Message Sent!" : submitting ? "Sending…" : "Send Message"}
+                  {sent ? (
+                    <>
+                      Message Sent!
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                        <path d="m5 12 4.5 4.5L19 7" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </>
+                  ) : submitting ? (
+                    "Sending…"
+                  ) : (
+                    <>
+                      Send Message
+                      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                        <path d="M4 12h15m-6-6 6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </>
+                  )}
                 </button>
               </form>
             </div>
