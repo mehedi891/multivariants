@@ -139,8 +139,8 @@ export default async function ClientsShowcasePage({ searchParams }: PageProps) {
                           <h2 className="mt-3 break-words text-lg font-black leading-tight text-white sm:text-xl">
                             {client.title}
                           </h2>
-                          <p className="mt-2 text-sm leading-relaxed text-white/65 sm:text-[15px]">
-                            {client.excerpt}
+                          <p className="mt-2 text-sm leading-relaxed text-white/65 sm:text-[15px] line-clamp-3">
+                            {client.excerpt.replace(/\s*\[(?:\.\.\.|…)\]\s*$/u, "")}
                           </p>
                           <div className="mt-auto pt-4">
                             <Link
