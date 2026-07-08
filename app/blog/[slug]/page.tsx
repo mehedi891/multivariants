@@ -98,14 +98,23 @@ function stripHtml(value: string) {
   return decodeHtmlEntities(value.replaceAll(/<[^>]*>/g, ""));
 }
 
-function buildMetaDescription(excerpt: string, contentHtml: string) {
-  const normalizedExcerpt = excerpt.trim();
-  if (normalizedExcerpt) return normalizedExcerpt;
+// Strip WordPress byline chrome ("Written by … Reviewed by … Published … Share in X")
+// and a trailing "[...]" that the migration dumped into some excerpt fields, so only
+// the real summary text remains.
+function cleanExcerpt(value: string) {
+  let text = decodeHtmlEntities(value ?? "").replaceAll(/\s+/g, " ").trim();
+  text = text.replace(/^Written by:?.*?\bShare\s+(?:in|on)\s+X\b\s*/i, "");
+  text = text.replace(/\s*\[(?:\.\.\.|…)\]\s*$/u, "");
+  return text.trim();
+}
 
-  const plain = stripHtml(contentHtml).replaceAll(/\s+/g, " ").trim();
-  if (!plain) return GENERIC_POST_DESCRIPTION;
-  if (plain.length <= 170) return plain;
-  return `${plain.slice(0, 167).trimEnd()}...`;
+function buildMetaDescription(excerpt: string, contentHtml: string) {
+  const cleaned = cleanExcerpt(excerpt);
+  const source =
+    cleaned || stripHtml(contentHtml).replaceAll(/\s+/g, " ").trim();
+  if (!source) return GENERIC_POST_DESCRIPTION;
+  if (source.length <= 170) return source;
+  return `${source.slice(0, 167).trimEnd()}…`;
 }
 
 function toAbsoluteUrl(value: string) {
@@ -312,6 +321,8 @@ export default async function BlogPostPage({ params }: PageProps) {
   const postCanonicalUrl = toAbsoluteUrl(`/blog/${post.slug}`);
   const coverImageUrl = post.coverImage ? toAbsoluteUrl(post.coverImage) : undefined;
   const { title: seoTitle, description: seoDescription } = resolvePostSeo(post);
+  const heroExcerpt =
+    cleanExcerpt(post.excerpt) || buildMetaDescription("", post.contentHtml);
   const blogPostingJsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -409,7 +420,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 {post.title}
               </h1>
               <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/[0.65] sm:text-lg">
-                {post.excerpt}
+                {heroExcerpt}
               </p>
               <p className="mt-3 text-sm text-white/[0.45]">By {post.authorName}</p>
             </AnimateIn>
