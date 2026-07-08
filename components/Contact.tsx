@@ -143,8 +143,25 @@ export default function Contact() {
                   <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
                 </div>
 
+                {status === "sent" && (
+                  <p
+                    role="status"
+                    className="flex items-center gap-2 rounded-xl border border-brand-green/40 bg-brand-green/10 px-4 py-3 text-sm font-medium text-brand-green"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" /><path d="m8.5 12 2.5 2.5 4.5-5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    Thanks! Your message has been sent — we&apos;ll get back to you within 24 hours.
+                  </p>
+                )}
                 {status === "error" && (
-                  <p role="alert" className="text-sm font-medium text-red-400">
+                  <p
+                    role="alert"
+                    className="flex items-center gap-2 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-300"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" /><path d="M12 8v4.5M12 16h.01" strokeLinecap="round" />
+                    </svg>
                     {error}
                   </p>
                 )}
