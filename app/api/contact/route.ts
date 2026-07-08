@@ -107,11 +107,19 @@ export async function POST(req: Request) {
   // ---- Forward to the CMS contact endpoint ---------------------------------
   try {
     const url = new URL(CONTACT_API_PATH, CMS_API_BASE_URL);
-    url.searchParams.set("site", CONTACT_SITE);
+    // Per the CMS API: site + name + email + message go in the BODY (subject
+    // optional). There's no phone field, so fold it into the message.
+    const payload = {
+      site: CONTACT_SITE,
+      name,
+      email,
+      subject: `Contact form message from ${name}`,
+      message: phone ? `${message}\n\nPhone: ${phone}` : message,
+    };
     const res = await fetch(url.toString(), {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ name, email, phone, message }),
+      body: JSON.stringify(payload),
     });
     if (!res.ok) {
       console.error(`[contact] CMS responded ${res.status}: ${(await res.text()).slice(0, 200)}`);
