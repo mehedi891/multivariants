@@ -122,7 +122,7 @@ export async function getPublicPartners(): Promise<{ partners: PublicPartner[]; 
     url.searchParams.set("site", PARTNERS_SITE);
 
     const res = await fetch(url.toString(), {
-      next: { revalidate: 300 },
+      next: { revalidate: 60 },
       headers: {
         Accept: "application/json",
       },

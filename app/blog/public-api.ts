@@ -531,7 +531,7 @@ export async function getPublicBlogPost(
 
         const res = await fetch(
           url.toString(),
-          buildFetchInit(3600, requestHeaders)
+          buildFetchInit(60, requestHeaders)
         );
         if (!res.ok) {
           errors.push(`${url}: ${res.status}`);
@@ -592,7 +592,7 @@ export async function getPublicBlogSlugs(limit = 100): Promise<string[]> {
         url.searchParams.set("limit", String(limit));
         url.searchParams.set("page", "1");
 
-        const res = await fetch(url.toString(), { next: { revalidate: 3600 } });
+        const res = await fetch(url.toString(), { next: { revalidate: 60 } });
         if (!res.ok) {
           errors.push(`${url}: ${res.status}`);
           continue;

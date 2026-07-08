@@ -264,7 +264,7 @@ export async function getPublicAcademyCategories(): Promise<PublicAcademyCategor
     url.searchParams.set("site", DOCS_SITE);
 
     const categories = normalizeListPayload(
-      await fetchJson(url.toString(), 300, "docs list request")
+      await fetchJson(url.toString(), 60, "docs list request")
     );
 
     return { categories };
@@ -281,7 +281,7 @@ export async function getPublicAcademyDoc(slug: string): Promise<PublicAcademyDo
   try {
     const url = buildSingleDocUrl(slug);
     url.searchParams.set("site", DOCS_SITE);
-    const parsed = await fetchJson(url.toString(), 600, `docs single request (${slug})`);
+    const parsed = await fetchJson(url.toString(), 60, `docs single request (${slug})`);
     const doc = mapApiSingleDoc(parsed);
     if (doc) return doc;
 

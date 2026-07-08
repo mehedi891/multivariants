@@ -154,7 +154,7 @@ export async function getPublicFaqs(
         if (category) url.searchParams.set("category", category);
 
         const res = await fetch(url.toString(), {
-          next: { revalidate: 300 },
+          next: { revalidate: 60 },
           headers: { Accept: "application/json" },
         });
 

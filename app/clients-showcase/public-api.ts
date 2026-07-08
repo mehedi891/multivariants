@@ -286,7 +286,7 @@ export async function getPublicClients({
         url.searchParams.set("limit", String(limit));
 
         const res = await fetch(url.toString(), {
-          next: { revalidate: 300 },
+          next: { revalidate: 60 },
           headers: {
             Accept: "application/json",
           },
@@ -381,7 +381,7 @@ export async function getPublicClient(slug: string): Promise<PublicClient | null
         url.searchParams.set("site", CLIENTS_SITE);
 
         const res = await fetch(url.toString(), {
-          next: { revalidate: 1800 },
+          next: { revalidate: 60 },
           headers: {
             Accept: "application/json",
           },
@@ -439,7 +439,7 @@ export async function getPublicClientSlugs(limit = 100): Promise<string[]> {
         url.searchParams.set("page", "1");
 
         const res = await fetch(url.toString(), {
-          next: { revalidate: 3600 },
+          next: { revalidate: 60 },
           headers: {
             Accept: "application/json",
           },

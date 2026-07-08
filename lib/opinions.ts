@@ -68,7 +68,7 @@ export const getPublicOpinions = cache(async (): Promise<Opinion[]> => {
     const url = new URL(OPINIONS_API_PATH, CMS_API_BASE_URL);
     url.searchParams.set("site", OPINIONS_SITE);
     const res = await fetch(url.toString(), {
-      next: { revalidate: 300 },
+      next: { revalidate: 60 },
       headers: { Accept: "application/json" },
     });
     if (!res.ok) return FALLBACK_OPINIONS;

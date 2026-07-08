@@ -249,7 +249,7 @@ export async function getPublicChangelogs({
         url.searchParams.set("limit", String(limit));
 
         const res = await fetch(url.toString(), {
-          next: { revalidate: 300 },
+          next: { revalidate: 60 },
           headers: {
             Accept: "application/json",
           },
