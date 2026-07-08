@@ -128,7 +128,19 @@ export default function Contact() {
                         <path d="M6.5 3.5a1.8 1.8 0 0 1 1.8 1.4l.5 2.2a1.8 1.8 0 0 1-.5 1.7l-1.2 1.1a12 12 0 0 0 5.8 5.8l1.1-1.2a1.8 1.8 0 0 1 1.7-.5l2.2.5a1.8 1.8 0 0 1 1.4 1.8v2A1.8 1.8 0 0 1 18.6 21 15.5 15.5 0 0 1 3 5.4a1.8 1.8 0 0 1 1.9-1.9z" strokeLinejoin="round" />
                       </svg>
                     </span>
-                    <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" autoComplete="tel" className={`${inputCls} pl-11`} />
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      inputMode="tel"
+                      pattern="[0-9+()\-\s]*"
+                      placeholder="+1 (555) 000-0000"
+                      autoComplete="tel"
+                      onInput={(e) => {
+                        e.currentTarget.value = e.currentTarget.value.replace(/[^\d+()\-\s]/g, "");
+                      }}
+                      className={`${inputCls} pl-11`}
+                    />
                   </div>
                 </div>
 
