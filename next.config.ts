@@ -42,6 +42,9 @@ const nextConfig: NextConfig = {
 
       // --- Batch 3: academy categories -> academy ----------------------
       { source: "/academy-categories/:slug", destination: "/academy", permanent: true },
+
+      // --- Batch 5: legacy /docs -> academy ----------------------------
+      { source: "/docs", destination: "/academy", permanent: true },
     ];
   },
 };
