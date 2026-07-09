@@ -17,7 +17,7 @@ function normalizeEnvUrl(value: string | undefined) {
 
 const CMS_API_BASE_URL =
   normalizeEnvUrl(process.env.CMS_API_BASE_URL) ?? "https://admin.yourdomain.com";
-const BLOG_SITE = process.env.BLOG_SITE ?? "multivariants";
+const BLOG_SITE = process.env.SITE_SLUG ?? process.env.BLOG_SITE ?? "multivariants";
 const BLOG_API_PATH = normalizeEnvUrl(process.env.BLOG_API_PATH) ?? "/api/public/posts";
 const BLOG_API_FALLBACK_ENABLED =
   process.env.BLOG_API_FALLBACK_ENABLED === "true";

@@ -16,7 +16,7 @@ const CMS_API_BASE_URL =
 const CLIENTS_API_PATH =
   normalizeEnvUrl(process.env.CLIENTS_API_PATH) ?? "/api/public/clients";
 const CLIENTS_SITE =
-  process.env.CLIENTS_SITE ?? process.env.BLOG_SITE ?? "multivariants";
+  process.env.SITE_SLUG ?? process.env.CLIENTS_SITE ?? process.env.BLOG_SITE ?? "multivariants";
 const CLIENTS_API_FALLBACK_ENABLED =
   process.env.CLIENTS_API_FALLBACK_ENABLED !== "false";
 

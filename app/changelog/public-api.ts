@@ -15,7 +15,7 @@ const CMS_API_BASE_URL =
   normalizeEnvUrl(process.env.CMS_API_BASE_URL) ?? "https://admin.yourdomain.com";
 const CHANGELOG_API_PATH =
   normalizeEnvUrl(process.env.CHANGELOG_API_PATH) ?? "/api/public/changelogs";
-const CHANGELOG_SITE = process.env.CHANGELOG_SITE ?? "multivariants";
+const CHANGELOG_SITE = process.env.SITE_SLUG ?? process.env.CHANGELOG_SITE ?? "multivariants";
 const CHANGELOG_API_FALLBACK_ENABLED =
   process.env.CHANGELOG_API_FALLBACK_ENABLED !== "false";
 

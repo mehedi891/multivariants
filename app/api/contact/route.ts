@@ -19,7 +19,7 @@ function normalizeEnvUrl(value: string | undefined) {
 const CMS_API_BASE_URL =
   normalizeEnvUrl(process.env.CMS_API_BASE_URL) ?? "https://efoli-cms.vercel.app";
 const CONTACT_API_PATH = normalizeEnvUrl(process.env.CONTACT_API_PATH) ?? "/api/public/contact";
-const CONTACT_SITE = process.env.CONTACT_SITE ?? "multivariants";
+const CONTACT_SITE = process.env.SITE_SLUG ?? process.env.CONTACT_SITE ?? "multivariants";
 
 // ---- In-memory rate limiter ----------------------------------------------
 // Best-effort per-instance limiter. On serverless this is per warm instance,

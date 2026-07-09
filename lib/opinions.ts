@@ -19,7 +19,7 @@ const CMS_API_BASE_URL =
   normalizeEnvUrl(process.env.CMS_API_BASE_URL) ?? "https://efoli-cms.vercel.app";
 const OPINIONS_API_PATH =
   normalizeEnvUrl(process.env.OPINIONS_API_PATH) ?? "/api/public/opinions";
-const OPINIONS_SITE = process.env.OPINIONS_SITE ?? "multivariants";
+const OPINIONS_SITE = process.env.SITE_SLUG ?? process.env.OPINIONS_SITE ?? "multivariants";
 
 // Shown if the CMS has no opinions published yet or is unreachable, so the
 // homepage section never renders empty.

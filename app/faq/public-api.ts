@@ -13,7 +13,7 @@ const CMS_API_BASE_URL =
   normalizeEnvUrl(process.env.CMS_API_BASE_URL) ?? "https://admin.yourdomain.com";
 const FAQ_API_PATH =
   normalizeEnvUrl(process.env.FAQ_API_PATH) ?? "/api/public/faqs";
-const FAQ_SITE = process.env.FAQ_SITE ?? "multivariants";
+const FAQ_SITE = process.env.SITE_SLUG ?? process.env.FAQ_SITE ?? "multivariants";
 const FAQ_API_FALLBACK_ENABLED = process.env.FAQ_API_FALLBACK_ENABLED !== "false";
 
 export type PublicFaqItem = {

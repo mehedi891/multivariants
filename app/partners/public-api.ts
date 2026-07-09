@@ -16,7 +16,7 @@ const CMS_API_BASE_URL =
 const PARTNERS_API_PATH =
   normalizeEnvUrl(process.env.PARTNERS_API_PATH) ?? "/api/public/partners";
 const PARTNERS_SITE =
-  process.env.PARTNERS_SITE ?? process.env.BLOG_SITE ?? "multivariants";
+  process.env.SITE_SLUG ?? process.env.PARTNERS_SITE ?? process.env.BLOG_SITE ?? "multivariants";
 const PARTNERS_API_FALLBACK_ENABLED =
   process.env.PARTNERS_API_FALLBACK_ENABLED !== "false";
 

@@ -19,7 +19,7 @@ function normalizeEnvUrl(value: string | undefined) {
 const CMS_API_BASE_URL =
   normalizeEnvUrl(process.env.CMS_API_BASE_URL) ?? "https://admin.yourdomain.com";
 const DOCS_API_PATH = normalizeEnvUrl(process.env.DOCS_API_PATH) ?? "/api/public/docs";
-const DOCS_SITE = process.env.DOCS_SITE ?? process.env.BLOG_SITE ?? "multivariants";
+const DOCS_SITE = process.env.SITE_SLUG ?? process.env.DOCS_SITE ?? process.env.BLOG_SITE ?? "multivariants";
 const DOCS_API_FALLBACK_ENABLED = process.env.DOCS_API_FALLBACK_ENABLED === "true";
 
 export type PublicAcademyDoc = AcademyDoc & {
