@@ -132,8 +132,9 @@ export default async function BlogPage({ searchParams }: PageProps) {
                     MultiVariants Blog
                   </h1>
                   <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/[0.65] sm:text-lg">
-                    Powered by API content. Browse by category and open any
-                    article at /blog/postURI.
+                    Guides, use cases, and product updates on Shopify bulk
+                    ordering and variant selling. Filter by category to find
+                    what you need.
                   </p>
                 </div>
 
