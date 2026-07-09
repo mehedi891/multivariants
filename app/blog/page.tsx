@@ -138,7 +138,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-white/14 bg-white/[0.04] px-4 py-3 backdrop-blur-md">
+                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 backdrop-blur-md">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/[0.45]">
                     Listing
                   </p>
@@ -166,7 +166,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
 
           <div className="relative z-10 mx-auto max-w-6xl">
             <AnimateIn direction="up">
-              <div className="rounded-2xl border border-white/14 bg-gradient-to-b from-[#1a2442]/88 to-[#101a33]/94 p-4 shadow-[0_16px_40px_rgba(0,0,0,0.36)] backdrop-blur-xl sm:p-5">
+              <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#1a2442]/88 to-[#101a33]/94 p-4 shadow-[0_16px_40px_rgba(0,0,0,0.36)] backdrop-blur-xl sm:p-5">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary-light">
                     Filter by Category
@@ -222,9 +222,9 @@ export default async function BlogPage({ searchParams }: PageProps) {
                   <li key={post.slug} className="h-full">
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="group/card block h-full overflow-hidden rounded-[20px] border border-white/14 bg-[#0d1730]/76 transition-all duration-300 hover:-translate-y-1 hover:border-primary/48 hover:shadow-[0_18px_44px_rgba(42,121,212,0.26)]"
+                      className="group/card block h-full overflow-hidden rounded-[20px] border border-white/[0.07] bg-[#0d1730]/76 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_18px_44px_rgba(42,121,212,0.26)]"
                     >
-                      <div className="relative aspect-[16/10] overflow-hidden border-b border-white/12">
+                      <div className="relative aspect-[16/10] overflow-hidden border-b border-white/[0.05]">
                         <Image
                           src={post.coverImage}
                           alt={post.coverImageAlt}
@@ -250,7 +250,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
                           {post.excerpt}
                         </p>
 
-                        <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
+                        <div className="mt-4 flex items-center justify-between border-t border-white/[0.05] pt-3">
                           <div className="flex items-center gap-2">
                             <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-white/[0.05] text-[11px] font-bold text-white/[0.8]">
                               {initials(post.authorName)}
