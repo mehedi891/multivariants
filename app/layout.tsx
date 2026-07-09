@@ -69,8 +69,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://multivariants.com",
   },
-  // Icons are supplied by the app/favicon.ico, app/icon and app/apple-icon
-  // file conventions.
+  // Favicon is supplied by the app/favicon.ico file convention (the brand mark).
 };
 
 // Site-wide entity graph: a single Organization + WebSite that other pages'
