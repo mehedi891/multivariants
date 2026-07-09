@@ -17,11 +17,11 @@ const integrationLinks = [
 ];
 
 const appLinks = [
-  { label: "DiscountRay", desc: "Discounted Pricing", href: "https://discountray.com/" },
-  { label: "PushBundle", desc: "Bundle & upsell", href: "https://pushbundle.com/" },
-  { label: "EmbedUp", desc: "Embed anything", href: "https://embedup.com" },
-  { label: "Order Rules", desc: "Checkout controls", href: "https://orderrules.com" },
-  { label: "Quotway", desc: "Request a quote", href: "https://www.quotway.com" },
+  { label: "DiscountRay", desc: "Custom Price", href: "https://discountray.com/" },
+  { label: "QuotWay", desc: "B2B Quote-Negotiation", href: "https://www.quotway.com" },
+  { label: "OrderRules", desc: "Store Open Limits", href: "https://orderrules.com" },
+  { label: "EmbedUp", desc: "Affiliate Buy Button", href: "https://embedup.com" },
+  { label: "Push Bundle", desc: "Build a Box App", href: "https://pushbundle.com/" },
 ];
 
 const legalLinks = [
