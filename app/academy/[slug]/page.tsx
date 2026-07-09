@@ -177,7 +177,7 @@ export default async function AcademyDocPage({ params }: PageProps) {
               />
             </AnimateIn>
 
-            <AnimateIn direction="left" delay={80}>
+            <AnimateIn direction="left" delay={80} className="order-first lg:order-last">
               <article className="rounded-2xl border border-white/[0.07] bg-[#0e1730]/85 p-5 shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl sm:p-8 lg:p-10">
                 {hasHtml ? (
                   <div
