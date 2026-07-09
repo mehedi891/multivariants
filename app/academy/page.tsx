@@ -8,7 +8,7 @@ import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicAcademyCategories } from "@/app/academy/public-api";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Academy",
+  title: "Academy – Setup Guides & Help Docs",
   description:
     "Browse MultiVariants help docs by category. Learn setup, quantity rules, layout customization, and integrations.",
   path: "/academy",

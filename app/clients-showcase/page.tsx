@@ -9,7 +9,7 @@ import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicClients } from "@/app/clients-showcase/public-api";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Clients Showcase",
+  title: "Client Showcase – Merchant Stories",
   description:
     "Explore businesses that use MultiVariants to scale bulk variant ordering on Shopify.",
   path: "/clients-showcase",

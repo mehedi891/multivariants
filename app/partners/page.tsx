@@ -28,7 +28,7 @@ function getPageItems(current: number, total: number): (number | "ellipsis")[] {
 }
 
 export const metadata: Metadata = pageMetadata({
-  title: "Partners",
+  title: "App Partners & Integrations",
   description:
     "Explore app partners that work seamlessly alongside MultiVariants for Shopify growth.",
   path: "/partners",

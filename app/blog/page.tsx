@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo";
 import { getPublicBlogPosts } from "@/app/blog/public-api";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Blog",
+  title: "Blog – Shopify Bulk Ordering & B2B Tips",
   description:
     "Read the latest MultiVariants insights on bulk ordering, B2B conversion, restriction rules, and Shopify growth.",
   path: "/blog",

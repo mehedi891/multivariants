@@ -154,7 +154,7 @@ const comparisonRows: ComparisonRow[] = [
 ];
 
 export const metadata: Metadata = pageMetadata({
-  title: "Pricing",
+  title: "Pricing Plans for Shopify Bulk Ordering",
   description:
     "Simple pricing plans for every Shopify store. Start free with the Starter plan and scale with Standard or Professional as your bulk ordering grows.",
   path: "/pricing",

@@ -7,7 +7,7 @@ import AnimateIn from "@/components/AnimateIn";
 import { getPublicFaqs, type PublicFaqItem } from "./public-api";
 
 export const metadata: Metadata = pageMetadata({
-  title: "FAQ",
+  title: "FAQ – Bulk Add to Cart & Order Rules",
   description:
     "Answers to common questions about MultiVariants — bulk add to cart, Mix n Match, order restrictions, quantity increments, pricing, and installation.",
   path: "/faq",

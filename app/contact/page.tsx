@@ -5,7 +5,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Contact",
+  title: "Contact Us – Support, Demos & Onboarding",
   description:
     "Contact the MultiVariants team for Shopify bulk-ordering support, live demos, setup help, and onboarding. We're here to help you get selling faster.",
   path: "/contact",

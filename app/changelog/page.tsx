@@ -9,7 +9,7 @@ import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicChangelogs } from "@/app/changelog/public-api";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Changelog",
+  title: "Changelog – Product Updates & Releases",
   description:
     "Track recent MultiVariants releases, features, improvements, and fixes.",
   path: "/changelog",

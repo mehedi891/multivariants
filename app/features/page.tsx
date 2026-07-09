@@ -211,7 +211,7 @@ const merchantBenefits = [
 ];
 
 export const metadata: Metadata = pageMetadata({
-  title: "Features",
+  title: "Bulk Order, Mix-and-Match & Restrictions",
   description:
     "Explore MultiVariants features for bulk ordering, restrictions, incremental quantities, bundle rules, and more.",
   path: "/features",
