@@ -33,11 +33,15 @@ The weaknesses cluster in five areas: **(a) broken shared assets** (the OG image
 |---|---------|-----|--------|-----------|
 | 1 | **C1** — Ship the missing `og-image.png` + `icon.png` + `apple-icon.png` | Critical | XS | One asset drop fixes broken social cards, icons, *and* invalid schema logo across the whole site |
 | 2 | **M1 + M2** — Per-page OpenGraph (9 pages share homepage card; blog index has none) | High | S | Cheap, high-visibility; restores per-page social identity |
-| 3 | **C2** — Gate `noindex` for non-production (staging currently crawlable) | High | S | Prevents `*.vercel.app` duplicate-content indexing |
-| 4 | **P1** — Don't hide above-the-fold hero behind `AnimateIn` (`opacity:0`→JS) | High | S | Direct LCP win + no-JS content visibility |
-| 5 | **D1 + G3 + P5** — Source the stats/rating; add analytics | High | M | Trust/AI-citation + first field-data visibility |
+| 3 | **C11** — Sitemap omits **all** blog/academy/client URLs (live-confirmed: 11 static-only) | High | S | No CMS content is being submitted for indexing |
+| 4 | **C2** — Gate `noindex` for non-production before domain cutover (staging currently crawlable) | High | S | Prevents `*.vercel.app` duplicate-content indexing |
+| 5 | **M1 + M2** — Per-page OpenGraph (9 pages share homepage card; blog index has none) | High | S | Restores per-page social identity |
 
-**Findings by severity:** Critical **1** · High **11** · Medium **23** · Low **10** · Opportunity **5** — **50 total**.
+*(Also high-priority, next tier: **P1** un-hide the hero for LCP; **D1 + G3 + P5** source the stats/rating and add analytics.)*
+
+**Findings by severity:** Critical **1** · High **12** · Medium **23** · Low **10** · Opportunity **5** — **51 total**. *(All Confirmed items re-verified live against `https://multivariants-website.vercel.app` on 2026-07-09 — see Appendix A.)*
+
+> **Domain-cutover note (C2):** You plan to point `multivariants.com` (currently WordPress) at this Vercel app. The right pattern is to keep the **production domain indexable** and force **`noindex` on every other host** (`*.vercel.app`). Because canonicals already point at `multivariants.com`, gate on the request host / `VERCEL_ENV` in `middleware.ts` or `robots.ts` so only the production domain is crawlable. Do this **before** the cutover so staging doesn't get indexed in the meantime. Also verify the WordPress→Vercel 308 redirects (`next.config.ts`) fire on the real domain after cutover.
 
 ---
 
@@ -74,6 +78,7 @@ IDs are grouped by area: **C**rawl/Index · **M**etadata · **S**tructure/Linkin
 | **C8** | Crawl | Low | Confirmed | `robots.txt` | `app/robots.ts:28-34` | No `Disallow: /api/`; redundant duplicate allow rule; non-standard `host` (Yandex-only) | two `allow:"/"` rules; `host:SITE_URL` | Minor (API routes are POST-only → 405 on GET); rule noise | Add `disallow:["/api/"]`; collapse allow rules. `host` harmless. |
 | **C9** | Crawl | Low | Improvement | 404 / errors | no `app/not-found.tsx`/`error.tsx`/`global-error.tsx` | `notFound()` yields Next's generic 404; unhandled errors → bare 500 | `grep` → none exist | Missed branding/internal-linking on 404; ungraceful 500s | Add branded `app/not-found.tsx` (links to `/`, `/blog`) + `error.tsx` boundary. |
 | **C10** | Crawl | Low | Requires-prod-verify | Sitemap | `app/sitemap.ts:29-30` | Slug fetches capped `limit=1000`, single page; collapses to static-only if CMS down at regen time | `getPublicBlogSlugs(1000)`, `getPublicClientSlugs(1000)` | Overflow URLs silently dropped >1000; transient full loss of dynamic URLs on outage | Loop pagination to exhaustion; serve last-known-good on fetch failure. |
+| **C11** | Crawl | **High** | **Confirmed live** | Sitemap | `app/sitemap.ts:28-30` + slug fns in `blog/academy/clients public-api.ts` | **Live sitemap contains only the 11 static routes — zero blog/academy/client URLs**, although 9 blog posts + many academy docs render fine | `curl …/sitemap.xml` → 11 `<loc>`, no `blog/`,`academy/`,`clients-showcase/` items; `/blog` lists 9 posts | None of the CMS content is submitted for indexing → major discovery gap right before domain cutover | Fix slug enumeration used by the sitemap (default fallback ON or serve last-known-good so `getPublic*Slugs` never return `[]`); confirm dynamic URLs appear after a fresh deploy/revalidate. Ties to C3/C5/C10. |
 | **M1** | Metadata | **High** | Confirmed | `/features`,`/pricing`,`/contact`,`/faq`,`/privacy-policy`,`/partners`,`/changelog`,`/academy`,`/clients-showcase` | each `page.tsx` (no `openGraph`) | Pages set unique `title` but no `openGraph` → Next inherits root OG wholesale → all 9 share the **homepage** og:title/description | Next docs: page without `openGraph` inherits root's entirely; `openGraph.title` never derived from `title` | 9 routes unfurl with the homepage pitch (e.g. Pricing shares as the home hero) → duplicated, misleading social previews | Add minimal per-page `openGraph:{title,description,url}` (image inherits once C1 fixed). Consider a metadata helper mapping `title`→`og:title`. |
 | **M2** | Metadata | **High** | Confirmed | `/blog` | `app/blog/page.tsx:20-27` | Blog list sets its own `openGraph` **without `images`**; OG is all-or-nothing → drops the root OG image | `openGraph` block has no `images` key | Blog index social shares have no image card at all | Add `openGraph.images` + `twitter.images` to the blog list metadata. |
 | **M3** | Metadata | Medium | Confirmed | `/academy/[slug]` | `app/academy/[slug]/page.tsx:32` | Title `${…} \| Academy` is a child segment, so template appends `\| MultiVariants` → double suffix `X \| Academy \| MultiVariants` | `title: \`${doc.seoTitle ?? doc.title} \| Academy\`` | Long, brand-repeating titles; >60-char truncation risk | Drop manual `\| Academy` (let template add brand), or use `title:{absolute:"…— MultiVariants Academy"}`. |
@@ -228,6 +233,33 @@ Add analytics/RUM + Speed Insights + CTA events (`P5`) · GSC + Bing verificatio
 - **Legal** — is a Terms of Service drafted/approved to publish (S1)?
 - **Target keywords / markets / competitors** — no keyword or competitor data in-repo; comparison/use-case page targeting (G2/G9) needs your priority list. No search-volume was invented.
 - **`CMS_API_BASE_URL` in prod** — is it set on Vercel? Image optimization (P3) breaks silently if not.
+
+---
+
+## Appendix A — Live Staging Verification (2026-07-09)
+
+Verified with read-only `curl` against **`https://multivariants-website.vercel.app`** (Vercel; old site still on WordPress; domain cutover to `multivariants.com` pending).
+
+| Check | Result | Confirms |
+|---|---|---|
+| `GET /og-image.png` | **404** | C1 — broken OG image live |
+| `GET /icon.png` | **404** | C1 — broken PNG favicon / schema logo |
+| `GET /apple-icon.png` | **404** | C1 — broken apple-touch icon |
+| `GET /favicon.ico` | 200 | favicon OK |
+| `robots.txt` | `Allow: /` for all + AI bots; **no `X-Robots-Tag: noindex`**; `Host:`/`Sitemap:` → `multivariants.com` | C2 — staging fully crawlable |
+| `sitemap.xml` | **11 `<loc>`, static routes only — no blog/academy/client URLs** | **C11** — dynamic content absent from sitemap |
+| `/blog` renders | **9 posts** present in HTML | content exists (so C11 is a real gap, not empty CMS) |
+| `/academy` renders | many docs present | content exists |
+| `og:title` on `/`, `/pricing`, `/features` | **identical** ("MultiVariants – One-Click Bulk Add to Cart…") | M1 — duplicate social titles |
+| `og:image` on `/blog` | **absent** | M2 — blog index has no OG image |
+| `og:image` on `/` | `https://multivariants.com/og-image.png` (the 404 asset) | C1 |
+| `/blog/[slug]` | per-item canonical ✅, per-item `og:image` (real blob URL, 200) ✅, `BlogPosting`+`SoftwareApplication` JSON-LD ✅, single `<h1>` ✅ | detail-page SEO is solid |
+| `/academy/[slug]` JSON-LD | only global `SoftwareApplication` (no `Article`/`HowTo`) | D6 — docs lack schema |
+| `/llms.txt` | 200, valid; "Last updated: 2026-07-03" (hardcoded, now stale) | G8 |
+| CMS cover images | rendered **raw** from `*.public.blob.vercel-storage.com` (not `/_next/image`) → 200 but **unoptimized** | P4 confirmed; P3 latent (blob host not in `remotePatterns`, so any future `<Image>`-optimized use would 400) |
+| Local `/images/*` via `/_next/image` | 200 | optimizer OK for local assets |
+
+**Live-verification takeaways:** the two most urgent, cheapest wins (C1 assets, M1/M2 OpenGraph) are confirmed broken in production-representative conditions; the **sitemap gap (C11)** is the most consequential newly-confirmed indexing issue; and the **staging-noindex gate (C2)** should land before you connect `multivariants.com`.
 
 ---
 
