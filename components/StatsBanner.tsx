@@ -21,7 +21,7 @@ export default function StatsBanner() {
             {[
               { num: "13,000", suffix: "+", label: "B2B and B2C Shopify Merchants" },
               { num: "120",    suffix: "+", label: "Countries Worldwide" },
-              { num: "350",    suffix: "+", label: "5-Star Reviews" },
+              { num: "341",    suffix: "",  label: "5-Star Reviews" },
             ].map((s, i) => (
               <React.Fragment key={s.label}>
                 <div className="text-center flex-1 min-w-[140px] glass rounded-2xl px-6 py-5 border-white/15">

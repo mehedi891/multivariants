@@ -44,19 +44,21 @@ export default async function Testimonials() {
                 We Are All Growing Together
               </h2>
             </div>
-            <div
-              className="flex flex-col items-end gap-1.5"
-              role="img"
-              aria-label="4.9 out of 5 stars, 350+ reviews on Shopify"
+            <a
+              href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=reviews&utm_campaign=rating"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col items-end gap-1.5"
+              aria-label="4.9 out of 5 stars from 341 reviews on the Shopify App Store"
             >
-              <div className="inline-flex items-center gap-1.5 glass rounded-full px-4 py-2 text-[13px] font-semibold border-white/20">
+              <span className="inline-flex items-center gap-1.5 glass rounded-full px-4 py-2 text-[13px] font-semibold border-white/20 transition-colors group-hover:border-primary/40">
                 <span className="w-2.5 h-2.5 rounded-full bg-brand-green" aria-hidden="true" />
                 <span className="text-amber-400" aria-hidden="true">★★★★★</span>
                 <strong className="text-white">4.9</strong>
                 <span className="text-white/60">on Shopify</span>
-              </div>
-              <span className="text-[13px] text-white/50">350+ verified reviews</span>
-            </div>
+              </span>
+              <span className="text-[13px] text-white/50 transition-colors group-hover:text-white/75">341 verified reviews →</span>
+            </a>
           </div>
         </AnimateIn>
 

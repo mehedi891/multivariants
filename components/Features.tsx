@@ -173,7 +173,7 @@ export default function Features() {
             </Link>
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2.5 text-[13px] font-semibold flex-wrap justify-center border-white/20">
               <span className="text-amber-400">★★★★★</span>
-              <strong className="text-white">350+ reviews</strong>
+              <strong className="text-white">341 reviews</strong>
               <span className="text-white/35">·</span>
               <Link href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp" target="_blank" rel="noopener noreferrer" className="text-primary-light hover:text-accent transition-colors">Get on Shopify</Link>
               <span className="text-white/35 text-[12px]">· Free plan · 7-Day Trial</span>
