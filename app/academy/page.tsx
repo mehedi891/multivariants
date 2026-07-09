@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
@@ -6,12 +7,12 @@ import AcademyExplorer from "@/components/AcademyExplorer";
 import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicAcademyCategories } from "@/app/academy/public-api";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Academy",
   description:
     "Browse MultiVariants help docs by category. Learn setup, quantity rules, layout customization, and integrations.",
-  alternates: { canonical: "/academy" },
-};
+  path: "/academy",
+});
 
 export default async function AcademyPage() {
   const { categories, error } = await getPublicAcademyCategories();

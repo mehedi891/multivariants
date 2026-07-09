@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
@@ -209,12 +210,12 @@ const merchantBenefits = [
   { icon: "📈", text: "Built to scale with growth" },
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Features",
   description:
     "Explore MultiVariants features for bulk ordering, restrictions, incremental quantities, bundle rules, and more.",
-  alternates: { canonical: "https://multivariants.com/features" },
-};
+  path: "/features",
+});
 
 function SupportIcon({ kind }: { kind: SupportItem["kind"] }) {
   if (kind === "installation") {

@@ -346,7 +346,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       url: SITE_URL,
       logo: {
         "@type": "ImageObject",
-        url: toAbsoluteUrl("/icon.png"),
+        url: toAbsoluteUrl("/images/logo.webp"),
       },
     },
   };

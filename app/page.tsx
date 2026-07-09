@@ -15,8 +15,8 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "MultiVariants – One-Click Bulk Add to Cart for Shopify Variants",
   description:
-    "MultiVariants lets Shopify merchants allow customers to bulk add multiple product variants to cart in one click. Boost B2B & B2C sales with Mix n Match, order restrictions, and incremental quantities. 13,000+ merchants · 120+ countries · Free plan.",
-  alternates: { canonical: "https://multivariants.com" },
+    "Let Shopify customers bulk-add multiple product variants to cart in one click. Boost B2B/B2C orders with Mix n Match, restrictions & quantity rules. Free plan.",
+  alternates: { canonical: "/" },
 };
 
 export default function HomePage() {

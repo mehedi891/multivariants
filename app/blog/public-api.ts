@@ -19,8 +19,11 @@ const CMS_API_BASE_URL =
   normalizeEnvUrl(process.env.CMS_API_BASE_URL) ?? "https://admin.yourdomain.com";
 const BLOG_SITE = process.env.SITE_SLUG ?? process.env.BLOG_SITE ?? "multivariants";
 const BLOG_API_PATH = normalizeEnvUrl(process.env.BLOG_API_PATH) ?? "/api/public/posts";
+// Default ON (like clients/changelog/partners/faq) so a transient CMS outage
+// serves local fallback content instead of hard-404ing live posts (C3) and
+// never lets the sitemap collapse to static-only (C11).
 const BLOG_API_FALLBACK_ENABLED =
-  process.env.BLOG_API_FALLBACK_ENABLED === "true";
+  process.env.BLOG_API_FALLBACK_ENABLED !== "false";
 const BLOG_API_FORWARD_AUTH = process.env.BLOG_API_FORWARD_AUTH === "true";
 const BLOG_API_BEARER_TOKEN = normalizeEnvUrl(process.env.BLOG_API_BEARER_TOKEN);
 const BLOG_API_PROTECTION_BYPASS = normalizeEnvUrl(

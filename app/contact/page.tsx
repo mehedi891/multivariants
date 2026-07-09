@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Navbar from "@/components/Navbar";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
   description:
-    "Get in touch with the MultiVariants team for support, demos, and onboarding.",
-  alternates: { canonical: "https://multivariants.com/contact" },
-};
+    "Contact the MultiVariants team for Shopify bulk-ordering support, live demos, setup help, and onboarding. We're here to help you get selling faster.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

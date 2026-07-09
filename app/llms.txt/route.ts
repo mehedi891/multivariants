@@ -5,10 +5,14 @@ export const dynamic = "force-static";
 
 const SITE = "https://multivariants.com";
 
+// Build-time date (route is force-static, regenerated on each deploy), so the
+// "Last updated" line reflects the latest publish instead of a stale constant.
+const lastUpdated = new Date().toISOString().slice(0, 10);
+
 const body = `# MultiVariants
 
 > MultiVariants is a Shopify app that lets customers bulk add multiple product variants to the cart in one click. It is built for B2B, wholesale, and high-volume B2C stores that need faster bulk ordering, order restrictions, and flexible quantity rules.
-> Last updated: 2026-07-03 - Facts verified against the shipped product.
+> Last updated: ${lastUpdated} - Facts verified against the shipped product.
 
 MultiVariants replaces the one-variant-at-a-time Shopify buying flow with a single table where shoppers set quantities for every variant (color, size, and other options) and add them all at once. This reduces clicks and cart abandonment and increases average order value for wholesale and bulk sellers.
 

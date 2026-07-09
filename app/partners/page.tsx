@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -26,12 +27,12 @@ function getPageItems(current: number, total: number): (number | "ellipsis")[] {
   return items;
 }
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Partners",
   description:
     "Explore app partners that work seamlessly alongside MultiVariants for Shopify growth.",
-  alternates: { canonical: "/partners" },
-};
+  path: "/partners",
+});
 
 const themeClassMap = [
   "bg-[#0d5fa6]/30 text-[#89c8ff] border-[#3b93d9]/45",

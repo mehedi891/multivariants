@@ -24,9 +24,16 @@ const ANSWER_AND_SEARCH_BOTS = [
 ];
 
 export default function robots(): MetadataRoute.Robots {
+  // Preview/branch deploys return a blanket disallow so staging isn't crawled.
+  // (The production *.vercel.app alias is additionally handled by the host-based
+  // X-Robots-Tag noindex in middleware.ts.) (C2)
+  if (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production") {
+    return { rules: [{ userAgent: "*", disallow: "/" }] };
+  }
+
   return {
     rules: [
-      { userAgent: "*", allow: "/" },
+      { userAgent: "*", allow: "/", disallow: "/api/" },
       { userAgent: ANSWER_AND_SEARCH_BOTS, allow: "/" },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,

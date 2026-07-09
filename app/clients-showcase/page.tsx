@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -7,12 +8,12 @@ import AnimateIn from "@/components/AnimateIn";
 import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicClients } from "@/app/clients-showcase/public-api";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Clients Showcase",
   description:
     "Explore businesses that use MultiVariants to scale bulk variant ordering on Shopify.",
-  alternates: { canonical: "/clients-showcase" },
-};
+  path: "/clients-showcase",
+});
 
 type PageProps = {
   searchParams: Promise<{

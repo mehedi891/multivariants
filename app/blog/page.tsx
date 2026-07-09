@@ -6,33 +6,16 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import ApiEmptyState from "@/components/ApiEmptyState";
+import { pageMetadata } from "@/lib/seo";
 import { getPublicBlogPosts } from "@/app/blog/public-api";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Blog",
   description:
     "Read the latest MultiVariants insights on bulk ordering, B2B conversion, restriction rules, and Shopify growth.",
-  alternates: { canonical: "/blog" },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  openGraph: {
-    type: "website",
-    url: "https://multivariants.com/blog",
-    title: "MultiVariants Blog",
-    description:
-      "Read the latest MultiVariants insights on bulk ordering, B2B conversion, restriction rules, and Shopify growth.",
-    siteName: "MultiVariants",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "MultiVariants Blog",
-    description:
-      "Read the latest MultiVariants insights on bulk ordering, B2B conversion, restriction rules, and Shopify growth.",
-    creator: "@multivariants",
-  },
-};
+  path: "/blog",
+  ogTitle: "MultiVariants Blog",
+});
 
 type PageProps = {
   searchParams: Promise<{

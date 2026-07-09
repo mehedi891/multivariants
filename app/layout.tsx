@@ -11,11 +11,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://multivariants.com"),
   title: {
-    default: "MultiVariants – Bulk Order App for Shopify | One-Click Variants Add to Cart",
+    default: "MultiVariants – Bulk Add-to-Cart App for Shopify",
     template: "%s | MultiVariants",
   },
   description:
-    "MultiVariants is a Shopify app that lets customers bulk add multiple product variants to cart in one click. Boost B2B/B2C sales, reduce cart abandonment, and increase revenue. 13,000+ merchants across 120+ countries. 350+ five-star reviews.",
+    "MultiVariants lets Shopify customers bulk-add multiple product variants to cart in one click. Boost B2B/B2C sales with Mix n Match, order restrictions & quantity rules. Free plan.",
   keywords: [
     "Shopify bulk order app",
     "variants bulk add to cart",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
       "Allow customers to bulk order multiple product variants in one click. Trusted by 13,000+ Shopify merchants across 120+ countries.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image",
         width: 1200,
         height: 630,
         alt: "MultiVariants – Bulk Order App for Shopify",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "MultiVariants – Bulk Order App for Shopify",
     description:
       "One-click bulk add to cart for Shopify product variants. 13,000+ merchants. Free plan available.",
-    images: ["/og-image.png"],
+    images: ["/og-image"],
     creator: "@multivariants",
   },
   robots: {
@@ -69,14 +69,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://multivariants.com",
   },
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png",    type: "image/png", sizes: "32x32" },
-    ],
-    shortcut: "/favicon.ico",
-    apple: "/apple-icon.png",
-  },
+  // Icons are supplied by the app/favicon.ico, app/icon and app/apple-icon
+  // file conventions.
 };
 
 const jsonLd = {

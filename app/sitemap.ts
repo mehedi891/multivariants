@@ -3,9 +3,10 @@ import { getPublicAcademySlugs } from "@/app/academy/public-api";
 import { getPublicBlogSlugs } from "@/app/blog/public-api";
 import { getPublicClientSlugs } from "@/app/clients-showcase/public-api";
 
-// Regenerate the sitemap at most once an hour so new CMS content (blog posts,
-// academy docs, client showcases) appears automatically without a redeploy.
-export const revalidate = 3600;
+// Regenerate the sitemap every 15 min so new CMS content (blog posts, academy
+// docs, client showcases) appears quickly, and a one-off failed/empty
+// generation self-heals fast instead of persisting for an hour (C11).
+export const revalidate = 900;
 
 const SITE_URL = "https://multivariants.com";
 

@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import { getPublicFaqs, type PublicFaqItem } from "./public-api";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "FAQ",
   description:
-    "Answers to common questions about MultiVariants — bulk add to cart, Mix n Match, order restrictions, quantity increments, pricing, installation, and support for Shopify.",
-  alternates: { canonical: "https://multivariants.com/faq" },
-};
+    "Answers to common questions about MultiVariants — bulk add to cart, Mix n Match, order restrictions, quantity increments, pricing, and installation.",
+  path: "/faq",
+});
 
 const appLink =
   "https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp";

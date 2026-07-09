@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -7,12 +8,12 @@ import AnimateIn from "@/components/AnimateIn";
 import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicChangelogs } from "@/app/changelog/public-api";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Changelog",
   description:
     "Track recent MultiVariants releases, features, improvements, and fixes.",
-  alternates: { canonical: "/changelog" },
-};
+  path: "/changelog",
+});
 
 type PageProps = {
   searchParams: Promise<{

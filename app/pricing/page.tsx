@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -152,12 +153,12 @@ const comparisonRows: ComparisonRow[] = [
   },
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Pricing",
   description:
     "Simple pricing plans for every Shopify store. Start free with the Starter plan and scale with Standard or Professional as your bulk ordering grows.",
-  alternates: { canonical: "https://multivariants.com/pricing" },
-};
+  path: "/pricing",
+});
 
 export default function PricingPage() {
   const renderComparisonCell = (value: ComparisonCell, emphasize = false) => {

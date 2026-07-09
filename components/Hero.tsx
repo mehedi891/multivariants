@@ -1,5 +1,4 @@
 import Link from "next/link";
-import AnimateIn from "./AnimateIn";
 
 export default function Hero() {
   const variantRows = [
@@ -38,31 +37,31 @@ export default function Hero() {
 
         {/* ── Left: Copy ── */}
         <div>
-          <AnimateIn direction="down" delay={0}>
+          <div>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white/80 glass shadow-lg">
               <span className="text-amber-400 tracking-wide" aria-hidden="true">★★★★★</span>
               Trusted by 13,000+ Shopify merchants
             </div>
-          </AnimateIn>
+          </div>
 
-          <AnimateIn direction="up" delay={100}>
+          <div>
             <h1 className="mb-6 text-4xl font-black leading-[1.22] tracking-tight text-white sm:text-5xl md:text-[3.4rem]">
               Bulk Variant Ordering
               <br />
               for{" "}
               <span className="text-gradient-warm">Shopify Stores</span>
             </h1>
-          </AnimateIn>
+          </div>
 
-          <AnimateIn direction="up" delay={200}>
+          <div>
             <p className="mb-10 max-w-[520px] text-base leading-relaxed text-white/65 sm:text-lg">
               Let customers order multiple product variants in seconds with a
               simple order form. Perfect for B2B, wholesale, and variant-heavy
               stores.
             </p>
-          </AnimateIn>
+          </div>
 
-          <AnimateIn direction="up" delay={300}>
+          <div>
             <div className="mb-12 flex flex-wrap items-center gap-3">
               <Link
                 href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp"
@@ -87,9 +86,9 @@ export default function Hero() {
                 View Demo
               </Link>
             </div>
-          </AnimateIn>
+          </div>
 
-          <AnimateIn direction="up" delay={400}>
+          <div>
             <div className="grid max-w-[480px] grid-cols-3 divide-x divide-white/15">
               {[
                 { value: "13,000+", label: "Merchants" },
@@ -102,11 +101,11 @@ export default function Hero() {
                 </div>
               ))}
             </div>
-          </AnimateIn>
+          </div>
         </div>
 
         {/* ── Right: Glass variant card ── */}
-        <AnimateIn direction="left" delay={200} className="w-full">
+        <div className="w-full">
           <div className="relative w-full max-w-[560px] lg:ml-auto">
             {/* Glow behind card */}
             <div className="absolute inset-0 -z-10 rounded-[28px] bg-primary/20 blur-3xl scale-95" aria-hidden="true" />
@@ -174,7 +173,7 @@ export default function Hero() {
               </div>
             </div>
           </div>
-        </AnimateIn>
+        </div>
       </div>
     </section>
   );

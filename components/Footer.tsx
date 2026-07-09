@@ -26,8 +26,8 @@ const appLinks = [
 
 const legalLinks = [
   { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms of Service", href: "#" },
   { label: "Changelog", href: "/changelog" },
+  { label: "llms.txt", href: "/llms.txt" },
 ];
 
 const socials = [
@@ -214,7 +214,11 @@ export default function Footer() {
             <ul className="flex flex-wrap gap-x-5 gap-y-2 list-none" role="list">
               {legalLinks.map((l) => (
                 <li key={l.label}>
-                  <Link href={l.href} className="text-white/50 hover:text-accent transition-colors">{l.label}</Link>
+                  {l.href.endsWith(".txt") ? (
+                    <a href={l.href} className="text-white/50 hover:text-accent transition-colors">{l.label}</a>
+                  ) : (
+                    <Link href={l.href} className="text-white/50 hover:text-accent transition-colors">{l.label}</Link>
+                  )}
                 </li>
               ))}
             </ul>
