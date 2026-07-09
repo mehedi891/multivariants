@@ -1,0 +1,456 @@
+Here is a stronger prompt designed for Claude Code to audit the complete website before making any changes:
+
+Act as a senior Technical SEO, AEO, GEO, and AI-discoverability specialist.
+
+Perform a complete end-to-end audit of this website project to identify anything that could prevent the site from:
+
+* Ranking effectively in traditional search engines
+* Appearing in featured snippets and answer engines
+* Being understood and cited by AI assistants
+* Being crawled, indexed, and interpreted correctly
+* Establishing clear topical authority, entity relevance, and trust
+
+Use specialized sub-agents where helpful to review the project in parallel, including:
+
+1. Technical SEO and crawlability
+2. On-page SEO and metadata
+3. Content structure and internal linking
+4. Structured data and schema markup
+5. AEO and featured-snippet readiness
+6. GEO and AI citation readiness
+7. Performance, accessibility, and rendering
+8. Analytics and search-engine verification setup
+
+## Important instructions
+
+Do not modify any files during this phase.
+
+First inspect the entire project, identify issues, verify each finding against the actual code, and create a prioritized remediation plan for my review.
+
+Do not make assumptions based only on filenames. Trace how pages, layouts, metadata, routes, content, and structured data are actually rendered.
+
+Avoid generic SEO advice. Every finding must be specific to this project and supported by evidence such as:
+
+* File path
+* Component or function name
+* Route or page
+* Relevant code reference
+* Rendered output, where it can be verified
+* Explanation of the likely SEO or discoverability impact
+
+## Audit scope
+
+### 1. Crawling and indexing
+
+Check:
+
+* robots.txt
+* XML sitemap generation and coverage
+* Canonical URLs
+* Index and noindex directives
+* Redirect behavior
+* HTTP status handling
+* Duplicate and parameterized URLs
+* Pagination
+* Trailing-slash consistency
+* HTTP/HTTPS and www/non-www consistency
+* Broken routes and links
+* Orphan pages
+* JavaScript rendering dependencies
+* Whether important content is available in the initial rendered HTML
+* Whether search engines can access all important pages and assets
+* Whether staging, development, admin, or private routes could be indexed accidentally
+
+### 2. Metadata
+
+Review every indexable page and route for:
+
+* Unique and descriptive meta titles
+* Meta description quality
+* Title and description length
+* Search intent alignment
+* Primary keyword placement
+* Duplicate or missing metadata
+* Metadata inheritance and fallback behavior
+* Dynamic metadata generation
+* Open Graph metadata
+* X/Twitter metadata
+* Social preview images
+* Canonical metadata
+* Robots metadata
+* Language and locale declarations
+* Alternate-language or hreflang requirements, where applicable
+
+Create a page-level metadata inventory showing the existing title, description, canonical URL, and identified issue.
+
+### 3. Page and heading structure
+
+Check:
+
+* Whether every page has one clear H1
+* Logical H1-H6 hierarchy
+* Heading duplication
+* Headings being used only for styling
+* Whether headings clearly communicate the page topic
+* Semantic HTML structure
+* Landmark elements such as header, nav, main, article, section, aside, and footer
+* Descriptive link and button text
+* Image alt text
+* Anchor text quality
+* Content accessibility for crawlers and assistive technologies
+
+### 4. Content quality and search intent
+
+Evaluate whether each major page:
+
+* Clearly explains what the company, product, or service does
+* Targets a defined search intent
+* Answers the visitor’s main questions
+* Includes meaningful benefit-focused content
+* Contains sufficient original information
+* Avoids thin, repetitive, vague, or keyword-stuffed copy
+* Uses consistent terminology
+* Demonstrates expertise and trust
+* Includes appropriate proof, examples, use cases, FAQs, comparisons, or supporting evidence
+* Has a clear relationship with other pages in the site architecture
+
+Identify content gaps and keyword cannibalization risks.
+
+Do not invent search volume or keyword data unless reliable research tools are available.
+
+### 5. Internal linking and information architecture
+
+Review:
+
+* Navigation structure
+* Footer links
+* Breadcrumbs
+* Contextual internal links
+* Topic clusters
+* Hub and supporting pages
+* Anchor-text quality
+* Click depth
+* Orphaned or weakly connected pages
+* Links between product, feature, use-case, pricing, documentation, FAQ, blog, and comparison pages
+* Whether the architecture clearly communicates topical authority
+
+Provide recommendations for an improved page hierarchy and internal-linking strategy.
+
+### 6. Structured data
+
+Find all existing structured data and validate:
+
+* JSON-LD syntax
+* Schema type selection
+* Required and recommended properties
+* Consistency with visible page content
+* Duplicate or conflicting schema
+* Organization schema
+* WebSite schema
+* WebPage schema
+* SoftwareApplication or Product schema, where appropriate
+* Offer and pricing information
+* BreadcrumbList
+* FAQPage, only where content and current search-engine policies support it
+* Article or BlogPosting
+* Person and author information
+* Review or AggregateRating eligibility
+* ContactPoint
+* SameAs references
+* Logo, image, date, publisher, and author properties
+
+Do not recommend misleading, invisible, or unsupported structured data.
+
+For every schema recommendation, explain:
+
+* Which pages should use it
+* Why it is appropriate
+* Which properties are required
+* What project data should populate it
+* Any eligibility or policy risks
+
+### 7. AEO readiness
+
+Assess how well the website is prepared for:
+
+* Featured snippets
+* People Also Ask results
+* Voice and conversational search
+* Direct answers
+* Definition queries
+* How-to queries
+* Comparison queries
+* Problem-solution searches
+
+Check whether content includes:
+
+* Clear question-based headings
+* Concise direct answers
+* Definitions
+* Ordered steps
+* Unordered lists
+* Comparison tables
+* FAQs
+* Examples
+* Use cases
+* Supporting context after the direct answer
+
+Recommend exact content formats and page locations, but do not rewrite the entire site during this audit.
+
+### 8. GEO and AI citation readiness
+
+Evaluate whether AI search systems and assistants can clearly understand, retrieve, verify, and cite the website.
+
+Check:
+
+* Clear organization and product identity
+* Consistent entity naming
+* Clear explanation of what the product does
+* Specific, verifiable claims
+* First-party facts, statistics, examples, case studies, and documentation
+* Author, publisher, and company attribution
+* Publication and update dates
+* Source transparency
+* About, contact, privacy, terms, and editorial information
+* Consistent company details across the site
+* Crawl access for relevant AI user agents
+* Content availability in rendered HTML
+* Stable, descriptive URLs
+* Citation-friendly paragraphs
+* Self-contained answers
+* Unique first-party information
+* Documentation and changelog quality
+* External authority signals and SameAs references
+* Whether key claims are supported by evidence
+* Whether content appears promotional without enough factual substance
+
+Review whether files or mechanisms such as `llms.txt` would add meaningful value for this project. Do not recommend them automatically without explaining their limitations and current practical value.
+
+Identify why an AI assistant might avoid citing the website and what changes could make the site a stronger primary source.
+
+### 9. Performance and technical quality
+
+Review SEO-impacting technical factors, including:
+
+* Core Web Vitals risks
+* Server-side rendering and static generation
+* Hydration issues
+* Render-blocking resources
+* JavaScript bundle size
+* Font loading
+* Image optimization
+* Lazy loading
+* Layout shifts
+* Largest Contentful Paint
+* Interaction responsiveness
+* Caching
+* Compression
+* Preloading and preconnect usage
+* Mobile responsiveness
+* Accessibility problems that also affect SEO
+* Broken components or console errors
+* Error pages and empty states
+
+Separate confirmed issues from potential risks that require live performance testing.
+
+### 10. Analytics and search-platform setup
+
+Check whether the project properly supports:
+
+* Google Analytics
+* Google Search Console verification
+* Bing Webmaster Tools verification
+* Consent handling, where required
+* Conversion tracking
+* UTM handling
+* Event tracking
+* Duplicate page-view prevention
+* Production-only analytics
+* Environment-variable safety
+
+Do not expose secret values in the report.
+
+## Validation requirements
+
+Where tools are available, run relevant project checks such as:
+
+* Build
+* Type checking
+* Linting
+* Route inspection
+* Sitemap validation
+* robots.txt inspection
+* Structured-data validation
+* Broken-link checking
+* Rendered HTML inspection
+* Accessibility checks
+* Lighthouse or equivalent audits
+
+Do not install unnecessary dependencies or make permanent project changes without approval.
+
+Clearly distinguish among:
+
+* Confirmed issue
+* Likely issue
+* Improvement opportunity
+* Requires production verification
+
+## Required deliverable
+
+Create a new audit document without changing existing project files.
+
+Suggested filename:
+
+`docs/SEO-AEO-GEO-AUDIT.md`
+
+The document should contain:
+
+### 1. Executive summary
+
+Include:
+
+* Overall assessment
+* Main strengths
+* Most serious weaknesses
+* Expected business and visibility impact
+* Top five priorities
+
+### 2. Current implementation overview
+
+Explain how the project currently handles:
+
+* Routing
+* Metadata
+* Rendering
+* Sitemap
+* robots.txt
+* Canonicals
+* Structured data
+* Content
+* Analytics
+
+### 3. Findings table
+
+For every finding, include:
+
+| ID | Area | Severity | Status | Page/Route | File | Finding | Evidence | Impact | Recommendation |
+| -- | ---- | -------- | ------ | ---------- | ---- | ------- | -------- | ------ | -------------- |
+
+Use these severity levels:
+
+* Critical
+* High
+* Medium
+* Low
+* Opportunity
+
+### 4. Page-level audit
+
+For each important route, document:
+
+* Search intent
+* Existing title
+* Existing description
+* H1
+* Canonical
+* Indexability
+* Schema
+* Main content issue
+* Internal-linking issue
+* AEO opportunity
+* AI-citation opportunity
+* Recommended action
+
+### 5. Metadata recommendations
+
+Provide recommended titles and descriptions for pages that are missing, duplicated, weak, or incorrectly targeted.
+
+Keep recommendations natural, useful, and aligned with the actual page content.
+
+### 6. Structured-data plan
+
+Show:
+
+* Existing schema
+* Validation issues
+* Recommended schema by page type
+* Required data sources
+* Implementation risks
+
+### 7. Content and topical-authority gaps
+
+Include:
+
+* Missing pages
+* Weak pages
+* Overlapping pages
+* FAQ opportunities
+* Comparison opportunities
+* Use-case opportunities
+* Documentation gaps
+* First-party research or case-study opportunities
+* Pages that could become citation-worthy resources
+
+### 8. Prioritized implementation plan
+
+Organize the work into:
+
+#### Phase 1: Critical fixes
+
+Issues affecting crawling, indexing, rendering, duplication, or trust.
+
+#### Phase 2: High-impact improvements
+
+Metadata, content structure, schema, internal links, and important page improvements.
+
+#### Phase 3: AEO and GEO improvements
+
+Answer-focused content, AI citation readiness, entity clarity, sourceability, and authority building.
+
+#### Phase 4: Validation and monitoring
+
+Testing, analytics, Search Console, structured-data monitoring, rankings, and ongoing review.
+
+For every task include:
+
+* Priority
+* Expected impact
+* Implementation complexity
+* Relevant files
+* Dependencies
+* Validation method
+
+### 9. Quick wins
+
+List changes that are low effort but likely to produce meaningful improvements.
+
+### 10. Questions and missing information
+
+List anything that cannot be confirmed from the repository, such as:
+
+* Production domain behavior
+* Search Console data
+* Analytics data
+* Current rankings
+* Backlink profile
+* CMS workflow
+* Target markets
+* Target keywords
+* Competitor strategy
+
+## Final response
+
+After creating the report, give me a concise summary containing:
+
+1. Overall audit result
+2. Number of findings by severity
+3. The five most important issues
+4. The recommended first implementation phase
+5. The path of the audit document
+6. Any checks that could not be completed and why
+
+Stop after the audit and remediation plan.
+
+Do not implement fixes until I review the findings and explicitly approve the implementation phase.
+
+This version forces Claude to verify the actual implementation, separate confirmed issues from assumptions, and produce an actionable report before touching the code.

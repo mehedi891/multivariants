@@ -134,11 +134,3 @@ Old `/blog/<YYYY>/<MM>/` monthly archive URLs → new `/blog`. The new site has 
 > (`/blog/my-post`) or the `/blog/page/:n` rule.
 
 ---
-
-<!-- Add the next batch of old URLs below and I'll fill in the redirect targets. -->
-
-## Batch 5 — (paste old URLs here)
-
-| # | Old URL | Redirect To | Status |
-|---|---------|-------------|--------|
-| | | | |
