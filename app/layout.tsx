@@ -73,45 +73,79 @@ export const metadata: Metadata = {
   // file conventions.
 };
 
+// Site-wide entity graph: a single Organization + WebSite that other pages'
+// JSON-LD (BlogPosting/Article publishers, breadcrumbs) can reference by @id,
+// plus the product's SoftwareApplication node.
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "MultiVariants – Bulk Order App",
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Shopify",
-  url: "https://multivariants.com",
-  description:
-    "Allow customers to bulk add multiple product variants to cart in one click on Shopify.",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-    description: "Free plan available with 7-day trial",
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "350",
-    bestRating: "5",
-    worstRating: "1",
-  },
-  author: {
-    "@type": "Organization",
-    name: "eFoli",
-    url: "https://multivariants.com",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "DOHS Mirpur",
-      addressLocality: "Dhaka",
-      postalCode: "1216",
-      addressCountry: "BD",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://multivariants.com/#organization",
+      name: "MultiVariants",
+      url: "https://multivariants.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://multivariants.com/images/logo.webp",
+      },
+      sameAs: [
+        "https://www.facebook.com/MultiVariantsApp",
+        "https://www.linkedin.com/company/multivariants/",
+        "https://twitter.com/multivariants",
+        "https://apps.shopify.com/multivariants",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "support@multivariants.com",
+        contactType: "customer support",
+      },
+      parentOrganization: {
+        "@type": "Organization",
+        name: "eFoli",
+        url: "https://efoli.com",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "DOHS Mirpur",
+          addressLocality: "Dhaka",
+          postalCode: "1216",
+          addressCountry: "BD",
+        },
+      },
     },
-    contactPoint: {
-      "@type": "ContactPoint",
-      email: "support@multivariants.com",
-      contactType: "customer support",
+    {
+      "@type": "WebSite",
+      "@id": "https://multivariants.com/#website",
+      url: "https://multivariants.com",
+      name: "MultiVariants",
+      publisher: { "@id": "https://multivariants.com/#organization" },
     },
-  },
+    {
+      "@type": "SoftwareApplication",
+      name: "MultiVariants – Bulk Order App",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Shopify",
+      url: "https://multivariants.com",
+      description:
+        "Allow customers to bulk add multiple product variants to cart in one click on Shopify.",
+      offers: {
+        "@type": "AggregateOffer",
+        priceCurrency: "USD",
+        lowPrice: "0",
+        highPrice: "29.99",
+        offerCount: "3",
+        description:
+          "Free Starter plan; paid plans from $12.99/month with a 7-day free trial",
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.9",
+        reviewCount: "350",
+        bestRating: "5",
+        worstRating: "1",
+      },
+      publisher: { "@id": "https://multivariants.com/#organization" },
+    },
+  ],
 };
 
 export default function RootLayout({

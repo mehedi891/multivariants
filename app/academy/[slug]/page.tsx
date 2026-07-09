@@ -25,14 +25,34 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: "Academy Doc",
       description: "MultiVariants help documentation.",
       alternates: { canonical: "/academy" },
+      robots: { index: false, follow: true },
     };
   }
 
+  const title = doc.seoTitle ?? doc.title;
+  const description = doc.seoDescription ?? doc.excerpt;
+  const url = `https://multivariants.com/academy/${slug}`;
+
   return {
-    title: `${doc.seoTitle ?? doc.title} | Academy`,
-    description: doc.seoDescription ?? doc.excerpt,
-    alternates: {
-      canonical: `/academy/${slug}`,
+    // `absolute` avoids the "| MultiVariants" template ALSO appending, which
+    // would produce a double "… | Academy | MultiVariants" suffix.
+    title: { absolute: `${title} | MultiVariants Academy` },
+    description,
+    alternates: { canonical: `/academy/${slug}` },
+    openGraph: {
+      type: "article",
+      url,
+      siteName: "MultiVariants",
+      title,
+      description,
+      images: [{ url: "/og-image", width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/og-image"],
+      creator: "@multivariants",
     },
   };
 }
@@ -67,8 +87,36 @@ export default async function AcademyDocPage({ params }: PageProps) {
   const contentHtml = doc.contentHtml ?? "";
   const hasHtml = contentHtml.trim().length > 0;
 
+  const docUrl = `https://multivariants.com/academy/${doc.slug}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        headline: doc.seoTitle ?? doc.title,
+        description: doc.seoDescription ?? doc.excerpt,
+        url: docUrl,
+        mainEntityOfPage: docUrl,
+        author: { "@id": "https://multivariants.com/#organization" },
+        publisher: { "@id": "https://multivariants.com/#organization" },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://multivariants.com" },
+          { "@type": "ListItem", position: 2, name: "Academy", item: "https://multivariants.com/academy" },
+          { "@type": "ListItem", position: 3, name: doc.title, item: docUrl },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
       <main id="main-content" className="overflow-x-clip">
         <section

@@ -203,13 +203,39 @@ function normalizeListPayload(payload: unknown) {
     (Array.isArray(root.categories) && root.categories) ||
     [];
 
-  return categoriesRaw
+  const categories = categoriesRaw
     .filter(
       (item): item is Record<string, unknown> =>
         typeof item === "object" && item !== null
     )
     .map(mapApiCategory)
     .filter((category): category is AcademyCategory => Boolean(category));
+
+  // Docs the CMS returns outside any category. Without this they were dropped
+  // from both the /academy listing and the sitemap, leaving them orphaned (C5).
+  const uncategorizedRaw =
+    (Array.isArray(data.uncategorized) && data.uncategorized) ||
+    (Array.isArray(root.uncategorized) && root.uncategorized) ||
+    [];
+
+  const uncategorizedDocs = uncategorizedRaw
+    .filter(
+      (item): item is Record<string, unknown> =>
+        typeof item === "object" && item !== null
+    )
+    .map(mapApiDocListItem)
+    .filter((doc) => Boolean(doc.slug));
+
+  if (uncategorizedDocs.length > 0) {
+    categories.push({
+      slug: "other",
+      title: "Other Guides",
+      description: "",
+      docs: uncategorizedDocs,
+    });
+  }
+
+  return categories;
 }
 
 function mapApiSingleDoc(payload: unknown): PublicAcademyDoc | null {

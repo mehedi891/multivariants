@@ -373,13 +373,14 @@ export default function FeaturesPage() {
                             {item.desc}
                           </p>
 
-                          <div className="mt-3 space-y-2.5">
+                          <ul className="mt-3 space-y-2.5">
                             {item.bullets.map((b) => (
-                              <p key={b} className="text-sm leading-relaxed text-white/60 sm:text-[15px] lg:text-base">
-                                {b}
-                              </p>
+                              <li key={b} className="flex items-start gap-2.5 text-sm leading-relaxed text-white/60 sm:text-[15px] lg:text-base">
+                                <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                                <span>{b}</span>
+                              </li>
                             ))}
-                          </div>
+                          </ul>
 
                           <div className="mt-6 flex flex-wrap gap-3">
                             <Link

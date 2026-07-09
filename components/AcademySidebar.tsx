@@ -65,7 +65,7 @@ export default function AcademySidebar({
 
       <label
         htmlFor="academy-sidebar-search"
-        className="relative z-10 mb-4 flex items-center gap-2 rounded-lg border border-white/[0.09] bg-[#0c1428]/70 px-3 py-2 text-sm text-white/65 focus-within:border-primary/45"
+        className="relative z-10 mb-4 flex items-center gap-2 rounded-lg border border-white/[0.09] bg-[#0c1428]/70 px-3 py-2 text-sm text-white/65 focus-within:border-primary/45 focus-within:ring-2 focus-within:ring-primary/35"
       >
         <svg
           className="h-4 w-4 text-white/45"
@@ -84,7 +84,7 @@ export default function AcademySidebar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Filter docs..."
-          className="w-full bg-transparent text-sm text-white placeholder:text-white/35 outline-none"
+          className="w-full bg-transparent text-sm text-white placeholder:text-white/50 outline-none"
         />
       </label>
 

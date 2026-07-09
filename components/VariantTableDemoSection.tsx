@@ -107,7 +107,7 @@ export default function VariantTableDemoSection() {
                               type="number" min={0} max={99}
                               value={quantities[size][color]}
                               onChange={(e) => update(size, color, parseInt(e.target.value, 10) || 0)}
-                              className={`h-8 w-11 rounded-lg border text-center text-sm font-bold bg-transparent outline-none transition-all [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${
+                              className={`h-8 w-11 rounded-lg border text-center text-sm font-bold bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-all [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${
                                 quantities[size][color] > 0
                                   ? "border-accent/50 text-accent"
                                   : "border-white/15 text-white/35"

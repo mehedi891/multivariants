@@ -110,7 +110,7 @@ export default function AcademyExplorer({ categories }: Props) {
           <div className="mt-4 grid grid-cols-1 gap-4">
             <label
               htmlFor="academy-search"
-              className="group flex items-center gap-2.5 rounded-xl border border-white/18 bg-[#0f1933]/65 px-3.5 py-2.5 text-sm text-white/65 transition-all focus-within:border-primary/55 focus-within:shadow-[0_0_18px_rgba(92,106,196,0.28)]"
+              className="group flex items-center gap-2.5 rounded-xl border border-white/18 bg-[#0f1933]/65 px-3.5 py-2.5 text-sm text-white/65 transition-all focus-within:border-primary/55 focus-within:ring-2 focus-within:ring-primary/35 focus-within:shadow-[0_0_18px_rgba(92,106,196,0.28)]"
             >
               <svg
                 className="h-4 w-4 text-white/45 group-focus-within:text-primary-light"
@@ -129,7 +129,7 @@ export default function AcademyExplorer({ categories }: Props) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search docs by title, topic, or keyword..."
-                className="w-full bg-transparent text-sm text-white placeholder:text-white/35 outline-none"
+                className="w-full bg-transparent text-sm text-white placeholder:text-white/50 outline-none"
               />
             </label>
 

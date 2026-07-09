@@ -167,15 +167,16 @@ export default async function ClientDetailsPage({ params }: PageProps) {
       "@type": "Person",
       name: client.authorName,
     },
-    publisher: {
-      "@type": "Organization",
-      name: "MultiVariants",
-      url: SITE_URL,
-      logo: {
-        "@type": "ImageObject",
-        url: toAbsoluteUrl("/images/logo.webp"),
-      },
-    },
+    publisher: { "@id": "https://multivariants.com/#organization" },
+  };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Clients Showcase", item: `${SITE_URL}/clients-showcase` },
+      { "@type": "ListItem", position: 3, name: client.title, item: canonicalUrl },
+    ],
   };
 
   return (
@@ -183,6 +184,10 @@ export default async function ClientDetailsPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(clientJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <Navbar />
       <main id="main-content">

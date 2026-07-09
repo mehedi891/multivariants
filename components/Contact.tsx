@@ -54,7 +54,7 @@ export default function Contact() {
   // Dark inputs; the -webkit-autofill overrides stop the browser from painting
   // the field white on autofill.
   const inputCls =
-    "w-full rounded-xl border border-white/12 bg-[#0c1428]/80 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all duration-200 focus:border-primary/55 focus:bg-[#0c1428] focus:ring-2 focus:ring-primary/25 [&:-webkit-autofill]:[box-shadow:inset_0_0_0_1000px_#0c1428] [&:-webkit-autofill]:[-webkit-text-fill-color:#fff]";
+    "w-full rounded-xl border border-white/12 bg-[#0c1428]/80 px-4 py-3 text-sm text-white placeholder-white/50 outline-none transition-all duration-200 focus:border-primary/55 focus:bg-[#0c1428] focus:ring-2 focus:ring-primary/25 [&:-webkit-autofill]:[box-shadow:inset_0_0_0_1000px_#0c1428] [&:-webkit-autofill]:[-webkit-text-fill-color:#fff]";
   const labelCls = "mb-1.5 block text-[13px] font-semibold text-white/70";
 
   return (

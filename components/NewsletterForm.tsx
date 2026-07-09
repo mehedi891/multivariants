@@ -23,7 +23,7 @@ export default function NewsletterForm() {
         placeholder="Your Email Address"
         autoComplete="email"
         required
-        className="flex-1 min-w-0 px-3.5 py-2.5 bg-white/10 border border-white/15 border-r-0 rounded-l-lg text-white text-[13px] placeholder-white/35 focus:outline-none focus:border-primary font-[inherit]"
+        className="flex-1 min-w-0 px-3.5 py-2.5 bg-white/10 border border-white/15 border-r-0 rounded-l-lg text-white text-[13px] placeholder-white/50 focus:outline-none focus:border-primary focus-visible:ring-2 focus-visible:ring-primary/50 font-[inherit]"
       />
       <button
         type="submit"

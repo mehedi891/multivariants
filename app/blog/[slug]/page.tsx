@@ -340,15 +340,16 @@ export default async function BlogPostPage({ params }: PageProps) {
       "@type": "Person",
       name: post.authorName,
     },
-    publisher: {
-      "@type": "Organization",
-      name: "MultiVariants",
-      url: SITE_URL,
-      logo: {
-        "@type": "ImageObject",
-        url: toAbsoluteUrl("/images/logo.webp"),
-      },
-    },
+    publisher: { "@id": "https://multivariants.com/#organization" },
+  };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: postCanonicalUrl },
+    ],
   };
   // Share links are generated from the post's own URL + title (not stored in
   // the CMS) — each is the network's share endpoint with the encoded post URL.
@@ -382,6 +383,10 @@ export default async function BlogPostPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <Navbar />
       <main id="main-content">
