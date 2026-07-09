@@ -154,8 +154,15 @@ function mapSections(raw: unknown): AcademySection[] {
     .filter((section) => section.heading || section.paragraphs.length > 0);
 }
 
+// Strip a trailing "[...]" / "[…]" truncation marker the CMS appends to excerpts.
+function cleanExcerpt(value: string | undefined) {
+  return String(value ?? "")
+    .replace(/\s*\[\s*(?:\.{2,}|…)\s*\]\s*$/u, "")
+    .trim();
+}
+
 function mapApiDocListItem(raw: Record<string, unknown>): AcademyDoc {
-  const excerpt = String(raw.excerpt ?? raw.summary ?? raw.description ?? "").trim();
+  const excerpt = cleanExcerpt(String(raw.excerpt ?? raw.summary ?? raw.description ?? ""));
   return {
     slug: String(raw.slug ?? ""),
     title: String(raw.title ?? "Untitled Doc"),
@@ -266,7 +273,7 @@ function mapApiSingleDoc(payload: unknown): PublicAcademyDoc | null {
   ).trim();
 
   const excerpt =
-    base.excerpt ||
+    cleanExcerpt(base.excerpt) ||
     (contentHtml ? stripHtml(contentHtml).slice(0, 180).trim() : "Academy guide");
 
   return {

@@ -446,7 +446,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
           <div className="relative z-10 mx-auto max-w-6xl lg:grid lg:grid-cols-[260px_minmax(0,1fr)] lg:items-start lg:gap-6">
             <aside className="hidden lg:block lg:sticky lg:top-24 lg:h-fit lg:self-start">
-              <div className="rounded-2xl border border-white/14 bg-white/[0.04] p-4 backdrop-blur-lg">
+              <div className="rounded-2xl border border-white/[0.18] bg-white/[0.04] p-4 backdrop-blur-lg">
                 <p className="text-xs font-semibold uppercase tracking-[0.1em] text-primary-light">
                   Table of Contents
                 </p>
@@ -474,7 +474,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               </div>
             </aside>
 
-            <article className="overflow-hidden rounded-[24px] border border-white/14 bg-gradient-to-b from-[#1a2441]/92 to-[#101933]/96 shadow-[0_18px_42px_rgba(0,0,0,0.34)]">
+            <article className="overflow-hidden rounded-[24px] border border-white/[0.18] bg-gradient-to-b from-[#1a2441]/92 to-[#101933]/96 shadow-[0_18px_42px_rgba(0,0,0,0.34)]">
               <div className="relative aspect-[16/8] border-b border-white/10">
                 <Image
                   src={post.coverImage}

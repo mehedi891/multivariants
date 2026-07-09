@@ -157,7 +157,7 @@ export default async function AcademyDocPage({ params }: PageProps) {
         </section>
 
         <section
-          className="relative overflow-hidden px-[5%] py-10 lg:py-14"
+          className="relative overflow-x-clip px-[5%] py-10 lg:py-14"
           style={{
             background:
               "linear-gradient(180deg, #0d1327 0%, #111b33 52%, #181238 100%)",
