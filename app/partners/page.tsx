@@ -27,12 +27,26 @@ function getPageItems(current: number, total: number): (number | "ellipsis")[] {
   return items;
 }
 
-export const metadata: Metadata = pageMetadata({
-  title: "App Partners & Integrations",
-  description:
-    "Explore app partners that work seamlessly alongside MultiVariants for Shopify growth.",
-  path: "/partners",
-});
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}): Promise<Metadata> {
+  const { page: pageParam } = await searchParams;
+  const page = Math.max(1, Math.floor(Number(pageParam) || 1));
+  let title = "App Partners & Integrations";
+  let description =
+    "Explore app partners that work seamlessly alongside MultiVariants for Shopify growth.";
+  if (page > 1) {
+    title = `${title} – Page ${page}`;
+    description = `${description} (Page ${page})`;
+  }
+  return pageMetadata({
+    title,
+    description,
+    path: page > 1 ? `/partners?page=${page}` : "/partners",
+  });
+}
 
 const themeClassMap = [
   "bg-[#0d5fa6]/30 text-[#89c8ff] border-[#3b93d9]/45",

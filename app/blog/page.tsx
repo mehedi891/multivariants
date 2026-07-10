@@ -9,13 +9,49 @@ import ApiEmptyState from "@/components/ApiEmptyState";
 import { pageMetadata } from "@/lib/seo";
 import { getPublicBlogPosts } from "@/app/blog/public-api";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Blog – Shopify Bulk Ordering & B2B Tips",
-  description:
-    "Read the latest MultiVariants insights on bulk ordering, B2B conversion, restriction rules, and Shopify growth.",
-  path: "/blog",
-  ogTitle: "MultiVariants Blog",
-});
+export async function generateMetadata({
+  searchParams,
+}: PageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const page = safePage(pickFirst(params.page));
+  const categoryRaw = pickFirst(params.category);
+  const category =
+    categoryRaw && categoryRaw.toLowerCase() !== "all" ? categoryRaw : undefined;
+
+  const baseTitle = "Blog – Shopify Bulk Ordering & B2B Tips";
+  const baseDesc =
+    "Read the latest MultiVariants insights on bulk ordering, B2B conversion, restriction rules, and Shopify growth.";
+
+  const prettyCategory = category
+    ? category.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+    : undefined;
+
+  let title = prettyCategory ? `${prettyCategory} Articles` : baseTitle;
+  let description = prettyCategory
+    ? `${prettyCategory} articles from the MultiVariants blog on Shopify bulk ordering and variant selling.`
+    : baseDesc;
+  let ogTitle = prettyCategory
+    ? `${prettyCategory} Articles – MultiVariants Blog`
+    : "MultiVariants Blog";
+
+  // Distinct title/description per page so paginated pages aren't seen as
+  // duplicates of page 1.
+  if (page > 1) {
+    title = `${title} – Page ${page}`;
+    description = `${description} (Page ${page})`;
+    ogTitle = `${ogTitle} – Page ${page}`;
+  }
+
+  // Self-referencing canonical per page/category (Google discourages pointing
+  // paginated pages' canonical back at page 1).
+  const query = new URLSearchParams();
+  if (page > 1) query.set("page", String(page));
+  if (category) query.set("category", category);
+  const qs = query.toString();
+  const path = qs ? `/blog?${qs}` : "/blog";
+
+  return pageMetadata({ title, description, path, ogTitle });
+}
 
 type PageProps = {
   searchParams: Promise<{

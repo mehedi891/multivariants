@@ -8,12 +8,24 @@ import AnimateIn from "@/components/AnimateIn";
 import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicChangelogs } from "@/app/changelog/public-api";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Changelog – Product Updates & Releases",
-  description:
-    "Track recent MultiVariants releases, features, improvements, and fixes.",
-  path: "/changelog",
-});
+export async function generateMetadata({
+  searchParams,
+}: PageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const page = safePage(pickFirst(params.page));
+  let title = "Changelog – Product Updates & Releases";
+  let description =
+    "Track recent MultiVariants releases, features, improvements, and fixes.";
+  if (page > 1) {
+    title = `${title} – Page ${page}`;
+    description = `${description} (Page ${page})`;
+  }
+  return pageMetadata({
+    title,
+    description,
+    path: page > 1 ? `/changelog?page=${page}` : "/changelog",
+  });
+}
 
 type PageProps = {
   searchParams: Promise<{

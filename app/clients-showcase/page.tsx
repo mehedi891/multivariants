@@ -8,12 +8,24 @@ import AnimateIn from "@/components/AnimateIn";
 import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicClients } from "@/app/clients-showcase/public-api";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Client Showcase – Merchant Stories",
-  description:
-    "Explore businesses that use MultiVariants to scale bulk variant ordering on Shopify.",
-  path: "/clients-showcase",
-});
+export async function generateMetadata({
+  searchParams,
+}: PageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const page = safePage(pickFirst(params.page));
+  let title = "Client Showcase – Merchant Stories";
+  let description =
+    "Explore businesses that use MultiVariants to scale bulk variant ordering on Shopify.";
+  if (page > 1) {
+    title = `${title} – Page ${page}`;
+    description = `${description} (Page ${page})`;
+  }
+  return pageMetadata({
+    title,
+    description,
+    path: page > 1 ? `/clients-showcase?page=${page}` : "/clients-showcase",
+  });
+}
 
 type PageProps = {
   searchParams: Promise<{
