@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { headers } from "next/headers";
+import { cookies, draftMode, headers } from "next/headers";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
+import PreviewBanner from "@/components/PreviewBanner";
+import { PREVIEW_LOCALE_COOKIE } from "@/app/api/preview/route";
 import {
   getPublicBlogPost,
   getPublicBlogPosts,
@@ -37,6 +39,20 @@ const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://multivariants.com
 const GENERIC_POST_TITLE = "MultiVariants Blog";
 const GENERIC_POST_DESCRIPTION =
   "Read the latest MultiVariants blog posts and Shopify growth guides.";
+
+/**
+ * Resolves the request's preview state. Draft mode is enabled by
+ * `/api/preview` (which the CMS "Preview on site" button redirects to), and the
+ * locale of the previewed translation rides along in a cookie.
+ */
+async function resolvePreviewContext() {
+  const { isEnabled } = await draftMode();
+  if (!isEnabled) return { preview: false as const, locale: undefined };
+
+  const cookieStore = await cookies();
+  const locale = cookieStore.get(PREVIEW_LOCALE_COOKIE)?.value?.trim();
+  return { preview: true as const, locale: locale || undefined };
+}
 
 function formatDate(dateISO: string) {
   return new Date(dateISO).toLocaleDateString("en-US", {
@@ -239,7 +255,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     cookie: incomingHeaders.get("cookie"),
     authorization: incomingHeaders.get("authorization"),
   };
-  const post = await getPublicBlogPost(slug, requestHeaders);
+  const { preview, locale } = await resolvePreviewContext();
+  const post = await getPublicBlogPost(slug, requestHeaders, { preview, locale });
 
   if (!post) {
     return {
@@ -260,17 +277,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const publishedTime = toIsoDate(post.publishedAt);
 
   return {
-    title,
+    title: preview ? `[Preview] ${title}` : title,
     description,
     category: post.category,
     keywords: [post.category, "Shopify", "MultiVariants", "Bulk ordering"],
     alternates: {
       canonical: canonicalPath,
     },
-    robots: {
-      index: true,
-      follow: true,
-    },
+    // Unpublished content must never be indexed, even on the production domain.
+    robots: preview
+      ? { index: false, follow: false, nocache: true }
+      : { index: true, follow: true },
     openGraph: {
       type: "article",
       url: canonicalUrl,
@@ -306,10 +323,13 @@ export default async function BlogPostPage({ params }: PageProps) {
     cookie: incomingHeaders.get("cookie"),
     authorization: incomingHeaders.get("authorization"),
   };
-  const post = await getPublicBlogPost(slug, requestHeaders);
+  const { preview, locale } = await resolvePreviewContext();
+  const post = await getPublicBlogPost(slug, requestHeaders, { preview, locale });
 
   if (!post) notFound();
 
+  // The listing endpoint only ever returns published content, so "related"
+  // stays published even while previewing a draft.
   const relatedRes = await getPublicBlogPosts({
     page: 1,
     limit: 4,
@@ -380,14 +400,27 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      {preview && (
+        <PreviewBanner
+          status={post.status}
+          locale={locale}
+          exitRedirect={`/blog/${post.slug}`}
+        />
+      )}
+      {/* Structured data describes published content only — emitting it for an
+          unpublished draft would advertise a page that does not exist yet. */}
+      {!preview && (
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+          />
+        </>
+      )}
       <Navbar />
       <main id="main-content">
         <section

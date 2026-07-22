@@ -29,6 +29,32 @@ const BLOG_API_BEARER_TOKEN = normalizeEnvUrl(process.env.BLOG_API_BEARER_TOKEN)
 const BLOG_API_PROTECTION_BYPASS = normalizeEnvUrl(
   process.env.BLOG_API_PROTECTION_BYPASS
 );
+// Shared secret with the CMS. Sent as the `x-preview-token` header (never a
+// query string) on the single-post endpoint to unlock unpublished drafts.
+// Server-side only — must never be exposed to client JavaScript.
+const PREVIEW_SECRET = normalizeEnvUrl(process.env.PREVIEW_SECRET);
+
+export function isPreviewConfigured() {
+  return Boolean(PREVIEW_SECRET);
+}
+
+export function getPreviewSecret() {
+  return PREVIEW_SECRET;
+}
+
+export type PostStatus = "DRAFT" | "PUBLISHED" | "SCHEDULED" | "ARCHIVED";
+
+const POST_STATUSES: PostStatus[] = [
+  "DRAFT",
+  "PUBLISHED",
+  "SCHEDULED",
+  "ARCHIVED",
+];
+
+function toPostStatus(value: unknown): PostStatus | undefined {
+  const raw = String(value ?? "").trim().toUpperCase();
+  return POST_STATUSES.find((status) => status === raw);
+}
 
 const FALLBACK_IMAGE = "/images/features/easy-to-use-and-configure.webp";
 
@@ -58,6 +84,10 @@ export type PublicBlogListItem = {
 
 export type PublicBlogPost = PublicBlogListItem & {
   contentHtml: string;
+  /** Only present when the post was fetched with a valid preview token. */
+  isPreview?: boolean;
+  /** DRAFT · PUBLISHED · SCHEDULED · ARCHIVED — only returned in preview. */
+  status?: PostStatus;
 };
 
 export type PublicBlogListResult = {
@@ -162,11 +192,22 @@ function buildSinglePostUrlCandidates(slug: string) {
 
 function buildFetchInit(
   revalidateSeconds: number,
-  requestHeaders?: BlogRequestHeaders
+  requestHeaders?: BlogRequestHeaders,
+  preview = false
 ) {
   const headers: Record<string, string> = {
     Accept: "application/json",
   };
+
+  // Preview responses are per-editor and may change on every save, so they are
+  // never cached and never share a cache entry with published content.
+  if (preview && PREVIEW_SECRET) {
+    headers["x-preview-token"] = PREVIEW_SECRET;
+    if (BLOG_API_PROTECTION_BYPASS) {
+      headers["x-vercel-protection-bypass"] = BLOG_API_PROTECTION_BYPASS;
+    }
+    return { cache: "no-store" as const, headers };
+  }
 
   if (BLOG_API_FORWARD_AUTH && requestHeaders?.cookie) {
     headers.cookie = requestHeaders.cookie;
@@ -520,10 +561,21 @@ function fallbackPost(slug: string): PublicBlogPost | null {
   };
 }
 
+export type BlogPostFetchOptions = {
+  /** Send the shared secret so unpublished drafts are returned. */
+  preview?: boolean;
+  /** Optional CMS locale — previews a draft translation. */
+  locale?: string;
+};
+
 export async function getPublicBlogPost(
   slug: string,
-  requestHeaders?: BlogRequestHeaders
+  requestHeaders?: BlogRequestHeaders,
+  options?: BlogPostFetchOptions
 ): Promise<PublicBlogPost | null> {
+  const preview = Boolean(options?.preview) && Boolean(PREVIEW_SECRET);
+  const locale = options?.locale?.trim();
+
   try {
     const errors: string[] = [];
 
@@ -531,10 +583,11 @@ export async function getPublicBlogPost(
       try {
         const url = new URL(baseUrl.toString());
         url.searchParams.set("site", BLOG_SITE);
+        if (locale) url.searchParams.set("locale", locale);
 
         const res = await fetch(
           url.toString(),
-          buildFetchInit(60, requestHeaders)
+          buildFetchInit(60, requestHeaders, preview)
         );
         if (!res.ok) {
           errors.push(`${url}: ${res.status}`);
@@ -568,6 +621,8 @@ export async function getPublicBlogPost(
         return {
           ...listItem,
           contentHtml: contentHtml || "<p>No content available.</p>",
+          isPreview: postData.isPreview === true || undefined,
+          status: toPostStatus(postData.status),
         };
       } catch (attemptError) {
         errors.push(toErrorMessage(attemptError));
@@ -577,7 +632,9 @@ export async function getPublicBlogPost(
   } catch (error) {
     logApiError(`single fetch failed for slug "${slug}"`, error);
 
-    if (BLOG_API_FALLBACK_ENABLED) {
+    // In preview the editor must see the real draft or an honest 404 — never a
+    // stale published/local copy silently standing in for it.
+    if (BLOG_API_FALLBACK_ENABLED && !preview) {
       return fallbackPost(slug);
     }
 

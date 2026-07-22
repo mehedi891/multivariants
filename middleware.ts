@@ -14,8 +14,17 @@ const INDEXABLE_HOSTS = new Set([
 export function middleware(req: NextRequest) {
   const host = (req.headers.get("host") ?? "").split(":")[0].toLowerCase();
   const res = NextResponse.next();
-  if (!INDEXABLE_HOSTS.has(host)) {
+
+  // Draft Mode sets `__prerender_bypass`. Any request carrying it may be
+  // rendering unpublished CMS content, so it is never indexed and never cached
+  // — including on the canonical production domain.
+  const isDraftMode = req.cookies.has("__prerender_bypass");
+
+  if (isDraftMode || !INDEXABLE_HOSTS.has(host)) {
     res.headers.set("X-Robots-Tag", "noindex, nofollow");
+  }
+  if (isDraftMode) {
+    res.headers.set("Cache-Control", "no-store, max-age=0");
   }
   return res;
 }
