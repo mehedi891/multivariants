@@ -552,6 +552,42 @@ export default async function BlogPostPage({ params }: PageProps) {
               </div>
 
               <section
+                aria-label="Editorial review"
+                className="border-t border-white/12 bg-white/[0.02] p-6 sm:p-8"
+              >
+                <div className="flex items-start gap-3.5">
+                  <span
+                    className="mt-0.5 inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-primary/40 bg-primary/15 text-primary-light"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      className="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z" />
+                      <path d="M9 12l2 2 4-4" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary-light">
+                      Reviewed by
+                    </p>
+                    <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/[0.72] sm:text-[15px]">
+                      This article was reviewed by the MultiVariants Technical
+                      Support Team, who regularly helps Shopify merchants test
+                      bulk ordering setup, variant selection, quantity rules,
+                      cart behavior, and checkout validation issues.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <section
                 aria-label="Author details"
                 className="border-t border-white/12 bg-white/[0.02] p-6 sm:p-8"
               >
