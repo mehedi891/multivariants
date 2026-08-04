@@ -154,13 +154,27 @@ function resolvePostSeo(post: PublicBlogPost) {
   return { title, description };
 }
 
+// WordPress-imported posts often bake their own "Table of Contents" (a heading
+// plus a list of anchor links) into the body. That duplicates the auto-generated
+// sidebar TOC, so strip it here — the sidebar TOC is regenerated from the real
+// section headings below. If a post has no inline TOC, this is a no-op.
+function stripInlineToc(html: string): string {
+  return html.replace(
+    /<(h[1-4])\b[^>]*>([\s\S]*?)<\/\1>\s*(?:<(ul|ol)\b[^>]*>[\s\S]*?<\/\3>)?/gi,
+    (match, _tag, inner) => {
+      const text = stripHtml(inner).replaceAll(/\s+/g, " ").trim().toLowerCase();
+      return text === "table of contents" || text === "contents" ? "" : match;
+    }
+  );
+}
+
 function buildContentWithToc(contentHtml: string): {
   contentWithAnchors: string;
   tocItems: TocItem[];
 } {
   const usedIds = new Map<string, number>();
   const tocItems: TocItem[] = [];
-  const contentWithTableWrap = contentHtml.replaceAll(
+  const contentWithTableWrap = stripInlineToc(contentHtml).replaceAll(
     /<table\b[\s\S]*?<\/table>/gi,
     (tableHtml) => `<div class="post-table-wrap">${tableHtml}</div>`
   );
