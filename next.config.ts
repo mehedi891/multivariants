@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       new URL("http://localhost:3000/uploads/**"),
       new URL("http://127.0.0.1:3000/uploads/**"),
+      { protocol: "https", hostname: "mediadev.efoli.io" },
+      { protocol: "https", hostname: "media.efoli.io" },
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
+      { protocol: "https", hostname: "cms.efoli.com" },
       ...envUploadPatterns,
     ],
   },
