@@ -8,7 +8,7 @@ const usefulLinks = [
   { label: "FAQ", href: "/faq" },
   { label: "Book a Demo", href: "#", demo: true },
   { label: "Support", href: "mailto:support@multivariants.com" },
-  { label: "Hire a MultiVariants Expert", href: "https://shopexperts.com/partners/multivariants-shopify-experts" },
+  { label: "Hire a MultiVariants Expert", href: "https://shopexperts.com/partners/multivariants-shopify-experts?utm_source=multivariants&utm_medium=footer&utm_campaign=hire-an-expert" },
   { label: "Privacy Policy", href: "/privacy-policy" },
 ];
 
