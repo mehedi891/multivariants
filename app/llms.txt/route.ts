@@ -27,7 +27,7 @@ MultiVariants is a Shopify app. Official site: ${SITE}. It is installed from the
 - **Starter** - Free forever. Core variant display features (variant image icons, out-of-stock badge, hide out-of-stock variants, button customization, flexible price display).
 - **Standard** - $12.99/month, or $124.70/year (20% off vs $155.88 regular). Bulk variant ordering with quantity box, inventory tracking, B2B wholesale pricing, total order price, grouped-product rules, global cart restriction, customer eligibility, and more.
 - **Professional** - $29.99/month, or $287.90/year (20% off vs $359.88 regular). Everything in Standard plus custom text fields, direct checkout button, incremental/bundle quantity, swatch display, custom CSS, min/max quantity rules, minimum quantity per option, and product options.
-- Paid plans include a **7-day free trial**.
+- Paid plans include a **14-day free trial**.
 
 ## Core capabilities (verified)
 

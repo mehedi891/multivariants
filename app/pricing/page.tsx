@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "Do you offer a free trial?",
-    a: "Yes. Paid plans include a 7-day free trial so you can evaluate fit before committing.",
+    a: "Yes. Paid plans include a 14-day free trial so you can evaluate fit before committing.",
   },
   {
     q: "Can I upgrade or downgrade my plan?",

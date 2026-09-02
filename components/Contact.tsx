@@ -260,7 +260,7 @@ export default function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Start 7-Day Free Trial
+                  Start 14-Day Free Trial
                 </Link>
               </div>
             </div>

@@ -213,7 +213,7 @@ export default function PricingPlans() {
                         : "border border-white/20 bg-white/5 text-white/80 hover:border-primary hover:text-primary-light"
                     }`}
                   >
-                    {plan.free ? "Get Started Free" : "Start 7-day FREE Trial"}
+                    {plan.free ? "Get Started Free" : "Start 14-day FREE Trial"}
                   </Link>
 
                   {plan.featuresHeading && (

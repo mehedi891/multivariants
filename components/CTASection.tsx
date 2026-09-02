@@ -70,7 +70,7 @@ export default function CTASection() {
               </div>
 
               <p className="mt-6 text-[13px] font-medium text-white/70">
-                Free plan available · 7-day free trial · No coding required
+                Free plan available · 14-day free trial · No coding required
               </p>
             </div>
           </div>

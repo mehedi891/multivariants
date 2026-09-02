@@ -223,7 +223,7 @@ function fallbackFaqs(): PublicFaqResult {
       id: "free-plan",
       question: "Is there a free plan or a trial?",
       answer:
-        "Yes. MultiVariants offers a free plan to get started, plus a 7-day free trial on paid plans so you can test the advanced features risk-free.",
+        "Yes. MultiVariants offers a free plan to get started, plus a 14-day free trial on paid plans so you can test the advanced features risk-free.",
     },
     {
       id: "support",

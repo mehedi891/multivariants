@@ -135,7 +135,7 @@ const jsonLd = {
         highPrice: "29.99",
         offerCount: "3",
         description:
-          "Free Starter plan; paid plans from $12.99/month with a 7-day free trial",
+          "Free Starter plan; paid plans from $12.99/month with a 14-day free trial",
       },
       aggregateRating: {
         "@type": "AggregateRating",

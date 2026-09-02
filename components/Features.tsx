@@ -176,7 +176,7 @@ export default function Features() {
               <strong className="text-white">341 reviews</strong>
               <span className="text-white/35">·</span>
               <Link href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp" target="_blank" rel="noopener noreferrer" className="text-primary-light hover:text-accent transition-colors">Get on Shopify</Link>
-              <span className="text-white/35 text-[12px]">· Free plan · 7-Day Trial</span>
+              <span className="text-white/35 text-[12px]">· Free plan · 14-Day Trial</span>
             </div>
           </div>
         </AnimateIn>
