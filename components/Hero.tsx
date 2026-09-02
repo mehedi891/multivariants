@@ -93,7 +93,7 @@ export default function Hero() {
               {[
                 { value: "13,000+", label: "Merchants" },
                 { value: "120+",    label: "Countries" },
-                { value: "4.9★",    label: "App Rating" },
+                { value: "5.0★",    label: "App Rating" },
               ].map((s) => (
                 <div key={s.label} className="flex flex-col items-center px-4 first:pl-0">
                   <p className="text-2xl font-black text-white sm:text-3xl">{s.value}</p>
