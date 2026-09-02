@@ -175,6 +175,134 @@
   }
 }
 
+/* ---------------------------------------------------------------------
+   CMS FAQ accordion.
+   The CMS authors FAQ blocks in the post body as native disclosure markup:
+     <div data-faq class="cms-faq">
+       <details class="cms-faq-item">
+         <summary class="cms-faq-q">Question</summary>
+         <div class="cms-faq-a">Answer</div>
+       </details>
+     </div>
+   Unstyled that renders as bare browser triangles, so it is dressed up here
+   as a real accordion. Staying on native <details> keeps it zero-JS,
+   keyboard accessible, and crawlable — answers remain in the DOM (and in
+   Ctrl+F) even while collapsed.
+   --------------------------------------------------------------------- */
+.blog-post-content .cms-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.blog-post-content .cms-faq-item {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+  transition: border-color 0.25s ease, background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.blog-post-content .cms-faq-item:hover {
+  border-color: rgba(92, 106, 196, 0.55);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.blog-post-content .cms-faq-item[open] {
+  border-color: rgba(92, 106, 196, 0.6);
+  background: linear-gradient(
+    180deg,
+    rgba(92, 106, 196, 0.16),
+    rgba(255, 255, 255, 0.03)
+  );
+  box-shadow: 0 14px 34px rgba(4, 10, 26, 0.4);
+}
+
+.blog-post-content .cms-faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 1.1rem;
+  list-style: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  transition: color 0.2s ease, padding 0.25s ease;
+}
+
+/* Kill the default disclosure triangle in WebKit/Blink and Gecko. */
+.blog-post-content .cms-faq-q::-webkit-details-marker {
+  display: none;
+}
+
+.blog-post-content .cms-faq-q:hover,
+.blog-post-content .cms-faq-item[open] .cms-faq-q {
+  color: #fff;
+}
+
+.blog-post-content .cms-faq-q:focus {
+  outline: none;
+}
+
+.blog-post-content .cms-faq-q:focus-visible {
+  outline: 2px solid rgba(92, 106, 196, 0.9);
+  outline-offset: -2px;
+  border-radius: 15px;
+}
+
+/* Chevron badge — same caret shape as the navbar dropdown. */
+.blog-post-content .cms-faq-q::after {
+  content: "";
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.06);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23c9d3ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 7.5 10 12.5 15 7.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1rem 1rem;
+  transition: transform 0.25s ease, background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.blog-post-content .cms-faq-item[open] .cms-faq-q::after {
+  transform: rotate(180deg);
+  border-color: rgba(92, 106, 196, 0.75);
+  background-color: rgba(92, 106, 196, 0.3);
+}
+
+.blog-post-content .cms-faq-item[open] .cms-faq-q {
+  padding-bottom: 0.8rem;
+}
+
+.blog-post-content .cms-faq-a {
+  margin: 0 1.1rem 1.1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.72);
+  animation: cms-faq-reveal 0.25s ease both;
+}
+
+@media (max-width: 480px) {
+  .blog-post-content .cms-faq-q {
+    gap: 0.7rem;
+    padding: 0.85rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .blog-post-content .cms-faq-a {
+    margin: 0 0.9rem 0.9rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -186,5 +314,16 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes cms-faq-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

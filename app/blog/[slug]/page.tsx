@@ -168,6 +168,34 @@ function stripInlineToc(html: string): string {
   );
 }
 
+type FaqEntry = { question: string; answer: string };
+
+// The CMS ships FAQ blocks inside the post body as
+// <details class="cms-faq-item"><summary class="cms-faq-q">…</summary>…</details>.
+// Lift those pairs out so the page can also emit FAQPage structured data —
+// the questions are already visible on the page, this just makes them
+// machine-readable for search and answer engines.
+function extractFaqEntries(html: string): FaqEntry[] {
+  const entries: FaqEntry[] = [];
+
+  for (const block of html.matchAll(
+    /<details\b[^>]*\bclass=["'][^"']*\bcms-faq-item\b[^"']*["'][^>]*>([\s\S]*?)<\/details>/gi
+  )) {
+    const inner = block[1];
+    const summary = inner.match(/<summary\b[^>]*>([\s\S]*?)<\/summary>/i);
+    if (!summary) continue;
+
+    const question = stripHtml(summary[1]).replaceAll(/\s+/g, " ").trim();
+    const answer = stripHtml(inner.replace(summary[0], ""))
+      .replaceAll(/\s+/g, " ")
+      .trim();
+
+    if (question && answer) entries.push({ question, answer });
+  }
+
+  return entries;
+}
+
 function buildContentWithToc(contentHtml: string): {
   contentWithAnchors: string;
   tocItems: TocItem[];
@@ -376,6 +404,19 @@ export default async function BlogPostPage({ params }: PageProps) {
     },
     publisher: { "@id": "https://multivariants.com/#organization" },
   };
+  const faqEntries = extractFaqEntries(post.contentHtml);
+  const faqJsonLd = faqEntries.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${postCanonicalUrl}#faq`,
+        mainEntity: faqEntries.map((entry) => ({
+          "@type": "Question",
+          name: entry.question,
+          acceptedAnswer: { "@type": "Answer", text: entry.answer },
+        })),
+      }
+    : null;
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -433,6 +474,12 @@ export default async function BlogPostPage({ params }: PageProps) {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
           />
+          {faqJsonLd && (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+            />
+          )}
         </>
       )}
       <Navbar />
