@@ -49,7 +49,7 @@ export default async function Testimonials() {
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-end gap-1.5"
-              aria-label="5.0 out of 5 stars from 341 reviews on the Shopify App Store"
+              aria-label="5.0 out of 5 stars from 355 reviews on the Shopify App Store"
             >
               <span className="inline-flex items-center gap-1.5 glass rounded-full px-4 py-2 text-[13px] font-semibold border-white/20 transition-colors group-hover:border-primary/40">
                 <span className="w-2.5 h-2.5 rounded-full bg-brand-green" aria-hidden="true" />
@@ -57,7 +57,7 @@ export default async function Testimonials() {
                 <strong className="text-white">5.0</strong>
                 <span className="text-white/60">on Shopify</span>
               </span>
-              <span className="text-[13px] text-white/50 transition-colors group-hover:text-white/75">341 verified reviews →</span>
+              <span className="text-[13px] text-white/50 transition-colors group-hover:text-white/75">355 verified reviews →</span>
             </a>
           </div>
         </AnimateIn>
