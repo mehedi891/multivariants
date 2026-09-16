@@ -4,13 +4,17 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { AcademyCategory } from "@/lib/academy/docs-data";
 
+import type { AcademyContent } from "@/i18n/content";
+
 type Props = {
+  t: AcademyContent["explorer"];
   categories: AcademyCategory[];
   activeDocSlug: string;
   activeCategorySlug: string;
 };
 
 export default function AcademySidebar({
+  t,
   categories,
   activeDocSlug,
   activeCategorySlug,
@@ -49,17 +53,17 @@ export default function AcademySidebar({
       <div className="relative z-10 mb-4 flex items-center justify-between gap-2">
         <div>
           <h2 className="text-sm font-bold uppercase tracking-[0.12em] text-white/80">
-            Knowledge Grid
+            {t.knowledgeGrid}
           </h2>
           <p className="mt-1 text-[11px] uppercase tracking-[0.08em] text-white/45">
-            {visibleCount} visible docs
+            {t.visibleDocs.replace("{count}", String(visibleCount))}
           </p>
         </div>
         <Link
           href="/academy"
           className="rounded-full border border-white/18 bg-white/[0.05] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-primary-light transition-all hover:border-primary/45 hover:text-accent"
         >
-          Index
+          {t.index}
         </Link>
       </div>
 
@@ -83,7 +87,7 @@ export default function AcademySidebar({
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Filter docs..."
+          placeholder={t.filterPlaceholder}
           className="w-full bg-transparent text-sm text-white placeholder:text-white/50 outline-none"
         />
       </label>

@@ -1,10 +1,10 @@
 {
   "pagination": {
     "aria": "Pagination",
-    "previous": "Previous",
+    "prev": "Prev",
     "next": "Next",
-    "page": "Page",
-    "of": "of"
+    "pageAria": "Page {page}",
+    "pageOf": "Page {current} of {total}"
   },
   "empty": {
     "helpText": "Content loads from the MultiVariants CMS — please try again shortly."

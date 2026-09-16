@@ -5,7 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import type { BlogPost } from "@/lib/blog/posts-data";
 
+import type { BlogContent } from "@/i18n/content";
+
 type Props = {
+  t: BlogContent["explorer"];
   posts: BlogPost[];
 };
 
@@ -28,7 +31,7 @@ function initials(name: string) {
     .join("");
 }
 
-export default function BlogExplorerGrid({ posts }: Props) {
+export default function BlogExplorerGrid({ posts, t }: Props) {
   const [activeCategory, setActiveCategory] = useState("All");
   const [page, setPage] = useState(1);
 
@@ -72,10 +75,10 @@ export default function BlogExplorerGrid({ posts }: Props) {
         <div className="rounded-2xl border border-white/14 bg-gradient-to-b from-[#1a2442]/88 to-[#101a33]/94 p-4 shadow-[0_16px_40px_rgba(0,0,0,0.36)] backdrop-blur-xl sm:p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary-light">
-              Filter by Category
+              {t.filterByCategory}
             </p>
             <p className="text-xs uppercase tracking-[0.08em] text-white/[0.48]">
-              {filteredPosts.length} results
+              {t.results.replace("{count}", String(filteredPosts.length))}
             </p>
           </div>
 
@@ -109,9 +112,9 @@ export default function BlogExplorerGrid({ posts }: Props) {
 
         {visiblePosts.length === 0 ? (
           <div className="mt-8 rounded-2xl border border-white/14 bg-white/[0.04] px-5 py-8 text-center backdrop-blur-lg">
-            <p className="text-lg font-bold text-white">No posts found</p>
+            <p className="text-lg font-bold text-white">{t.noPostsTitle}</p>
             <p className="mt-2 text-sm text-white/[0.62]">
-              Try selecting another category.
+              {t.noPostsBody}
             </p>
           </div>
         ) : (
@@ -175,7 +178,7 @@ export default function BlogExplorerGrid({ posts }: Props) {
               disabled={currentPage === 1}
               className="rounded-full border border-white/18 bg-white/[0.05] px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-white/[0.78] transition-all hover:border-white/35 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Prev
+              {t.prev}
             </button>
 
             {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((p) => (
@@ -188,7 +191,7 @@ export default function BlogExplorerGrid({ posts }: Props) {
                     ? "border-primary/48 bg-primary/18 text-primary-light shadow-[0_0_16px_rgba(92,106,196,0.28)]"
                     : "border-white/18 bg-white/[0.05] text-white/[0.78] hover:border-white/35 hover:text-white"
                 }`}
-                aria-label={`Go to page ${p}`}
+                aria-label={t.goToPage.replace("{page}", String(p))}
                 aria-current={p === currentPage ? "page" : undefined}
               >
                 {p}
@@ -201,7 +204,7 @@ export default function BlogExplorerGrid({ posts }: Props) {
               disabled={currentPage === totalPages}
               className="rounded-full border border-white/18 bg-white/[0.05] px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-white/[0.78] transition-all hover:border-white/35 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Next
+              {t.next}
             </button>
           </div>
         )}

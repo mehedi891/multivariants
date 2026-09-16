@@ -63,7 +63,7 @@ export default async function AcademyPage({ params }: PageProps) {
         </section>
 
         {categories.length > 0 ? (
-          <AcademyExplorer categories={categories} />
+          <AcademyExplorer categories={categories} t={content.explorer} />
         ) : (
           <section
             className="relative overflow-hidden px-[5%] py-12 lg:py-16"

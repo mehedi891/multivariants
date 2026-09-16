@@ -62,5 +62,8 @@
   "langSwitcher": {
     "label": "Mudar idioma",
     "current": "Idioma atual"
+  },
+  "schema": {
+    "offerDescription": "Plano Starter gratuito; planos pagos a partir de US$ 12,99/mês com 14 dias de teste grátis"
   }
 }

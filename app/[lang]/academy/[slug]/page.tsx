@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { localeAlternates } from "@/lib/seo";
 import { toLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getAcademyContent } from "@/i18n/content";
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -71,6 +72,7 @@ export default async function AcademyDocPage({ params }: PageProps) {
   const { lang } = await params;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const content = await getAcademyContent(locale);
   const { slug } = await params;
   const [{ categories }, doc] = await Promise.all([
     getPublicAcademyCategories(),
@@ -184,6 +186,7 @@ export default async function AcademyDocPage({ params }: PageProps) {
           <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-6 lg:grid-cols-[300px_1fr] lg:gap-8">
             <AnimateIn direction="right">
               <AcademySidebar
+              t={content.explorer}
                 categories={categories}
                 activeDocSlug={doc.slug}
                 activeCategorySlug={currentCategory.slug}

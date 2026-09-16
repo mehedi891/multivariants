@@ -5,7 +5,7 @@ import "../globals.css";
 import Analytics from "@/components/Analytics";
 import LiveChat from "@/components/LiveChat";
 import { LocaleProvider } from "@/components/LocaleProvider";
-import { getDictionary } from "@/i18n/dictionaries";
+import { getDictionary, type Dictionary } from "@/i18n/dictionaries";
 import { isLocale, locales, localeMeta, type Locale } from "@/i18n/config";
 
 const inter = Inter({
@@ -78,7 +78,8 @@ export const metadata: Metadata = {
 // Site-wide entity graph: a single Organization + WebSite that other pages'
 // JSON-LD (BlogPosting/Article publishers, breadcrumbs) can reference by @id,
 // plus the product's SoftwareApplication node.
-const jsonLd = {
+function buildJsonLd(dict: Dictionary) {
+  return {
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -135,8 +136,7 @@ const jsonLd = {
         lowPrice: "0",
         highPrice: "29.99",
         offerCount: "3",
-        description:
-          "Free Starter plan; paid plans from $12.99/month with a 14-day free trial",
+        description: dict.schema.offerDescription,
       },
       aggregateRating: {
         "@type": "AggregateRating",
@@ -148,7 +148,8 @@ const jsonLd = {
       publisher: { "@id": "https://multivariants.com/#organization" },
     },
   ],
-};
+  };
+}
 
 /** Pre-render every locale variant at build time. */
 export function generateStaticParams() {
@@ -173,7 +174,7 @@ export default async function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(dict)) }}
         />
       </head>
       <body suppressHydrationWarning>

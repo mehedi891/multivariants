@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getCommonContent } from "@/i18n/content";
 import { getClientsContent } from "@/i18n/content";
 import Image from "next/image";
 import Link from "next/link";
@@ -78,6 +79,7 @@ export default async function ClientsShowcasePage({
   const { lang } = await routeParams;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const common = await getCommonContent(locale);
   const content = await getClientsContent(locale);
   const params = await searchParams;
   const requestedPage = safePage(pickFirst(params.page));
@@ -198,7 +200,7 @@ export default async function ClientsShowcasePage({
                       : "border-white/18 bg-white/[0.05] text-white/[0.78] hover:border-white/35 hover:text-white"
                   }`}
                 >
-                  Prev
+                  {common.pagination.prev}
                 </Link>
 
                 {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((p) => (
@@ -225,7 +227,7 @@ export default async function ClientsShowcasePage({
                       : "border-white/18 bg-white/[0.05] text-white/[0.78] hover:border-white/35 hover:text-white"
                   }`}
                 >
-                  Next
+                  {common.pagination.next}
                 </Link>
               </div>
             )}

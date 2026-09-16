@@ -9,7 +9,10 @@ type ExplorerDoc = AcademyDoc & {
   categoryTitle: string;
 };
 
+import type { AcademyContent } from "@/i18n/content";
+
 type Props = {
+  t: AcademyContent["explorer"];
   categories: AcademyCategory[];
 };
 
@@ -29,7 +32,7 @@ function matchesDoc(doc: ExplorerDoc, query: string) {
   );
 }
 
-export default function AcademyExplorer({ categories }: Props) {
+export default function AcademyExplorer({ categories, t }: Props) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
@@ -90,10 +93,10 @@ export default function AcademyExplorer({ categories }: Props) {
                 id="academy-explorer-heading"
                 className="text-2xl font-black tracking-tight text-white sm:text-3xl"
               >
-                Find Docs Faster
+                {t.findDocsTitle}
               </h2>
               <p className="mt-1 text-sm text-white/60 sm:text-[15px]">
-                Search across all docs, then narrow by category.
+                {t.findDocsSubtitle}
               </p>
             </div>
 
@@ -102,7 +105,7 @@ export default function AcademyExplorer({ categories }: Props) {
                 {allDocs.length} docs total
               </span>
               <span className="rounded-full border border-primary/35 bg-primary/15 px-3 py-1 uppercase tracking-[0.08em] text-primary-light">
-                {filteredDocs.length} results
+                {t.results.replace("{count}", String(filteredDocs.length))}
               </span>
             </div>
           </div>
@@ -128,7 +131,7 @@ export default function AcademyExplorer({ categories }: Props) {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search docs by title, topic, or keyword..."
+                placeholder={t.searchPlaceholder}
                 className="w-full bg-transparent text-sm text-white placeholder:text-white/50 outline-none"
               />
             </label>
@@ -143,7 +146,7 @@ export default function AcademyExplorer({ categories }: Props) {
                     : "border-white/18 bg-white/[0.04] text-white/65 hover:border-white/35 hover:text-white"
                 }`}
               >
-                All Categories
+                {t.allCategories}
               </button>
 
               {categories.map((category) => (
@@ -167,7 +170,7 @@ export default function AcademyExplorer({ categories }: Props) {
         {query.trim() && topMatches.length > 0 && (
           <div className="mt-6 rounded-2xl border border-white/14 bg-white/[0.05] p-4 shadow-[0_14px_36px_rgba(0,0,0,0.3)] backdrop-blur-lg">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-primary-light">
-              Top Matches
+              {t.topMatches}
             </p>
             <ul className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
               {topMatches.map((doc) => (
@@ -187,9 +190,9 @@ export default function AcademyExplorer({ categories }: Props) {
 
         {filteredDocs.length === 0 ? (
           <div className="mt-8 rounded-2xl border border-white/14 bg-white/[0.04] px-5 py-8 text-center backdrop-blur-lg">
-            <p className="text-lg font-bold text-white">No docs found</p>
+            <p className="text-lg font-bold text-white">{t.noDocsTitle}</p>
             <p className="mt-2 text-sm text-white/60">
-              Try a different keyword or switch category filters.
+              {t.noDocsBody}
             </p>
             <button
               type="button"
@@ -199,7 +202,7 @@ export default function AcademyExplorer({ categories }: Props) {
               }}
               className="mt-4 rounded-full border border-primary/45 bg-primary/18 px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-primary-light transition-all hover:bg-primary/24"
             >
-              Clear Filters
+              {t.clearFilters}
             </button>
           </div>
         ) : (

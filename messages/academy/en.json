@@ -10,5 +10,20 @@
     "title": "No docs available yet",
     "description": "Academy guides will appear here once documents are published.",
     "helpText": "Please check back shortly."
+  },
+  "explorer": {
+    "findDocsTitle": "Find Docs Faster",
+    "findDocsSubtitle": "Search across all docs, then narrow by category.",
+    "searchPlaceholder": "Search docs by title, topic, or keyword...",
+    "allCategories": "All Categories",
+    "topMatches": "Top Matches",
+    "results": "{count} results",
+    "noDocsTitle": "No docs found",
+    "noDocsBody": "Try a different keyword or switch category filters.",
+    "clearFilters": "Clear Filters",
+    "knowledgeGrid": "Knowledge Grid",
+    "visibleDocs": "{count} visible docs",
+    "index": "Index",
+    "filterPlaceholder": "Filter docs..."
   }
 }

@@ -15,36 +15,92 @@
     "monthly": "Monthly Plan",
     "annual": "Annual Plan",
     "save": "Save 20%",
-    "free": "Free"
+    "free": "Free",
+    "mostPopular": "✦ Most Popular",
+    "perMonth": "/month",
+    "perYear": "/year",
+    "saveLabel": "Save {percent}",
+    "billedAnnually": "Billed annually at {amount} ({regular} regular)"
   },
   "plans": {
     "starter": {
       "name": "Starter",
       "description": "Free forever. Core variant display essentials to get started.",
       "features": [
-        { "title": "Variant Image Icon Display", "desc": "Show all variant images as icons for easy selection." },
-        { "title": "Out-of-Stock Badge", "desc": "Highlight unavailable variants with a clear “Out-of-Stock” label." },
-        { "title": "Hide Out-of-Stock Variants", "desc": "Automatically remove unavailable variants from the listing." },
-        { "title": "Visual Button Customization", "desc": "Customize the Add to Cart button to match your store's design seamlessly." },
-        { "title": "Flexible Price Display", "desc": "Show variant prices per unit or as a total cost." }
+        {
+          "title": "Variant Image Icon Display",
+          "desc": "Show all variant images as icons for easy selection."
+        },
+        {
+          "title": "Out-of-Stock Badge",
+          "desc": "Highlight unavailable variants with a clear “Out-of-Stock” label."
+        },
+        {
+          "title": "Hide Out-of-Stock Variants",
+          "desc": "Automatically remove unavailable variants from the listing."
+        },
+        {
+          "title": "Visual Button Customization",
+          "desc": "Customize the Add to Cart button to match your store's design seamlessly."
+        },
+        {
+          "title": "Flexible Price Display",
+          "desc": "Show variant prices per unit or as a total cost."
+        }
       ]
     },
     "standard": {
       "name": "Standard",
       "description": "Everything you need to simplify variant ordering and enable bulk purchases.",
       "features": [
-        { "title": "Variants Listing with Quantity Box", "desc": "Display all variants in a list with a quantity box for quick bulk ordering." },
-        { "title": "Inventory Tracking & Stock Display", "desc": "Show real-time stock levels to manage availability." },
-        { "title": "B2B Wholesale Pricing", "desc": "Offer catalog pricing for bulk and wholesale buyers." },
-        { "title": "Show Total Order Price", "desc": "Automatically display the total price for all selected variants and quantities." },
-        { "title": "Apply to Specific or Grouped Products", "desc": "Create multiple rules for individual products or grouped product types with customized display settings." },
-        { "title": "Variants Option Display: Select", "desc": "Choose to display variant options in a drop-down (select) menu." },
-        { "title": "Custom Out-of-Stock Badge", "desc": "Upload and display a unique badge for sold-out items." },
-        { "title": "Display Layout", "desc": "Choose a predefined layout for each ruleset to apply a unique theme to individual or grouped products." },
-        { "title": "Flexible Variant Display", "desc": "Choose from list, grid, or matrix layouts." },
-        { "title": "Sticky Add to Cart Button", "desc": "Always visible for easy checkout." },
-        { "title": "Global Cart Restriction", "desc": "Set minimum and maximum limits for order value, item count, and quantity across multiple products in the cart." },
-        { "title": "Customer Eligibility", "desc": "Restrict your bulk order table to specific customers by login status, customer tag, or customer list." }
+        {
+          "title": "Variants Listing with Quantity Box",
+          "desc": "Display all variants in a list with a quantity box for quick bulk ordering."
+        },
+        {
+          "title": "Inventory Tracking & Stock Display",
+          "desc": "Show real-time stock levels to manage availability."
+        },
+        {
+          "title": "B2B Wholesale Pricing",
+          "desc": "Offer catalog pricing for bulk and wholesale buyers."
+        },
+        {
+          "title": "Show Total Order Price",
+          "desc": "Automatically display the total price for all selected variants and quantities."
+        },
+        {
+          "title": "Apply to Specific or Grouped Products",
+          "desc": "Create multiple rules for individual products or grouped product types with customized display settings."
+        },
+        {
+          "title": "Variants Option Display: Select",
+          "desc": "Choose to display variant options in a drop-down (select) menu."
+        },
+        {
+          "title": "Custom Out-of-Stock Badge",
+          "desc": "Upload and display a unique badge for sold-out items."
+        },
+        {
+          "title": "Display Layout",
+          "desc": "Choose a predefined layout for each ruleset to apply a unique theme to individual or grouped products."
+        },
+        {
+          "title": "Flexible Variant Display",
+          "desc": "Choose from list, grid, or matrix layouts."
+        },
+        {
+          "title": "Sticky Add to Cart Button",
+          "desc": "Always visible for easy checkout."
+        },
+        {
+          "title": "Global Cart Restriction",
+          "desc": "Set minimum and maximum limits for order value, item count, and quantity across multiple products in the cart."
+        },
+        {
+          "title": "Customer Eligibility",
+          "desc": "Restrict your bulk order table to specific customers by login status, customer tag, or customer list."
+        }
       ]
     },
     "professional": {
@@ -52,15 +108,42 @@
       "description": "Everything in Standard, plus advanced controls for scaling B2B and wholesale.",
       "featuresHeading": "Everything in Standard, plus:",
       "features": [
-        { "title": "Custom Text Fields for Variants", "desc": "Allow customers to add personalized text or comments for each variant." },
-        { "title": "Checkout Button", "desc": "Skip the cart and go straight to checkout after selection." },
-        { "title": "Incremental Quantity or Bundle Quantity", "desc": "Sell variants in preset bundle quantities with a drop-down selection or set step qty like 6." },
-        { "title": "Variants Option Display: Swatch", "desc": "Customize which options appear as swatches." },
-        { "title": "Custom CSS", "desc": "Style the display to match your store theme with custom CSS." },
-        { "title": "Min/Max Quantity of Variant/Total", "desc": "Set min and max quantity limits per variant or for the total combined quantity." },
-        { "title": "Limit Variant Orders", "desc": "e.g., Min/Max 6 flavors." },
-        { "title": "Minimum Quantity per Option", "desc": "Set minimum order quantity per variant option. e.g., Red - 12 pcs." },
-        { "title": "Product Options", "desc": "Add custom input fields to product pages — text, dropdowns, swatches, file uploads, and more — with optional pricing per option." }
+        {
+          "title": "Custom Text Fields for Variants",
+          "desc": "Allow customers to add personalized text or comments for each variant."
+        },
+        {
+          "title": "Checkout Button",
+          "desc": "Skip the cart and go straight to checkout after selection."
+        },
+        {
+          "title": "Incremental Quantity or Bundle Quantity",
+          "desc": "Sell variants in preset bundle quantities with a drop-down selection or set step qty like 6."
+        },
+        {
+          "title": "Variants Option Display: Swatch",
+          "desc": "Customize which options appear as swatches."
+        },
+        {
+          "title": "Custom CSS",
+          "desc": "Style the display to match your store theme with custom CSS."
+        },
+        {
+          "title": "Min/Max Quantity of Variant/Total",
+          "desc": "Set min and max quantity limits per variant or for the total combined quantity."
+        },
+        {
+          "title": "Limit Variant Orders",
+          "desc": "e.g., Min/Max 6 flavors."
+        },
+        {
+          "title": "Minimum Quantity per Option",
+          "desc": "Set minimum order quantity per variant option. e.g., Red - 12 pcs."
+        },
+        {
+          "title": "Product Options",
+          "desc": "Add custom input fields to product pages — text, dropdowns, swatches, file uploads, and more — with optional pricing per option."
+        }
       ]
     }
   },
@@ -101,11 +184,27 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "items": [
-      { "q": "Do you offer a free plan?", "a": "Yes. The Starter plan is free forever and includes core variant display features, so you can start using MultiVariants at no cost." },
-      { "q": "Do you offer a free trial?", "a": "Yes. Paid plans include a 14-day free trial so you can evaluate fit before committing." },
-      { "q": "Can I upgrade or downgrade my plan?", "a": "Absolutely. You can switch plans anytime based on your store's ordering volume and requirements." },
-      { "q": "Can I cancel my subscription anytime?", "a": "Yes. You can cancel at any time from your Shopify app billing settings." },
-      { "q": "Will uninstalling the app affect my theme?", "a": "No permanent theme damage is made. We follow safe integration patterns and can help with cleanup if needed." }
-    ]
+      {
+        "q": "Do you offer a free plan?",
+        "a": "Yes. The Starter plan is free forever and includes core variant display features, so you can start using MultiVariants at no cost."
+      },
+      {
+        "q": "Do you offer a free trial?",
+        "a": "Yes. Paid plans include a 14-day free trial so you can evaluate fit before committing."
+      },
+      {
+        "q": "Can I upgrade or downgrade my plan?",
+        "a": "Absolutely. You can switch plans anytime based on your store's ordering volume and requirements."
+      },
+      {
+        "q": "Can I cancel my subscription anytime?",
+        "a": "Yes. You can cancel at any time from your Shopify app billing settings."
+      },
+      {
+        "q": "Will uninstalling the app affect my theme?",
+        "a": "No permanent theme damage is made. We follow safe integration patterns and can help with cleanup if needed."
+      }
+    ],
+    "subtitle": "Everything you need to know before choosing your plan."
   }
 }

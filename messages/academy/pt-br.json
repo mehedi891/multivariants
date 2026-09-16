@@ -10,5 +10,20 @@
     "title": "Ainda não há documentos",
     "description": "Os guias da Academy aparecerão aqui assim que forem publicados.",
     "helpText": "Volte em instantes."
+  },
+  "explorer": {
+    "findDocsTitle": "Encontre a documentação mais rápido",
+    "findDocsSubtitle": "Pesquise em toda a documentação e depois filtre por categoria.",
+    "searchPlaceholder": "Pesquisar por título, tema ou palavra-chave...",
+    "allCategories": "Todas as categorias",
+    "topMatches": "Melhores resultados",
+    "results": "{count} resultados",
+    "noDocsTitle": "Nenhum documento encontrado",
+    "noDocsBody": "Tente outra palavra-chave ou mude os filtros de categoria.",
+    "clearFilters": "Limpar filtros",
+    "knowledgeGrid": "Base de conhecimento",
+    "visibleDocs": "{count} documentos visíveis",
+    "index": "Índice",
+    "filterPlaceholder": "Filtrar documentos..."
   }
 }

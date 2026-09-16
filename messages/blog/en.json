@@ -18,5 +18,14 @@
     "descriptionCategory": "No articles are published in this category yet.",
     "descriptionAll": "We're preparing new blog content for this page.",
     "helpText": "Try another category or check back soon."
+  },
+  "explorer": {
+    "filterByCategory": "Filter by Category",
+    "results": "{count} results",
+    "noPostsTitle": "No posts found",
+    "noPostsBody": "Try selecting another category.",
+    "prev": "Prev",
+    "next": "Next",
+    "goToPage": "Go to page {page}"
   }
 }

@@ -30,6 +30,12 @@
   },
   "freePlan": {
     "title": "Free Plan Available",
-    "body": "Start with our free plan — no credit card required. Upgrade any time as your business grows."
-  }
+    "body": "Start with our free plan — no credit card required. Upgrade any time as your business grows.",
+    "cta": "Start 14-Day Free Trial"
+  },
+  "formTitle": "Send a Message",
+  "formSubtitle": "Fill in the form and we'll get back to you within 24 hours.",
+  "successNote": "Thanks! Your message has been sent — we'll get back to you within 24 hours.",
+  "infoTitle": "Contact Information",
+  "infoSubtitle": "We're here to help your Shopify store grow. Reach out through any channel that's convenient for you."
 }

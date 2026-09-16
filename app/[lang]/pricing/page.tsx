@@ -403,7 +403,7 @@ export default async function PricingPage({ params }: PageProps) {
                 {content.faq.title}
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-white/60 sm:text-base">
-                Everything you need to know before choosing your plan.
+                {content.faq.subtitle}
               </p>
               <ul className="mt-8 space-y-4">
                 {content.faq.items.map((item, index) => (

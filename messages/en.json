@@ -62,5 +62,8 @@
   "langSwitcher": {
     "label": "Change language",
     "current": "Current language"
+  },
+  "schema": {
+    "offerDescription": "Free Starter plan; paid plans from $12.99/month with a 14-day free trial"
   }
 }

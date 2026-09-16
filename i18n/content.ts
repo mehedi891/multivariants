@@ -115,3 +115,11 @@ export const getClientsContent = makeLoader<ClientsContent>({
   en: () => import("@/messages/clients/en.json"),
   "pt-br": () => import("@/messages/clients/pt-br.json"),
 });
+
+// --- privacy ---
+import type privacyEn from "@/messages/privacy/en.json";
+export type PrivacyContent = typeof privacyEn;
+export const getPrivacyContent = makeLoader<PrivacyContent>({
+  en: () => import("@/messages/privacy/en.json"),
+  "pt-br": () => import("@/messages/privacy/pt-br.json"),
+});

@@ -91,9 +91,9 @@ export default function Contact({ content }: { content: ContactContent }) {
           {/* Form */}
           <AnimateIn direction="right">
             <div className="glass rounded-[24px] p-8 sm:p-10 border-white/15">
-              <h2 className="text-[22px] font-black mb-2 text-white">Send a Message</h2>
+              <h2 className="text-[22px] font-black mb-2 text-white">{content.formTitle}</h2>
               <p className="text-sm text-white/50 mb-7">
-                Fill in the form and we&apos;ll get back to you within 24 hours.
+                {content.formSubtitle}
               </p>
 
               <form onSubmit={handleSubmit} noValidate className="space-y-5">
@@ -165,7 +165,7 @@ export default function Contact({ content }: { content: ContactContent }) {
                     <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
                       <circle cx="12" cy="12" r="9" /><path d="m8.5 12 2.5 2.5 4.5-5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    Thanks! Your message has been sent — we&apos;ll get back to you within 24 hours.
+                    {content.successNote}
                   </p>
                 )}
                 {status === "error" && (
@@ -217,9 +217,9 @@ export default function Contact({ content }: { content: ContactContent }) {
           <AnimateIn direction="left" delay={150}>
             <div className="flex flex-col gap-7 justify-center">
               <div>
-                <h2 className="text-2xl font-black tracking-tight mb-2 text-white">Contact Information</h2>
+                <h2 className="text-2xl font-black tracking-tight mb-2 text-white">{content.infoTitle}</h2>
                 <p className="text-[15px] text-white/55 leading-relaxed">
-                  We&apos;re here to help your Shopify store grow. Reach out through any channel that&apos;s convenient for you.
+                  {content.infoSubtitle}
                 </p>
               </div>
 
@@ -262,7 +262,7 @@ export default function Contact({ content }: { content: ContactContent }) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Start 14-Day Free Trial
+                  {content.freePlan.cta}
                 </Link>
               </div>
             </div>

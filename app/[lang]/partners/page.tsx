@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getCommonContent } from "@/i18n/content";
 import { getPartnersContent } from "@/i18n/content";
 import Image from "next/image";
 import Link from "next/link";
@@ -93,6 +94,7 @@ export default async function PartnersPage({
   const { lang } = await params;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const common = await getCommonContent(locale);
   const content = await getPartnersContent(locale);
   const { partners: partnerItems, error } = await getPublicPartners();
 
@@ -230,7 +232,7 @@ export default async function PartnersPage({
                         : "border-white/18 bg-white/[0.05] text-white/[0.78] hover:border-white/35 hover:text-white"
                     }`}
                   >
-                    Prev
+                    {common.pagination.prev}
                   </Link>
 
                   {getPageItems(currentPage, totalPages).map((item, idx) =>
@@ -247,7 +249,7 @@ export default async function PartnersPage({
                         key={item}
                         href={toPartnersHref(item)}
                         aria-current={item === currentPage ? "page" : undefined}
-                        aria-label={`Page ${item}`}
+                        aria-label={common.pagination.pageAria.replace("{page}", String(item))}
                         className={`h-9 w-9 rounded-full border text-center text-xs font-semibold leading-9 transition-all ${
                           item === currentPage
                             ? "border-primary/48 bg-primary/18 text-primary-light shadow-[0_0_16px_rgba(92,106,196,0.28)]"
@@ -268,7 +270,7 @@ export default async function PartnersPage({
                         : "border-white/18 bg-white/[0.05] text-white/[0.78] hover:border-white/35 hover:text-white"
                     }`}
                   >
-                    Next
+                    {common.pagination.next}
                   </Link>
                 </nav>
               )}

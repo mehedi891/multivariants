@@ -18,5 +18,14 @@
     "descriptionCategory": "Ainda não há artigos publicados nesta categoria.",
     "descriptionAll": "Estamos preparando novos conteúdos para esta página.",
     "helpText": "Tente outra categoria ou volte em breve."
+  },
+  "explorer": {
+    "filterByCategory": "Filtrar por categoria",
+    "results": "{count} resultados",
+    "noPostsTitle": "Nenhum artigo encontrado",
+    "noPostsBody": "Tente selecionar outra categoria.",
+    "prev": "Anterior",
+    "next": "Próxima",
+    "goToPage": "Ir para a página {page}"
   }
 }

@@ -30,6 +30,12 @@
   },
   "freePlan": {
     "title": "Plano gratuito disponível",
-    "body": "Comece com nosso plano gratuito — sem cartão de crédito. Faça upgrade quando seu negócio crescer."
-  }
+    "body": "Comece com nosso plano gratuito — sem cartão de crédito. Faça upgrade quando seu negócio crescer.",
+    "cta": "Comece o teste grátis de 14 dias"
+  },
+  "formTitle": "Envie uma mensagem",
+  "formSubtitle": "Preencha o formulário e responderemos em até 24 horas.",
+  "successNote": "Obrigado! Sua mensagem foi enviada — responderemos em até 24 horas.",
+  "infoTitle": "Informações de contato",
+  "infoSubtitle": "Estamos aqui para ajudar sua loja Shopify a crescer. Fale com a gente pelo canal que for mais prático para você."
 }

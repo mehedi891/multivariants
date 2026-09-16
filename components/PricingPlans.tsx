@@ -41,8 +41,8 @@ function buildPlans(t: PricingContent): Plan[] {
     {
       name: t.plans.standard.name,
       icon: "⚡",
-      monthly: { amount: "$12.99", period: "/month" },
-      annual: { amount: "$124.70", regular: "$155.88", period: "/year", save: "20%" },
+      monthly: { amount: "$12.99", period: t.billing.perMonth },
+      annual: { amount: "$124.70", regular: "$155.88", period: t.billing.perYear, save: "20%" },
       description: t.plans.standard.description,
       features: t.plans.standard.features,
     },
@@ -50,8 +50,8 @@ function buildPlans(t: PricingContent): Plan[] {
       name: t.plans.professional.name,
       icon: "👑",
       popular: true,
-      monthly: { amount: "$29.99", period: "/month" },
-      annual: { amount: "$287.90", regular: "$359.88", period: "/year", save: "20%" },
+      monthly: { amount: "$29.99", period: t.billing.perMonth },
+      annual: { amount: "$287.90", regular: "$359.88", period: t.billing.perYear, save: "20%" },
       description: t.plans.professional.description,
       featuresHeading: t.plans.professional.featuresHeading,
       features: t.plans.professional.features,
@@ -137,7 +137,7 @@ export default function PricingPlans({
                   {plan.popular && (
                     <div className="absolute inset-x-0 top-0 z-20 border-b border-[#8d8fff]/55 bg-gradient-to-r from-[#5a5eff] via-[#6e72ff] to-[#6e72ff] py-1.5">
                       <p className="text-center text-[13px] font-semibold uppercase tracking-[0.08em] text-white">
-                        ✦ Most Popular
+                        {content.billing.mostPopular}
                       </p>
                     </div>
                   )}
@@ -174,13 +174,15 @@ export default function PricingPlans({
                     )}
                     {price?.save && (
                       <span className="mb-1 rounded-full bg-brand-green/15 px-2 py-0.5 text-[11px] font-bold text-brand-green">
-                        Save {price.save}
+                        {content.billing.saveLabel.replace("{percent}", price.save)}
                       </span>
                     )}
                   </div>
                   {price?.regular && (
                     <p className="relative z-10 mt-1.5 text-xs text-white/45">
-                      Billed annually at {price.amount} ({price.regular} regular)
+                      {content.billing.billedAnnually
+                        .replace("{amount}", price.amount)
+                        .replace("{regular}", price.regular)}
                     </p>
                   )}
 
