@@ -43,3 +43,11 @@ export const getHomeContent = makeLoader<HomeContent>({
   en: () => import("@/messages/home/en.json"),
   "pt-br": () => import("@/messages/home/pt-br.json"),
 });
+
+// --- pricing ----------------------------------------------------------------
+import type pricingEn from "@/messages/pricing/en.json";
+export type PricingContent = typeof pricingEn;
+export const getPricingContent = makeLoader<PricingContent>({
+  en: () => import("@/messages/pricing/en.json"),
+  "pt-br": () => import("@/messages/pricing/pt-br.json"),
+});

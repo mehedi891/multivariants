@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import AnimateIn from "./AnimateIn";
+import type { PricingContent } from "@/i18n/content";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 const appLink =
   "https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp";
@@ -24,65 +26,48 @@ type Plan = {
   features: Feature[];
 };
 
-const plans: Plan[] = [
-  {
-    name: "Starter",
-    icon: "✨",
-    free: true,
-    description: "Free forever. Core variant display essentials to get started.",
-    features: [
-      { title: "Variant Image Icon Display", desc: "Show all variant images as icons for easy selection." },
-      { title: "Out-of-Stock Badge", desc: "Highlight unavailable variants with a clear “Out-of-Stock” label." },
-      { title: "Hide Out-of-Stock Variants", desc: "Automatically remove unavailable variants from the listing." },
-      { title: "Visual Button Customization", desc: "Customize the Add to Cart button to match your store's design seamlessly." },
-      { title: "Flexible Price Display", desc: "Show variant prices per unit or as a total cost." },
-    ],
-  },
-  {
-    name: "Standard",
-    icon: "⚡",
-    monthly: { amount: "$12.99", period: "/month" },
-    annual: { amount: "$124.70", regular: "$155.88", period: "/year", save: "20%" },
-    description: "Everything you need to simplify variant ordering and enable bulk purchases.",
-    features: [
-      { title: "Variants Listing with Quantity Box", desc: "Display all variants in a list with a quantity box for quick bulk ordering." },
-      { title: "Inventory Tracking & Stock Display", desc: "Show real-time stock levels to manage availability." },
-      { title: "B2B Wholesale Pricing", desc: "Offer catalog pricing for bulk and wholesale buyers." },
-      { title: "Show Total Order Price", desc: "Automatically display the total price for all selected variants and quantities." },
-      { title: "Apply to Specific or Grouped Products", desc: "Create multiple rules for individual products or grouped product types with customized display settings." },
-      { title: "Variants Option Display: Select", desc: "Choose to display variant options in a drop-down (select) menu." },
-      { title: "Custom Out-of-Stock Badge", desc: "Upload and display a unique badge for sold-out items." },
-      { title: "Display Layout", desc: "Choose a predefined layout for each ruleset to apply a unique theme to individual or grouped products." },
-      { title: "Flexible Variant Display", desc: "Choose from list, grid, or matrix layouts." },
-      { title: "Sticky Add to Cart Button", desc: "Always visible for easy checkout." },
-      { title: "Global Cart Restriction", desc: "Set minimum and maximum limits for order value, item count, and quantity across multiple products in the cart." },
-      { title: "Customer Eligibility", desc: "Restrict your bulk order table to specific customers by login status, customer tag, or customer list." },
-    ],
-  },
-  {
-    name: "Professional",
-    icon: "👑",
-    popular: true,
-    monthly: { amount: "$29.99", period: "/month" },
-    annual: { amount: "$287.90", regular: "$359.88", period: "/year", save: "20%" },
-    description: "Everything in Standard, plus advanced controls for scaling B2B and wholesale.",
-    featuresHeading: "Everything in Standard, plus:",
-    features: [
-      { title: "Custom Text Fields for Variants", desc: "Allow customers to add personalized text or comments for each variant." },
-      { title: "Checkout Button", desc: "Skip the cart and go straight to checkout after selection." },
-      { title: "Incremental Quantity or Bundle Quantity", desc: "Sell variants in preset bundle quantities with a drop-down selection or set step qty like 6." },
-      { title: "Variants Option Display: Swatch", desc: "Customize which options appear as swatches." },
-      { title: "Custom CSS", desc: "Style the display to match your store theme with custom CSS." },
-      { title: "Min/Max Quantity of Variant/Total", desc: "Set min and max quantity limits per variant or for the total combined quantity." },
-      { title: "Limit Variant Orders", desc: "e.g., Min/Max 6 flavors." },
-      { title: "Minimum Quantity per Option", desc: "Set minimum order quantity per variant option. e.g., Red - 12 pcs." },
-      { title: "Product Options", desc: "Add custom input fields to product pages — text, dropdowns, swatches, file uploads, and more — with optional pricing per option." },
-    ],
-  },
-];
+// Prices, icons and flags are the single source of truth and stay in code; the
+// translated name/description/feature text is merged onto them from
+// messages/pricing/<locale>.json.
+function buildPlans(t: PricingContent): Plan[] {
+  return [
+    {
+      name: t.plans.starter.name,
+      icon: "✨",
+      free: true,
+      description: t.plans.starter.description,
+      features: t.plans.starter.features,
+    },
+    {
+      name: t.plans.standard.name,
+      icon: "⚡",
+      monthly: { amount: "$12.99", period: "/month" },
+      annual: { amount: "$124.70", regular: "$155.88", period: "/year", save: "20%" },
+      description: t.plans.standard.description,
+      features: t.plans.standard.features,
+    },
+    {
+      name: t.plans.professional.name,
+      icon: "👑",
+      popular: true,
+      monthly: { amount: "$29.99", period: "/month" },
+      annual: { amount: "$287.90", regular: "$359.88", period: "/year", save: "20%" },
+      description: t.plans.professional.description,
+      featuresHeading: t.plans.professional.featuresHeading,
+      features: t.plans.professional.features,
+    },
+  ];
+}
 
-export default function PricingPlans() {
+export default function PricingPlans({
+  content,
+  dict,
+}: {
+  content: PricingContent;
+  dict: Dictionary;
+}) {
   const [annual, setAnnual] = useState(false);
+  const plans = buildPlans(content);
 
   return (
     <div className="relative z-10 mx-auto max-w-6xl">
@@ -92,7 +77,7 @@ export default function PricingPlans() {
           <div
             className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.05] p-1 backdrop-blur-xl"
             role="tablist"
-            aria-label="Billing period"
+            aria-label={content.billing.aria}
           >
             <button
               type="button"
@@ -103,7 +88,7 @@ export default function PricingPlans() {
                 !annual ? "bg-white text-[#111a31] shadow" : "text-white/65 hover:text-white"
               }`}
             >
-              Monthly Plan
+              {content.billing.monthly}
             </button>
             <button
               type="button"
@@ -114,13 +99,13 @@ export default function PricingPlans() {
                 annual ? "bg-white text-[#111a31] shadow" : "text-white/65 hover:text-white"
               }`}
             >
-              Annual Plan
+              {content.billing.annual}
               <span
                 className={`rounded-full px-1.5 py-0.5 text-[11px] font-bold ${
                   annual ? "bg-brand-green/15 text-brand-green" : "bg-brand-green/20 text-brand-green"
                 }`}
               >
-                Save 20%
+                {content.billing.save}
               </span>
             </button>
           </div>
@@ -177,7 +162,7 @@ export default function PricingPlans() {
                         plan.popular ? "text-[#8f95ff]" : "text-white"
                       }`}
                     >
-                      {plan.free ? "Free" : price?.amount}
+                      {plan.free ? content.billing.free : price?.amount}
                     </p>
                     {!plan.free && price && (
                       <span className="pb-1 text-sm text-white/55">{price.period}</span>
@@ -213,7 +198,7 @@ export default function PricingPlans() {
                         : "border border-white/20 bg-white/5 text-white/80 hover:border-primary hover:text-primary-light"
                     }`}
                   >
-                    {plan.free ? "Get Started Free" : "Start 14-day FREE Trial"}
+                    {plan.free ? dict.cta.getStartedFree : dict.cta.startTrialShort}
                   </Link>
 
                   {plan.featuresHeading && (

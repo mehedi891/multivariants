@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "Planos e preços para pedidos em massa na Shopify",
+    "description": "Planos simples para qualquer loja Shopify. Comece de graça com o plano Starter e evolua para o Standard ou o Professional conforme seus pedidos em massa crescerem."
+  },
+  "hero": {
+    "badge": "Preços",
+    "title": "Preços simples para qualquer loja Shopify",
+    "subtitle": "Use o MultiVariants para simplificar os pedidos em massa dos seus clientes. Escolha o plano que combina com o tamanho da sua loja e o seu volume de pedidos.",
+    "primary": "Instalar o app na Shopify",
+    "secondary": "Ver demonstração"
+  },
+  "billing": {
+    "aria": "Período de cobrança",
+    "monthly": "Plano mensal",
+    "annual": "Plano anual",
+    "save": "Economize 20%",
+    "free": "Grátis"
+  },
+  "plans": {
+    "starter": {
+      "name": "Starter",
+      "description": "Grátis para sempre. O essencial da exibição de variantes para começar.",
+      "features": [
+        { "title": "Exibição de variantes por imagem", "desc": "Mostre todas as imagens das variantes como ícones para facilitar a escolha." },
+        { "title": "Selo de fora de estoque", "desc": "Destaque variantes indisponíveis com um selo claro de “Fora de estoque”." },
+        { "title": "Ocultar variantes sem estoque", "desc": "Remova automaticamente da listagem as variantes indisponíveis." },
+        { "title": "Personalização visual do botão", "desc": "Personalize o botão Adicionar ao carrinho para combinar com o design da sua loja." },
+        { "title": "Exibição flexível de preços", "desc": "Mostre o preço das variantes por unidade ou como custo total." }
+      ]
+    },
+    "standard": {
+      "name": "Standard",
+      "description": "Tudo o que você precisa para simplificar o pedido de variantes e habilitar compras em massa.",
+      "features": [
+        { "title": "Listagem de variantes com campo de quantidade", "desc": "Exiba todas as variantes em lista com campo de quantidade para pedidos em massa rápidos." },
+        { "title": "Controle de estoque e exibição de disponibilidade", "desc": "Mostre o estoque em tempo real para gerenciar a disponibilidade." },
+        { "title": "Preços de atacado B2B", "desc": "Ofereça preços de catálogo para compradores em volume e no atacado." },
+        { "title": "Mostrar o preço total do pedido", "desc": "Exiba automaticamente o preço total de todas as variantes e quantidades selecionadas." },
+        { "title": "Aplicar a produtos específicos ou agrupados", "desc": "Crie várias regras para produtos individuais ou grupos de produtos, com configurações de exibição personalizadas." },
+        { "title": "Exibição das opções: menu suspenso", "desc": "Opte por exibir as opções de variantes em um menu suspenso." },
+        { "title": "Selo de fora de estoque personalizado", "desc": "Envie e exiba um selo exclusivo para itens esgotados." },
+        { "title": "Layout de exibição", "desc": "Escolha um layout predefinido para cada conjunto de regras e aplique um estilo próprio a produtos individuais ou agrupados." },
+        { "title": "Exibição flexível de variantes", "desc": "Escolha entre os layouts de lista, grade ou matriz." },
+        { "title": "Botão fixo de adicionar ao carrinho", "desc": "Sempre visível para facilitar a finalização da compra." },
+        { "title": "Restrição global do carrinho", "desc": "Defina limites mínimos e máximos de valor, número de itens e quantidade somando vários produtos do carrinho." },
+        { "title": "Elegibilidade do cliente", "desc": "Limite a tabela de pedidos em massa a clientes específicos por status de login, tag ou lista de clientes." }
+      ]
+    },
+    "professional": {
+      "name": "Professional",
+      "description": "Tudo do Standard, mais controles avançados para escalar no B2B e no atacado.",
+      "featuresHeading": "Tudo do Standard, e mais:",
+      "features": [
+        { "title": "Campos de texto personalizados por variante", "desc": "Permita que o cliente inclua um texto ou comentário personalizado em cada variante." },
+        { "title": "Botão de finalizar compra", "desc": "Pule o carrinho e vá direto ao checkout depois da seleção." },
+        { "title": "Quantidade incremental ou em pacote", "desc": "Venda variantes em quantidades predefinidas com menu suspenso ou defina um passo de quantidade, como 6." },
+        { "title": "Exibição das opções: amostras de cor", "desc": "Escolha quais opções aparecem como amostras de cor." },
+        { "title": "CSS personalizado", "desc": "Ajuste a exibição ao tema da sua loja com CSS personalizado." },
+        { "title": "Quantidade mín./máx. por variante ou total", "desc": "Defina limites mínimos e máximos por variante ou para a quantidade total combinada." },
+        { "title": "Limitar pedidos por variante", "desc": "Por exemplo: mín./máx. de 6 sabores." },
+        { "title": "Quantidade mínima por opção", "desc": "Defina a quantidade mínima por opção de variante. Por exemplo: vermelho — 12 unidades." },
+        { "title": "Opções de produto", "desc": "Adicione campos personalizados às páginas de produto — texto, menus, amostras, upload de arquivos e mais — com preço opcional por opção." }
+      ]
+    }
+  },
+  "comparison": {
+    "badge": "Comparativo de planos",
+    "title": "Compare os recursos de cada plano",
+    "subtitle": "Escolha o plano certo rapidamente comparando os principais recursos lado a lado.",
+    "colFeature": "Recurso",
+    "included": "Incluído",
+    "notIncluded": "Não incluído",
+    "custom": "Personalizado",
+    "rows": [
+      "Ícones e exibição de imagens das variantes",
+      "Selo de fora de estoque",
+      "Ocultar variantes sem estoque",
+      "Personalização do botão Adicionar ao carrinho",
+      "Exibição flexível de preços",
+      "Pedido em massa de variantes com campo de quantidade",
+      "Controle de estoque e validação de disponibilidade",
+      "Preços de atacado B2B",
+      "Mostrar o preço total do pedido",
+      "Aplicar a produtos específicos ou agrupados",
+      "Restrição global do carrinho e elegibilidade do cliente",
+      "Campos de texto personalizados por variante",
+      "Botão de checkout direto",
+      "Quantidade incremental / em pacote",
+      "Exibição de opções em amostras de cor",
+      "CSS personalizado",
+      "Regras de quantidade mín./máx.",
+      "Opções de produto (campos personalizados)"
+    ]
+  },
+  "trust": {
+    "title": "A escolha de lojistas Shopify no mundo todo",
+    "subtitle": "O MultiVariants é usado por mais de 13.000 lojistas Shopify em mais de 120 países para simplificar o pedido de variantes e aumentar o ticket médio.",
+    "cta": "Começar o teste grátis"
+  },
+  "faq": {
+    "title": "Perguntas frequentes",
+    "items": [
+      { "q": "Vocês têm um plano gratuito?", "a": "Sim. O plano Starter é gratuito para sempre e inclui os recursos essenciais de exibição de variantes, então você pode começar a usar o MultiVariants sem custo." },
+      { "q": "Existe teste grátis?", "a": "Sim. Os planos pagos incluem 14 dias de teste grátis para você avaliar antes de assinar." },
+      { "q": "Posso mudar de plano depois?", "a": "Com certeza. Você pode trocar de plano quando quiser, conforme o volume de pedidos e as necessidades da sua loja." },
+      { "q": "Posso cancelar a assinatura a qualquer momento?", "a": "Sim. É possível cancelar quando quiser nas configurações de cobrança de apps da Shopify." },
+      { "q": "Desinstalar o app afeta meu tema?", "a": "Não há dano permanente ao tema. Seguimos práticas seguras de integração e podemos ajudar na limpeza, se necessário." }
+    ]
+  }
+}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getPricingContent } from "@/i18n/content";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -21,29 +22,6 @@ const appLink =
   "https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp";
 const demoLink = "https://multivariant.myshopify.com/collections/all";
 
-const faqs = [
-  {
-    q: "Do you offer a free plan?",
-    a: "Yes. The Starter plan is free forever and includes core variant display features, so you can start using MultiVariants at no cost.",
-  },
-  {
-    q: "Do you offer a free trial?",
-    a: "Yes. Paid plans include a 14-day free trial so you can evaluate fit before committing.",
-  },
-  {
-    q: "Can I upgrade or downgrade my plan?",
-    a: "Absolutely. You can switch plans anytime based on your store's ordering volume and requirements.",
-  },
-  {
-    q: "Can I cancel my subscription anytime?",
-    a: "Yes. You can cancel at any time from your Shopify app billing settings.",
-  },
-  {
-    q: "Will uninstalling the app affect my theme?",
-    a: "No permanent theme damage is made. We follow safe integration patterns and can help with cleanup if needed.",
-  },
-];
-
 const comparisonRows: ComparisonRow[] = [
   {
     feature: "Variant image icons & display",
@@ -54,8 +32,8 @@ const comparisonRows: ComparisonRow[] = [
   {
     feature: "Out-of-stock badge",
     starter: true,
-    standard: "Custom",
-    professional: "Custom",
+    standard: "custom",
+    professional: "custom",
   },
   {
     feature: "Hide out-of-stock variants",
@@ -159,12 +137,13 @@ type PageProps = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { lang } = await params;
+  const locale = toLocale(lang);
+  const { meta } = await getPricingContent(locale);
   return pageMetadata({
-    title: "Pricing Plans for Shopify Bulk Ordering",
-    description:
-      "Simple pricing plans for every Shopify store. Start free with the Starter plan and scale with Standard or Professional as your bulk ordering grows.",
+    title: meta.title,
+    description: meta.description,
     path: "/pricing",
-    locale: toLocale(lang),
+    locale,
   });
 }
 
@@ -172,6 +151,7 @@ export default async function PricingPage({ params }: PageProps) {
   const { lang } = await params;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const content = await getPricingContent(locale);
   const renderComparisonCell = (value: ComparisonCell, emphasize = false) => {
     if (typeof value === "boolean") {
       if (value) {
@@ -182,7 +162,7 @@ export default async function PricingPage({ params }: PageProps) {
                 ? "bg-[#6e72ff]/25 text-[#aeb3ff]"
                 : "bg-accent/20 text-accent"
             }`}
-            aria-label="Included"
+            aria-label={content.comparison.included}
           >
             ✓
           </span>
@@ -191,7 +171,7 @@ export default async function PricingPage({ params }: PageProps) {
       return (
         <span
           className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/45"
-          aria-label="Not included"
+          aria-label={content.comparison.notIncluded}
         >
           —
         </span>
@@ -200,7 +180,7 @@ export default async function PricingPage({ params }: PageProps) {
 
     return (
       <span className={emphasize ? "font-semibold text-[#c5c9ff]" : ""}>
-        {value}
+        {value === "custom" ? content.comparison.custom : value}
       </span>
     );
   };
@@ -208,7 +188,7 @@ export default async function PricingPage({ params }: PageProps) {
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
+    mainEntity: content.faq.items.map((f) => ({
       "@type": "Question",
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -238,15 +218,13 @@ export default async function PricingPage({ params }: PageProps) {
           <div className="relative z-10 mx-auto max-w-5xl text-center">
             <AnimateIn direction="up">
               <span className="inline-flex rounded-full border border-accent/30 bg-accent/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-accent">
-                Pricing
+                {content.hero.badge}
               </span>
               <h1 className="mx-auto mt-4 max-w-3xl text-3xl font-black leading-[1.38] tracking-tight text-white sm:text-4xl lg:text-5xl/tight">
-                Simple Pricing for Every Shopify Store
+                {content.hero.title}
               </h1>
               <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/65 sm:text-lg">
-                Start using MultiVariants to simplify bulk ordering for your
-                customers. Choose the plan that fits your store size and ordering
-                needs.
+                {content.hero.subtitle}
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
@@ -255,7 +233,7 @@ export default async function PricingPage({ params }: PageProps) {
                   rel="noopener noreferrer"
                   className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-primary-dark sm:w-auto"
                 >
-                  Get the App on Shopify
+                  {content.hero.primary}
                 </Link>
                 <Link
                   href={demoLink}
@@ -263,7 +241,7 @@ export default async function PricingPage({ params }: PageProps) {
                   rel="noopener noreferrer"
                   className="inline-flex w-full items-center justify-center rounded-xl border border-white/25 px-6 py-3 text-sm font-semibold text-white/75 transition-all hover:border-primary hover:text-primary sm:w-auto"
                 >
-                  View Demo
+                  {content.hero.secondary}
                 </Link>
               </div>
             </AnimateIn>
@@ -282,7 +260,7 @@ export default async function PricingPage({ params }: PageProps) {
             <div className="absolute right-[-80px] bottom-8 h-[260px] w-[260px] rounded-full bg-accent/10 blur-[75px]" />
           </div>
 
-          <PricingPlans />
+          <PricingPlans content={content} dict={dict} />
         </section>
 
         <section
@@ -301,36 +279,35 @@ export default async function PricingPage({ params }: PageProps) {
             <div className="relative z-10 mx-auto max-w-6xl">
               <div className="text-center">
                 <span className="inline-flex rounded-full border border-primary/35 bg-primary/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-light">
-                  Plan Comparison
+                  {content.comparison.badge}
                 </span>
                 <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-black leading-[1.26] text-white sm:text-4xl">
-                  Compare Features Across Plans
+                  {content.comparison.title}
                 </h2>
                 <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-white/65 sm:text-base">
-                  Pick the right plan quickly by comparing core capabilities side
-                  by side.
+                  {content.comparison.subtitle}
                 </p>
               </div>
 
               <ul className="mt-8 space-y-3 md:hidden">
                 {comparisonRows.map((row, index) => (
-                  <li key={row.feature}>
+                  <li key={content.comparison.rows[index] ?? row.feature}>
                     <AnimateIn direction="up" delay={index * 35}>
                       <article className="rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.03] p-4 shadow-[0_10px_24px_rgba(0,0,0,0.28)] backdrop-blur-xl">
                         <p className="text-sm font-semibold text-white">
-                          {row.feature}
+                          {content.comparison.rows[index] ?? row.feature}
                         </p>
                         <dl className="mt-3 space-y-2.5 text-sm text-white/75">
                           <div className="flex items-center justify-between gap-3">
-                            <dt className="text-white/60">Starter</dt>
+                            <dt className="text-white/60">{content.plans.starter.name}</dt>
                             <dd>{renderComparisonCell(row.starter)}</dd>
                           </div>
                           <div className="flex items-center justify-between gap-3">
-                            <dt className="text-white/60">Standard</dt>
+                            <dt className="text-white/60">{content.plans.standard.name}</dt>
                             <dd>{renderComparisonCell(row.standard)}</dd>
                           </div>
                           <div className="flex items-center justify-between gap-3">
-                            <dt className="font-medium text-[#c5c9ff]">Professional</dt>
+                            <dt className="font-medium text-[#c5c9ff]">{content.plans.professional.name}</dt>
                             <dd>{renderComparisonCell(row.professional, true)}</dd>
                           </div>
                         </dl>
@@ -345,29 +322,29 @@ export default async function PricingPage({ params }: PageProps) {
                   <thead>
                     <tr className="text-sm uppercase tracking-wide text-white/55">
                       <th className="border-b border-white/10 px-5 py-4 font-semibold sm:px-6">
-                        Feature
+                        {content.comparison.colFeature}
                       </th>
                       <th className="border-b border-white/10 px-5 py-4 font-semibold sm:px-6">
-                        Starter
+                        {content.plans.starter.name}
                       </th>
                       <th className="border-b border-white/10 px-5 py-4 font-semibold sm:px-6">
-                        Standard
+                        {content.plans.standard.name}
                       </th>
                       <th className="border-b border-white/10 bg-[#6e72ff]/10 px-5 py-4 font-semibold text-[#c5c9ff] sm:px-6">
-                        Professional
+                        {content.plans.professional.name}
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {comparisonRows.map((row, index) => (
                       <tr
-                        key={row.feature}
+                        key={content.comparison.rows[index] ?? row.feature}
                         className={`transition-colors duration-200 hover:bg-white/[0.05] ${
                           index % 2 === 0 ? "bg-white/[0.02]" : ""
                         }`}
                       >
                         <td className="border-b border-white/10 px-5 py-4 text-sm font-medium text-white/85 sm:px-6 sm:text-[15px]">
-                          {row.feature}
+                          {content.comparison.rows[index] ?? row.feature}
                         </td>
                         <td className="border-b border-white/10 px-5 py-4 text-sm text-white/70 sm:px-6 sm:text-[15px]">
                           {renderComparisonCell(row.starter)}
@@ -391,12 +368,10 @@ export default async function PricingPage({ params }: PageProps) {
           <AnimateIn direction="up">
             <div className="mx-auto max-w-4xl text-center">
               <h2 className="text-3xl font-black leading-[1.26] text-white sm:text-4xl">
-                Trusted by Shopify Merchants Worldwide
+                {content.trust.title}
               </h2>
               <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-white/65 sm:text-lg">
-                MultiVariants is used by 13,000+ Shopify merchants across 120+
-                countries to simplify variant ordering and increase average
-                order value.
+                {content.trust.subtitle}
               </p>
               <Link
                 href={appLink}
@@ -404,7 +379,7 @@ export default async function PricingPage({ params }: PageProps) {
                 rel="noopener noreferrer"
                 className="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-primary-dark sm:w-auto"
               >
-                Start Free Trial
+                {content.trust.cta}
               </Link>
             </div>
           </AnimateIn>
@@ -425,13 +400,13 @@ export default async function PricingPage({ params }: PageProps) {
           <AnimateIn direction="up">
             <div className="relative z-10 mx-auto max-w-4xl">
               <h2 className="text-center text-3xl font-black leading-[1.26] text-white sm:text-4xl">
-                Frequently Asked Questions
+                {content.faq.title}
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-white/60 sm:text-base">
                 Everything you need to know before choosing your plan.
               </p>
               <ul className="mt-8 space-y-4">
-                {faqs.map((item, index) => (
+                {content.faq.items.map((item, index) => (
                   <li key={item.q}>
                     <AnimateIn direction="up" delay={index * 45}>
                       <details className="group overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.09] to-white/[0.03] p-4 shadow-[0_12px_26px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 hover:border-primary/35 sm:p-5">
