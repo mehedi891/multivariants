@@ -5,7 +5,7 @@ import {
   getPublicBlogPost,
   getPreviewSecret,
   isPreviewConfigured,
-} from "@/app/blog/public-api";
+} from "@/lib/blog/public-api";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

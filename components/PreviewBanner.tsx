@@ -1,4 +1,4 @@
-import type { PostStatus } from "@/app/blog/public-api";
+import type { PostStatus } from "@/lib/blog/public-api";
 
 const STATUS_STYLES: Record<PostStatus, string> = {
   DRAFT: "bg-amber-400/20 text-amber-200 border-amber-300/40",

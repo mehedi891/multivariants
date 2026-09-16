@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import AnimateIn from "./AnimateIn";
-import { getPublicBlogPosts } from "@/app/blog/public-api";
+import { getPublicBlogPosts } from "@/lib/blog/public-api";
 
 function formatDate(dateISO: string) {
   return new Date(dateISO).toLocaleDateString("en-US", {

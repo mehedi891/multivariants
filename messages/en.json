@@ -1,0 +1,66 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "clients": "Clients",
+    "contact": "Contact",
+    "resources": "Resources",
+    "partners": "Partners",
+    "blog": "Blog",
+    "docs": "Docs",
+    "changelog": "Changelog",
+    "faq": "FAQ",
+    "privacy": "Privacy Policy",
+    "hireExpert": "Hire a MultiVariants Expert"
+  },
+  "cta": {
+    "bookDemo": "Book a Demo",
+    "getApp": "Get the App",
+    "getAppShopify": "Get the App on Shopify",
+    "getOnShopify": "Get on Shopify",
+    "startTrial": "Start 14-Day Free Trial",
+    "startTrialShort": "Start 14-day FREE Trial",
+    "getStartedFree": "Get Started Free",
+    "seeAllFeatures": "See All Features",
+    "viewAll": "View All",
+    "readMore": "Read More"
+  },
+  "common": {
+    "skipToContent": "Skip to content",
+    "homeAriaLabel": "MultiVariants home",
+    "mainNavigation": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "minRead": "min read",
+    "freePlanTrial": "Free plan available · 14-Day Trial",
+    "freePlanTrialLong": "Free plan available · 14-day free trial · No coding required",
+    "reviewsSuffix": "reviews",
+    "verifiedReviews": "verified reviews",
+    "onShopify": "on Shopify"
+  },
+  "footer": {
+    "tagline": "Let your customers order multiple variants and quantities of the same product in just one click. Increase your sales and conversion rate with our bulk ordering solution.",
+    "usefulLinks": "Useful Links",
+    "integration": "Integration",
+    "moreByEfoli": "More by eFoli",
+    "support": "Support",
+    "socialLinks": "Social links",
+    "usefulLinksAria": "Useful links",
+    "integrationAria": "Integration links",
+    "moreByEfoliAria": "Other apps by eFoli",
+    "legalAria": "Legal links",
+    "copyright": "©{year} | MultiVariants — A Product of",
+    "apps": {
+      "discountray": "Custom Price",
+      "quotway": "B2B Quote-Negotiation",
+      "orderrules": "Store Open Limits",
+      "embedup": "Affiliate Buy Button",
+      "pushbundle": "Build a Box App"
+    }
+  },
+  "langSwitcher": {
+    "label": "Change language",
+    "current": "Current language"
+  }
+}

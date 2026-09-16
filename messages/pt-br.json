@@ -1,0 +1,66 @@
+{
+  "nav": {
+    "home": "Início",
+    "features": "Recursos",
+    "pricing": "Preços",
+    "clients": "Clientes",
+    "contact": "Contato",
+    "resources": "Recursos úteis",
+    "partners": "Parceiros",
+    "blog": "Blog",
+    "docs": "Documentação",
+    "changelog": "Novidades",
+    "faq": "Perguntas frequentes",
+    "privacy": "Política de Privacidade",
+    "hireExpert": "Contrate um especialista MultiVariants"
+  },
+  "cta": {
+    "bookDemo": "Agendar uma demonstração",
+    "getApp": "Instalar o app",
+    "getAppShopify": "Instalar o app na Shopify",
+    "getOnShopify": "Instalar na Shopify",
+    "startTrial": "Comece o teste grátis de 14 dias",
+    "startTrialShort": "Teste GRÁTIS de 14 dias",
+    "getStartedFree": "Comece grátis",
+    "seeAllFeatures": "Ver todos os recursos",
+    "viewAll": "Ver tudo",
+    "readMore": "Leia mais"
+  },
+  "common": {
+    "skipToContent": "Pular para o conteúdo",
+    "homeAriaLabel": "Página inicial da MultiVariants",
+    "mainNavigation": "Navegação principal",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "minRead": "min de leitura",
+    "freePlanTrial": "Plano gratuito disponível · Teste de 14 dias",
+    "freePlanTrialLong": "Plano gratuito disponível · Teste grátis de 14 dias · Sem programação",
+    "reviewsSuffix": "avaliações",
+    "verifiedReviews": "avaliações verificadas",
+    "onShopify": "na Shopify"
+  },
+  "footer": {
+    "tagline": "Permita que seus clientes peçam várias variantes e quantidades do mesmo produto com apenas um clique. Aumente suas vendas e sua taxa de conversão com nossa solução de pedidos em massa.",
+    "usefulLinks": "Links úteis",
+    "integration": "Integrações",
+    "moreByEfoli": "Mais da eFoli",
+    "support": "Suporte",
+    "socialLinks": "Redes sociais",
+    "usefulLinksAria": "Links úteis",
+    "integrationAria": "Links de integração",
+    "moreByEfoliAria": "Outros apps da eFoli",
+    "legalAria": "Links legais",
+    "copyright": "©{year} | MultiVariants — Um produto da",
+    "apps": {
+      "discountray": "Preços personalizados",
+      "quotway": "Negociação de orçamentos B2B",
+      "orderrules": "Limites de abertura da loja",
+      "embedup": "Botão de compra para afiliados",
+      "pushbundle": "App de monte sua caixa"
+    }
+  },
+  "langSwitcher": {
+    "label": "Mudar idioma",
+    "current": "Idioma atual"
+  }
+}

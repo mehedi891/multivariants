@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { BlogPost } from "@/app/blog/posts-data";
+import type { BlogPost } from "@/lib/blog/posts-data";
 
 type Props = {
   posts: BlogPost[];

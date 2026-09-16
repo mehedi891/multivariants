@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { AcademyCategory, AcademyDoc } from "@/app/academy/docs-data";
+import type { AcademyCategory, AcademyDoc } from "@/lib/academy/docs-data";
 
 type ExplorerDoc = AcademyDoc & {
   categorySlug: string;

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { AcademyCategory } from "@/app/academy/docs-data";
+import type { AcademyCategory } from "@/lib/academy/docs-data";
 
 type Props = {
   categories: AcademyCategory[];

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
-import { getPublicAcademySlugs } from "@/app/academy/public-api";
-import { getPublicBlogSlugs } from "@/app/blog/public-api";
-import { getPublicClientSlugs } from "@/app/clients-showcase/public-api";
+import { getPublicAcademySlugs } from "@/lib/academy/public-api";
+import { getPublicBlogSlugs } from "@/lib/blog/public-api";
+import { getPublicClientSlugs } from "@/lib/clients-showcase/public-api";
 
 // Regenerate the sitemap every 15 min so new CMS content (blog posts, academy
 // docs, client showcases) appears quickly, and a one-off failed/empty
