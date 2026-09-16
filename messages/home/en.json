@@ -191,7 +191,9 @@
   "testimonials": {
     "eyebrow": "Opinions That Matter",
     "title": "We Are All Growing Together",
-    "ratingAria": "{rating} out of 5 stars from {count} reviews on the Shopify App Store"
+    "ratingAria": "{rating} out of 5 stars from {count} reviews on the Shopify App Store",
+    "verifiedMerchant": "Verified merchant",
+    "starsAria": "5 out of 5 stars"
   },
   "blogs": {
     "eyebrow": "Resources",

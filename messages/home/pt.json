@@ -191,7 +191,9 @@
   "testimonials": {
     "eyebrow": "Opiniões que importam",
     "title": "Estamos todos crescendo juntos",
-    "ratingAria": "{rating} de 5 estrelas em {count} avaliações na Shopify App Store"
+    "ratingAria": "{rating} de 5 estrelas em {count} avaliações na Shopify App Store",
+    "verifiedMerchant": "Lojista verificado",
+    "starsAria": "5 de 5 estrelas"
   },
   "blogs": {
     "eyebrow": "Conteúdos",
