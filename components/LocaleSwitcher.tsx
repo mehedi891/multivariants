@@ -54,7 +54,9 @@ export default function LocaleSwitcher({
         </svg>
       </button>
 
-      <div className="pointer-events-none invisible absolute right-0 top-full z-50 w-48 translate-y-2 rounded-xl border border-white/20 bg-[#111a2f]/95 p-1.5 opacity-0 shadow-[0_16px_35px_rgba(0,0,0,0.45)] transition-all duration-200 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      {/* Flush against the trigger: any gap here is dead space that drops the
+         :hover state, closing the menu as the pointer travels into it. */}
+      <div className="pointer-events-none invisible absolute right-0 top-full z-50 w-48 -translate-y-1 rounded-xl border border-white/20 bg-[#111a2f]/95 p-1.5 opacity-0 shadow-[0_16px_35px_rgba(0,0,0,0.45)] transition-all duration-200 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
         {locales.map((locale) => (
           <Link
             key={locale}
