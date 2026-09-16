@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "title": "Academy – Guias de configuração e documentação",
+    "description": "Navegue pela documentação do MultiVariants por categoria. Aprenda sobre configuração, regras de quantidade, personalização de layout e integrações."
+  },
+  "badge": "Documentação",
+  "title": "MultiVariants Academy",
+  "subtitle": "Documentação de ajuda sobre configuração, restrições, fluxos de pedido em massa e integrações. Comece por uma categoria e abra qualquer guia.",
+  "empty": {
+    "title": "Ainda não há documentos",
+    "description": "Os guias da Academy aparecerão aqui assim que forem publicados.",
+    "helpText": "Volte em instantes."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "title": "FAQ – Bulk Add to Cart & Order Rules",
+    "description": "Answers to common questions about MultiVariants — bulk add to cart, Mix n Match, order restrictions, quantity increments, pricing, and installation."
+  },
+  "badge": "Support",
+  "title": "Frequently Asked Questions",
+  "subtitle": "Everything you need to know about MultiVariants — bulk ordering, restrictions, quantity rules, pricing, and support.",
+  "moreQuestions": "More Questions",
+  "empty": {
+    "title": "No FAQs available yet",
+    "description": "Questions and answers will appear here once they are published.",
+    "helpText": "Please check back shortly."
+  },
+  "cta": {
+    "title": "Still have questions?",
+    "subtitle": "Our team is happy to help with setup, custom workflows, and anything else you need to get selling faster.",
+    "primary": "Get the App on Shopify",
+    "secondary": "Contact Support"
+  }
+}

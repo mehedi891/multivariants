@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "title": "Fale conosco – Suporte, demonstrações e integração",
+    "description": "Fale com o time do MultiVariants para suporte a pedidos em massa na Shopify, demonstrações ao vivo, ajuda na configuração e integração. Estamos aqui para você vender mais rápido."
+  },
+  "eyebrow": "Fale com a gente",
+  "title": "Escreva para nós",
+  "subtitle": "Tem dúvidas ou quer uma demonstração personalizada? Nosso time terá prazer em ajudar você a começar.",
+  "form": {
+    "name": "Nome completo",
+    "namePlaceholder": "João da Silva",
+    "email": "E-mail",
+    "emailPlaceholder": "joao@exemplo.com",
+    "phone": "Telefone",
+    "phonePlaceholder": "+55 (11) 90000-0000",
+    "message": "Mensagem",
+    "messagePlaceholder": "Conte como podemos ajudar você...",
+    "honeypot": "Empresa (deixe em branco)",
+    "submit": "Enviar mensagem",
+    "sending": "Enviando…",
+    "sent": "Mensagem enviada!",
+    "errorGeneric": "Algo deu errado. Tente novamente.",
+    "errorNetwork": "Erro de conexão. Tente novamente."
+  },
+  "info": {
+    "website": "Site",
+    "supportEmail": "E-mail de suporte",
+    "location": "Endereço",
+    "address": "DOHS Mirpur, Dhaka-1216, Bangladesh"
+  },
+  "freePlan": {
+    "title": "Plano gratuito disponível",
+    "body": "Comece com nosso plano gratuito — sem cartão de crédito. Faça upgrade quando seu negócio crescer."
+  }
+}

@@ -59,3 +59,27 @@ export const getFeaturesContent = makeLoader<FeaturesContent>({
   en: () => import("@/messages/features/en.json"),
   "pt-br": () => import("@/messages/features/pt-br.json"),
 });
+
+// --- contact ----------------------------------------------------------------
+import type contactEn from "@/messages/contact/en.json";
+export type ContactContent = typeof contactEn;
+export const getContactContent = makeLoader<ContactContent>({
+  en: () => import("@/messages/contact/en.json"),
+  "pt-br": () => import("@/messages/contact/pt-br.json"),
+});
+
+// --- faq ---
+import type faqEn from "@/messages/faq/en.json";
+export type FaqContent = typeof faqEn;
+export const getFaqContent = makeLoader<FaqContent>({
+  en: () => import("@/messages/faq/en.json"),
+  "pt-br": () => import("@/messages/faq/pt-br.json"),
+});
+
+// --- academy ---
+import type academyEn from "@/messages/academy/en.json";
+export type AcademyContent = typeof academyEn;
+export const getAcademyContent = makeLoader<AcademyContent>({
+  en: () => import("@/messages/academy/en.json"),
+  "pt-br": () => import("@/messages/academy/pt-br.json"),
+});

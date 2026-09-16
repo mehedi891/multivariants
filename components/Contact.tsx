@@ -2,11 +2,13 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
+import type { ContactContent } from "@/i18n/content";
 import AnimateIn from "./AnimateIn";
 
 type Status = "idle" | "submitting" | "sent" | "error";
 
-export default function Contact() {
+export default function Contact({ content }: { content: ContactContent }) {
+  const f = content.form;
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   // When the form was mounted — used for bot-detection timing on the server.
@@ -36,7 +38,7 @@ export default function Contact() {
       const json = await res.json().catch(() => ({}));
       if (!res.ok || !json.ok) {
         setStatus("error");
-        setError(json.error || "Something went wrong. Please try again.");
+        setError(json.error || f.errorGeneric);
         return;
       }
       setStatus("sent");
@@ -44,7 +46,7 @@ export default function Contact() {
       setTimeout(() => setStatus("idle"), 4000);
     } catch {
       setStatus("error");
-      setError("Network error. Please try again.");
+      setError(f.errorNetwork);
     }
   }
 
@@ -73,13 +75,13 @@ export default function Contact() {
         <AnimateIn direction="up">
           <div className="text-center mb-12">
             <p className="text-[13px] font-semibold text-primary-light uppercase tracking-widest mb-3">
-              Reach Out to Us
+              {content.eyebrow}
             </p>
             <h1 id="contact-heading" className="text-3xl font-black leading-[1.32] tracking-tight text-white mb-4 md:text-4xl">
-              Write to Us
+              {content.title}
             </h1>
             <p className="text-[17px] text-white/55 max-w-lg mx-auto leading-relaxed">
-              Have questions or want a personalized demo? Our team is happy to help you get started.
+              {content.subtitle}
             </p>
           </div>
         </AnimateIn>
@@ -97,31 +99,31 @@ export default function Contact() {
               <form onSubmit={handleSubmit} noValidate className="space-y-5">
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="name" className={labelCls}>Full Name</label>
+                    <label htmlFor="name" className={labelCls}>{f.name}</label>
                     <div className="relative">
                       <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35">
                         <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
                           <circle cx="12" cy="8" r="3.5" /><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5" strokeLinecap="round" />
                         </svg>
                       </span>
-                      <input id="name" name="name" type="text" placeholder="John Doe" required autoComplete="name" className={`${inputCls} pl-11`} />
+                      <input id="name" name="name" type="text" placeholder={f.namePlaceholder} required autoComplete="name" className={`${inputCls} pl-11`} />
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="email" className={labelCls}>Email Address</label>
+                    <label htmlFor="email" className={labelCls}>{f.email}</label>
                     <div className="relative">
                       <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35">
                         <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
                           <rect x="3" y="5" width="18" height="14" rx="2.5" /><path d="m4 7 8 5.5L20 7" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </span>
-                      <input id="email" name="email" type="email" placeholder="john@example.com" required autoComplete="email" className={`${inputCls} pl-11`} />
+                      <input id="email" name="email" type="email" placeholder={f.emailPlaceholder} required autoComplete="email" className={`${inputCls} pl-11`} />
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className={labelCls}>Phone No.</label>
+                  <label htmlFor="phone" className={labelCls}>{f.phone}</label>
                   <div className="relative">
                     <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35">
                       <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
@@ -134,7 +136,7 @@ export default function Contact() {
                       type="tel"
                       inputMode="tel"
                       pattern="[0-9+()\-\s]*"
-                      placeholder="+1 (555) 000-0000"
+                      placeholder={f.phonePlaceholder}
                       autoComplete="tel"
                       onInput={(e) => {
                         e.currentTarget.value = e.currentTarget.value.replace(/[^\d+()\-\s]/g, "");
@@ -145,13 +147,13 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className={labelCls}>Message</label>
-                  <textarea id="message" name="message" placeholder="Tell us how we can help you..." rows={5} required className={`${inputCls} resize-y`} />
+                  <label htmlFor="message" className={labelCls}>{f.message}</label>
+                  <textarea id="message" name="message" placeholder={f.messagePlaceholder} rows={5} required className={`${inputCls} resize-y`} />
                 </div>
 
                 {/* Honeypot — hidden from users, bots tend to fill it */}
                 <div className="absolute left-[-9999px] top-[-9999px]" aria-hidden="true">
-                  <label htmlFor="company">Company (leave this empty)</label>
+                  <label htmlFor="company">{f.honeypot}</label>
                   <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
                 </div>
 
@@ -191,16 +193,16 @@ export default function Contact() {
                 >
                   {sent ? (
                     <>
-                      Message Sent!
+                      {f.sent}
                       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
                         <path d="m5 12 4.5 4.5L19 7" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </>
                   ) : submitting ? (
-                    "Sending…"
+                    f.sending
                   ) : (
                     <>
-                      Send Message
+                      {f.submit}
                       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                         <path d="M4 12h15m-6-6 6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
@@ -223,9 +225,9 @@ export default function Contact() {
 
               <dl className="flex flex-col gap-5">
                 {[
-                  { icon: "🌐", label: "Website",       value: "multivariants.com",           href: "https://multivariants.com" },
-                  { icon: "✉️", label: "Support Email", value: "support@multivariants.com",   href: "mailto:support@multivariants.com" },
-                  { icon: "📍", label: "Location",      value: "DOHS Mirpur, Dhaka-1216, Bangladesh", href: null },
+                  { icon: "🌐", label: content.info.website, value: "multivariants.com", href: "https://multivariants.com" },
+                  { icon: "✉️", label: content.info.supportEmail, value: "support@multivariants.com", href: "mailto:support@multivariants.com" },
+                  { icon: "📍", label: content.info.location, value: content.info.address, href: null },
                 ].map((item) => (
                   <div key={item.label} className="flex items-start gap-3.5">
                     <dt className="w-11 h-11 rounded-xl glass border-white/15 flex items-center justify-center text-lg flex-shrink-0" aria-hidden="true">
@@ -250,9 +252,9 @@ export default function Contact() {
               </dl>
 
               <div className="glass rounded-[20px] p-6 border-accent/25 bg-accent/8">
-                <p className="font-bold text-accent mb-2">Free Plan Available</p>
+                <p className="font-bold text-accent mb-2">{content.freePlan.title}</p>
                 <p className="text-sm text-white/55 mb-4 leading-relaxed">
-                  Start with our free plan — no credit card required. Upgrade any time as your business grows.
+                  {content.freePlan.body}
                 </p>
                 <Link
                   href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp"

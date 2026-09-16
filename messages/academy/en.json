@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "title": "Academy – Setup Guides & Help Docs",
+    "description": "Browse MultiVariants help docs by category. Learn setup, quantity rules, layout customization, and integrations."
+  },
+  "badge": "Docs",
+  "title": "MultiVariants Academy",
+  "subtitle": "Help docs for setup, restrictions, bulk ordering workflows, and integrations. Start with a category and open any guide.",
+  "empty": {
+    "title": "No docs available yet",
+    "description": "Academy guides will appear here once documents are published.",
+    "helpText": "Please check back shortly."
+  }
+}

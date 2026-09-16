@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getAcademyContent } from "@/i18n/content";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
@@ -13,12 +14,13 @@ type PageProps = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { lang } = await params;
+  const locale = toLocale(lang);
+  const { meta } = await getAcademyContent(locale);
   return pageMetadata({
-    title: "Academy – Setup Guides & Help Docs",
-    description:
-      "Browse MultiVariants help docs by category. Learn setup, quantity rules, layout customization, and integrations.",
+    title: meta.title,
+    description: meta.description,
     path: "/academy",
-    locale: toLocale(lang),
+    locale,
   });
 }
 
@@ -26,6 +28,7 @@ export default async function AcademyPage({ params }: PageProps) {
   const { lang } = await params;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const content = await getAcademyContent(locale);
   const { categories, error } = await getPublicAcademyCategories();
 
   return (
@@ -47,14 +50,13 @@ export default async function AcademyPage({ params }: PageProps) {
           <div className="relative z-10 mx-auto max-w-5xl text-center">
             <AnimateIn direction="up">
               <span className="inline-flex rounded-full border border-primary/35 bg-primary/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-light">
-                Docs
+                {content.badge}
               </span>
               <h1 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-[1.35] tracking-tight text-white sm:text-4xl lg:text-5xl">
-                MultiVariants Academy
+                {content.title}
               </h1>
               <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/65 sm:text-lg">
-                Help docs for setup, restrictions, bulk ordering workflows, and
-                integrations. Start with a category and open any guide.
+                {content.subtitle}
               </p>
             </AnimateIn>
           </div>
@@ -71,9 +73,9 @@ export default async function AcademyPage({ params }: PageProps) {
             }}
           >
             <ApiEmptyState
-              title="No docs available yet"
-              description="Academy guides will appear here once documents are published."
-              helpText="Please check back shortly."
+              title={content.empty.title}
+              description={content.empty.description}
+              helpText={content.empty.helpText}
               error={error}
               showDebugDetails={process.env.NODE_ENV !== "production"}
             />

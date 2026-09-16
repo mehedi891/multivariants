@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "title": "Perguntas frequentes – Compra em massa e regras de pedido",
+    "description": "Respostas às dúvidas mais comuns sobre o MultiVariants — adição em massa ao carrinho, Mix n Match, restrições de pedido, incrementos de quantidade, preços e instalação."
+  },
+  "badge": "Suporte",
+  "title": "Perguntas frequentes",
+  "subtitle": "Tudo o que você precisa saber sobre o MultiVariants — pedidos em massa, restrições, regras de quantidade, preços e suporte.",
+  "moreQuestions": "Outras perguntas",
+  "empty": {
+    "title": "Ainda não há perguntas frequentes",
+    "description": "As perguntas e respostas aparecerão aqui assim que forem publicadas.",
+    "helpText": "Volte em instantes."
+  },
+  "cta": {
+    "title": "Ainda tem dúvidas?",
+    "subtitle": "Nosso time terá prazer em ajudar com a configuração, fluxos personalizados e o que mais você precisar para vender mais rápido.",
+    "primary": "Instalar o app na Shopify",
+    "secondary": "Falar com o suporte"
+  }
+}

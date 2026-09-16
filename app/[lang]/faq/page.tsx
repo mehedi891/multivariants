@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
-import { toLocale } from "@/i18n/config";
+import { localizePath, toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getFaqContent } from "@/i18n/content";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -12,12 +13,13 @@ type PageProps = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { lang } = await params;
+  const locale = toLocale(lang);
+  const { meta } = await getFaqContent(locale);
   return pageMetadata({
-    title: "FAQ – Bulk Add to Cart & Order Rules",
-    description:
-      "Answers to common questions about MultiVariants — bulk add to cart, Mix n Match, order restrictions, quantity increments, pricing, and installation.",
+    title: meta.title,
+    description: meta.description,
     path: "/faq",
-    locale: toLocale(lang),
+    locale,
   });
 }
 
@@ -51,6 +53,7 @@ export default async function FaqPage({ params }: PageProps) {
   const { lang } = await params;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const content = await getFaqContent(locale);
   const { categories, uncategorized } = await getPublicFaqs();
 
   const allItems: PublicFaqItem[] = [
@@ -95,14 +98,13 @@ export default async function FaqPage({ params }: PageProps) {
           <div className="relative z-10 mx-auto max-w-5xl text-center">
             <AnimateIn direction="up">
               <span className="inline-flex rounded-full border border-primary/35 bg-primary/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-light">
-                Support
+                {content.badge}
               </span>
               <h1 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-[1.35] tracking-tight text-white sm:text-4xl lg:text-5xl">
-                Frequently Asked Questions
+                {content.title}
               </h1>
               <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/65 sm:text-lg">
-                Everything you need to know about MultiVariants — bulk ordering,
-                restrictions, quantity rules, pricing, and support.
+                {content.subtitle}
               </p>
             </AnimateIn>
           </div>
@@ -159,7 +161,7 @@ export default async function FaqPage({ params }: PageProps) {
                     {categories.length > 0 && (
                       <AnimateIn direction="up">
                         <h2 className="text-xl font-black text-white sm:text-2xl">
-                          More Questions
+                          {content.moreQuestions}
                         </h2>
                       </AnimateIn>
                     )}
@@ -176,11 +178,10 @@ export default async function FaqPage({ params }: PageProps) {
             <AnimateIn direction="up" delay={80}>
               <div className="mt-12 rounded-3xl border border-white/16 bg-gradient-to-b from-white/[0.1] to-white/[0.03] p-7 text-center shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl sm:p-9">
                 <h2 className="text-2xl font-black text-white sm:text-3xl">
-                  Still have questions?
+                  {content.cta.title}
                 </h2>
                 <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/60 sm:text-base">
-                  Our team is happy to help with setup, custom workflows, and
-                  anything else you need to get selling faster.
+                  {content.cta.subtitle}
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <Link
@@ -189,13 +190,13 @@ export default async function FaqPage({ params }: PageProps) {
                     rel="noopener noreferrer"
                     className="inline-flex items-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-primary-dark hover:-translate-y-px"
                   >
-                    Get the App on Shopify
+                    {content.cta.primary}
                   </Link>
                   <Link
-                    href="/contact"
+                    href={localizePath("/contact", locale)}
                     className="inline-flex items-center rounded-xl border-[1.5px] border-white/25 px-6 py-3 text-sm font-semibold text-white/75 transition-all hover:border-primary hover:text-primary"
                   >
-                    Contact Support
+                    {content.cta.secondary}
                   </Link>
                 </div>
               </div>

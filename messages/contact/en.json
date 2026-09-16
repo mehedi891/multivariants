@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "title": "Contact Us – Support, Demos & Onboarding",
+    "description": "Contact the MultiVariants team for Shopify bulk-ordering support, live demos, setup help, and onboarding. We're here to help you get selling faster."
+  },
+  "eyebrow": "Reach Out to Us",
+  "title": "Write to Us",
+  "subtitle": "Have questions or want a personalized demo? Our team is happy to help you get started.",
+  "form": {
+    "name": "Full Name",
+    "namePlaceholder": "John Doe",
+    "email": "Email Address",
+    "emailPlaceholder": "john@example.com",
+    "phone": "Phone No.",
+    "phonePlaceholder": "+1 (555) 000-0000",
+    "message": "Message",
+    "messagePlaceholder": "Tell us how we can help you...",
+    "honeypot": "Company (leave this empty)",
+    "submit": "Send Message",
+    "sending": "Sending…",
+    "sent": "Message Sent!",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "errorNetwork": "Network error. Please try again."
+  },
+  "info": {
+    "website": "Website",
+    "supportEmail": "Support Email",
+    "location": "Location",
+    "address": "DOHS Mirpur, Dhaka-1216, Bangladesh"
+  },
+  "freePlan": {
+    "title": "Free Plan Available",
+    "body": "Start with our free plan — no credit card required. Upgrade any time as your business grows."
+  }
+}
