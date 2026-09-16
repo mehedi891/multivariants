@@ -112,18 +112,22 @@ export default async function Testimonials({
   const opinions = await getPublicOpinions();
   if (opinions.length === 0) return null;
 
-  // Both rows carry every review, the second rotated by half the list, so the
-  // two rows are never showing the same card at the same moment. Each row is
-  // then repeated until it can span a wide viewport — with only a handful of
-  // reviews a single pass would leave an empty stretch mid-loop.
-  const rotate = (list: Opinion[], by: number) => [...list.slice(by), ...list.slice(0, by)];
+  // Whatever the CMS returns is split straight down the middle — one half per
+  // row — so the same merchant is never on screen in both rows at once.
+  const half = Math.ceil(opinions.length / 2);
+  // Repeat a row until it can span a wide viewport; a single pass of a short
+  // list would leave an empty stretch mid-loop.
   const fill = (row: Opinion[]) => {
     const out = [...row];
     while (out.length < 6) out.push(...row);
     return out;
   };
-  const first = fill(opinions);
-  const second = fill(rotate(opinions, Math.ceil(opinions.length / 2)));
+
+  // `.slice(half)` is empty only when there is a single review, in which case
+  // one row carries it and the second is dropped rather than rendered blank.
+  const rows = [opinions.slice(0, half), opinions.slice(half)]
+    .filter((row) => row.length > 0)
+    .map(fill);
 
   return (
     <section
@@ -173,7 +177,7 @@ export default async function Testimonials({
       {/* Two marquee rows travelling in opposite directions. Full-bleed (the
           section's 5% padding is cancelled) so cards run edge to edge. */}
       <div className="relative z-10 mt-12 -mx-[5%] flex flex-col gap-5">
-        {[first, second].map((row, rowIndex) => (
+        {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
             className="review-marquee"
