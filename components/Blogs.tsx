@@ -1,4 +1,7 @@
 import Link from "next/link";
+import type { Dictionary } from "@/i18n/dictionaries";
+import type { HomeContent } from "@/i18n/content";
+import { localizePath, type Locale } from "@/i18n/config";
 import Image from "next/image";
 import AnimateIn from "./AnimateIn";
 import { getPublicBlogPosts } from "@/lib/blog/public-api";
@@ -15,7 +18,15 @@ function isRemoteImage(src: string) {
   return src.startsWith("http://") || src.startsWith("https://");
 }
 
-export default async function Blogs() {
+export default async function Blogs({
+  content,
+  dict,
+  locale,
+}: {
+  content: HomeContent["blogs"];
+  dict: Dictionary;
+  locale: Locale;
+}) {
   const { posts } = await getPublicBlogPosts({ page: 1, limit: 3 });
 
   return (
@@ -35,14 +46,14 @@ export default async function Blogs() {
           <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
             <div>
               <p className="text-[13px] font-semibold text-primary-light uppercase tracking-widest mb-2">
-                Resources
+                {content.eyebrow}
               </p>
               <h2 id="blogs-heading" className="text-3xl font-black tracking-tight text-white md:text-4xl">
-                Latest News and Blogs
+                {content.title}
               </h2>
             </div>
-            <Link href="/blog" className="inline-flex items-center px-5 py-2 rounded-lg text-sm font-semibold border-[1.5px] border-white/25 text-white/70 hover:border-primary hover:text-primary transition-all whitespace-nowrap glass">
-              See All Blogs
+            <Link href={localizePath("/blog", locale)} className="inline-flex items-center px-5 py-2 rounded-lg text-sm font-semibold border-[1.5px] border-white/25 text-white/70 hover:border-primary hover:text-primary transition-all whitespace-nowrap glass">
+              {content.seeAll}
             </Link>
           </div>
         </AnimateIn>
@@ -52,7 +63,7 @@ export default async function Blogs() {
             <AnimateIn key={post.slug} direction="up" delay={i * 100}>
               <li className="h-full">
                 <Link
-                  href={`/blog/${post.slug}`}
+                  href={localizePath(`/blog/${post.slug}`, locale)}
                   className="group block h-full glass rounded-[20px] overflow-hidden border-white/10 hover:border-primary/40 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(92,106,196,0.2)] transition-all duration-300"
                 >
                   <div className="relative h-[180px] overflow-hidden border-b border-white/10">
@@ -79,7 +90,7 @@ export default async function Blogs() {
                     <p className="text-[12px] text-white/35 flex items-center gap-1.5">
                       <time>{formatDate(post.publishedAt)}</time>
                       <span aria-hidden="true">|</span>
-                      {post.readingTimeMinutes} min read
+                      {post.readingTimeMinutes} {dict.common.minRead}
                     </p>
                   </article>
                 </Link>

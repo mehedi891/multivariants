@@ -1,4 +1,6 @@
 import Image from "next/image";
+import type { Dictionary } from "@/i18n/dictionaries";
+import type { HomeContent } from "@/i18n/content";
 import AnimateIn from "./AnimateIn";
 import { getPublicOpinions } from "@/lib/opinions";
 
@@ -17,7 +19,13 @@ const AVATAR_GRADIENTS = [
   "from-cyan-500 to-blue-500",
 ];
 
-export default async function Testimonials() {
+export default async function Testimonials({
+  content,
+  dict,
+}: {
+  content: HomeContent["testimonials"];
+  dict: Dictionary;
+}) {
   const opinions = await getPublicOpinions();
   if (opinions.length === 0) return null;
 
@@ -38,10 +46,10 @@ export default async function Testimonials() {
           <div className="flex flex-wrap items-center justify-between gap-6 mb-12">
             <div>
               <p className="text-[13px] font-semibold text-primary-light uppercase tracking-widest mb-3">
-                Opinions That Matter
+                {content.eyebrow}
               </p>
               <h2 id="reviews-heading" className="text-3xl font-black tracking-tight text-white md:text-4xl">
-                We Are All Growing Together
+                {content.title}
               </h2>
             </div>
             <a
@@ -49,15 +57,17 @@ export default async function Testimonials() {
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-end gap-1.5"
-              aria-label="5.0 out of 5 stars from 355 reviews on the Shopify App Store"
+              aria-label={content.ratingAria
+                .replace("{rating}", "5.0")
+                .replace("{count}", "355")}
             >
               <span className="inline-flex items-center gap-1.5 glass rounded-full px-4 py-2 text-[13px] font-semibold border-white/20 transition-colors group-hover:border-primary/40">
                 <span className="w-2.5 h-2.5 rounded-full bg-brand-green" aria-hidden="true" />
                 <span className="text-amber-400" aria-hidden="true">★★★★★</span>
                 <strong className="text-white">5.0</strong>
-                <span className="text-white/60">on Shopify</span>
+                <span className="text-white/60">{dict.common.onShopify}</span>
               </span>
-              <span className="text-[13px] text-white/50 transition-colors group-hover:text-white/75">355 verified reviews →</span>
+              <span className="text-[13px] text-white/50 transition-colors group-hover:text-white/75">355 {dict.common.verifiedReviews} →</span>
             </a>
           </div>
         </AnimateIn>

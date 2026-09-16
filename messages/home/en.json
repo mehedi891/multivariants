@@ -1,0 +1,206 @@
+{
+  "hero": {
+    "aria": "Hero",
+    "badge": "Trusted by 13,000+ Shopify merchants",
+    "titleLead": "Bulk Variant Ordering",
+    "titleFor": "for",
+    "titleHighlight": "Shopify Stores",
+    "subtitle": "Let customers order multiple product variants in seconds with a simple order form. Perfect for B2B, wholesale, and variant-heavy stores.",
+    "ctaInstall": "Install App Free",
+    "ctaDemo": "View Demo",
+    "stats": {
+      "merchants": "Merchants",
+      "countries": "Countries",
+      "rating": "App Rating"
+    },
+    "card": {
+      "productName": "Premium Cotton T-Shirt",
+      "perUnit": "$29.99 per unit",
+      "colSize": "Size",
+      "colBlack": "Black",
+      "colWhite": "White",
+      "colNavy": "Navy",
+      "total": "Total: 12 items",
+      "addAll": "Add All to Cart",
+      "badgeTitle": "10x Faster",
+      "badgeSub": "Than default Shopify"
+    }
+  },
+  "why": {
+    "eyebrow": "The Problem",
+    "title": "The Problem with Default Shopify Ordering",
+    "subtitle": "Shopify's default variant selector forces customers to add products one at a time. This frustrates bulk buyers and kills wholesale conversions.",
+    "withoutTitle": "Without MultiVariants",
+    "withTitle": "With MultiVariants",
+    "typicalExperience": "Typical experience:",
+    "mvExperience": "MultiVariants experience:",
+    "withoutNote": "Repeat for each variant... 😵",
+    "withNote": "Add all 6 items with one click! ✨",
+    "selectSteps": [
+      "Select Size ▼",
+      "Select Color ▼",
+      "Add 1 item"
+    ],
+    "tableCols": [
+      "Size",
+      "Black",
+      "White",
+      "Navy"
+    ],
+    "withoutPoints": [
+      "Select variant, add to cart, repeat... for each item",
+      "20+ clicks to order 5 different sizes",
+      "Customers abandon bulk orders"
+    ],
+    "withPoints": [
+      "Add all variants in one simple table view",
+      "3 clicks to order any number of variants",
+      "Higher conversion, larger orders"
+    ]
+  },
+  "demo": {
+    "badge": "Live Demo",
+    "title": "Try the Variant Table",
+    "subtitle": "Experience how your customers will order. Click +/− or type quantities directly.",
+    "productName": "Premium Cotton T-Shirt",
+    "perUnit": "$29.99 per unit",
+    "sku": "SKU: PCT-001",
+    "totalItems": "Total Items",
+    "totalPrice": "Total Price",
+    "inStock": "In Stock",
+    "colSize": "Size",
+    "reset": "Reset",
+    "addAll": "Add All to Cart",
+    "liveNote": "This is a live demo. Try adding quantities to see the total update in real-time!",
+    "colors": [
+      "Black",
+      "White",
+      "Navy",
+      "Gray"
+    ]
+  },
+  "whyMv": {
+    "eyebrow": "Why MultiVariants?",
+    "title": "Variants Bulk Add to Cart for Shopify",
+    "subtitle": "Everything you need to streamline bulk ordering and grow your Shopify store's revenue.",
+    "cards": [
+      {
+        "title": "Allow Variants Bulk Add to Cart",
+        "desc": "Customers quickly buy products with variations in bulk. Add multiple colors, sizes, or other options to the cart with just one click — reducing cart abandonment dramatically."
+      },
+      {
+        "title": "Increase Sales and Conversion",
+        "desc": "Makes the bulk ordering process quick so customers can easily buy multiple product variants without hassle. Drives increased wholesale sales and revenue growth."
+      },
+      {
+        "title": "Simple Installation",
+        "desc": "A top-notch app with a simple, hassle-free setup. MultiVariants works seamlessly with all top eCommerce platforms and integrates without a single line of coding."
+      },
+      {
+        "title": "Multi-Language Support",
+        "desc": "MultiVariants makes international expansion easy with multi-language capabilities. Easily localize your store for customers worldwide and grow beyond borders."
+      }
+    ]
+  },
+  "integrations": {
+    "badge": "Integrations",
+    "title": "Works with Your Existing Setup",
+    "subtitle": "MultiVariants integrates seamlessly with all Shopify themes and popular page builders. No complex configuration needed.",
+    "items": [
+      {
+        "title": "All Shopify Themes",
+        "desc": "Works with any theme out of the box"
+      },
+      {
+        "title": "GemPages",
+        "desc": "Full compatibility with page builder"
+      },
+      {
+        "title": "PageFly",
+        "desc": "Seamless integration"
+      },
+      {
+        "title": "Shogun",
+        "desc": "Drag and drop ready"
+      }
+    ],
+    "cards": [
+      {
+        "title": "Easy Setup",
+        "desc": "Install and configure in under 5 minutes. No coding required."
+      },
+      {
+        "title": "Fast Performance",
+        "desc": "Optimized code that won't slow down your store."
+      },
+      {
+        "title": "Secure & Reliable",
+        "desc": "Built on Shopify's secure infrastructure with 99.9% uptime."
+      }
+    ]
+  },
+  "stats": {
+    "aria": "Key statistics",
+    "labels": [
+      "B2B and B2C Shopify Merchants",
+      "Countries Worldwide",
+      "5-Star Reviews"
+    ]
+  },
+  "features": {
+    "eyebrow": "Key Features",
+    "title": "Everything You Need to Sell More",
+    "subtitle": "MultiVariants enables easy bulk ordering for eCommerce through key features that increase conversions, value, and revenues.",
+    "liveDemo": "Live Demo",
+    "items": {
+      "mixMatch": {
+        "badge": "Mix n Match",
+        "title": "Let Your Customers Build Their Own Box",
+        "body": "Mix and Match allows clients to submit orders that meet minimum or maximum order limits. A great way to increase sales by enabling customers to create a more personalized shopping experience.",
+        "mockTitle": "Build Your Box",
+        "mockProduct": "Premium T-Shirt Bundle",
+        "mockProgress": "Total: 4 of 6 required",
+        "mockCta": "Add Box to Cart"
+      },
+      "restrictions": {
+        "badge": "Apply Multiple Restrictions",
+        "title": "Minimum Order Value Restriction",
+        "body": "Apply multiple restrictions to a single product page, including per product and per variant restrictions. Set maximum order quantities, enforce minimums per color or size, and prevent overselling effortlessly.",
+        "highlightLabel": "Example:",
+        "highlightText": "Max 5 T-shirts total, min 3 red. Customers must order 3 red + at least 2 of any other color.",
+        "mockTitle": "Order Restrictions",
+        "mockRows": [
+          "Red T-Shirt",
+          "Blue T-Shirt",
+          "Green T-Shirt",
+          "Total Order"
+        ]
+      },
+      "increments": {
+        "badge": "Incremental Quantity",
+        "title": "Add Incremental Quantity for Product Variants",
+        "body": "Set product quantity increments with the MultiVariants Professional plan. For a quantity of 12, specify increments of 12, 24, 36, 48, and 60. Perfect for bulk product sellers — prevents overselling of limited-stock items.",
+        "mockTitle": "Quantity Increments",
+        "mockProduct": "Case of Cans (qty)",
+        "mockStep": "Step: 12 · Range: 12 – 60"
+      }
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Opinions That Matter",
+    "title": "We Are All Growing Together",
+    "ratingAria": "{rating} out of 5 stars from {count} reviews on the Shopify App Store"
+  },
+  "blogs": {
+    "eyebrow": "Resources",
+    "title": "Latest News and Blogs",
+    "seeAll": "See All Blogs"
+  },
+  "cta": {
+    "badge": "Get Started Today",
+    "title": "Ready to Sell More with Bulk Variant Ordering?",
+    "subtitle": "Add one-click bulk add-to-cart to your Shopify store and watch your average order value grow — risk-free.",
+    "primary": "Get the App on Shopify",
+    "secondary": "View Pricing"
+  }
+}

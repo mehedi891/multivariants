@@ -1,0 +1,12 @@
+{
+  "pagination": {
+    "aria": "Pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of"
+  },
+  "empty": {
+    "helpText": "Content loads from the MultiVariants CMS — please try again shortly."
+  }
+}

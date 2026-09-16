@@ -1,6 +1,8 @@
 import Link from "next/link";
+import type { HomeContent } from "@/i18n/content";
 
-export default function Hero() {
+export default function Hero({ content }: { content: HomeContent["hero"] }) {
+  const c = content.card;
   const variantRows = [
     { size: "S",  black: 2, white: 0, navy: 1 },
     { size: "M",  black: 2, white: 0, navy: 1 },
@@ -14,7 +16,7 @@ export default function Hero() {
       style={{
         background: "linear-gradient(135deg, #1a1040 0%, #0f172a 45%, #0a1628 100%)",
       }}
-      aria-label="Hero"
+      aria-label={content.aria}
     >
       {/* Animated blobs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -40,24 +42,22 @@ export default function Hero() {
           <div>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white/80 glass shadow-lg">
               <span className="text-amber-400 tracking-wide" aria-hidden="true">★★★★★</span>
-              Trusted by 13,000+ Shopify merchants
+              {content.badge}
             </div>
           </div>
 
           <div>
             <h1 className="mb-6 text-4xl font-black leading-[1.22] tracking-tight text-white sm:text-5xl md:text-[3.4rem]">
-              Bulk Variant Ordering
+              {content.titleLead}
               <br />
-              for{" "}
-              <span className="text-gradient-warm">Shopify Stores</span>
+              {content.titleFor}{" "}
+              <span className="text-gradient-warm">{content.titleHighlight}</span>
             </h1>
           </div>
 
           <div>
             <p className="mb-10 max-w-[520px] text-base leading-relaxed text-white/65 sm:text-lg">
-              Let customers order multiple product variants in seconds with a
-              simple order form. Perfect for B2B, wholesale, and variant-heavy
-              stores.
+              {content.subtitle}
             </p>
           </div>
 
@@ -69,7 +69,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Install App Free
+                {content.ctaInstall}
                 <span aria-hidden="true">→</span>
               </Link>
               <Link
@@ -83,7 +83,7 @@ export default function Hero() {
                     <path d="M2 1.5L8 5L2 8.5V1.5Z" />
                   </svg>
                 </span>
-                View Demo
+                {content.ctaDemo}
               </Link>
             </div>
           </div>
@@ -91,9 +91,9 @@ export default function Hero() {
           <div>
             <div className="grid max-w-[480px] grid-cols-3 divide-x divide-white/15">
               {[
-                { value: "13,000+", label: "Merchants" },
-                { value: "120+",    label: "Countries" },
-                { value: "5.0★",    label: "App Rating" },
+                { value: "13,000+", label: content.stats.merchants },
+                { value: "120+",    label: content.stats.countries },
+                { value: "5.0★",    label: content.stats.rating },
               ].map((s) => (
                 <div key={s.label} className="flex flex-col items-center px-4 first:pl-0">
                   <p className="text-2xl font-black text-white sm:text-3xl">{s.value}</p>
@@ -117,17 +117,17 @@ export default function Hero() {
                   👕
                 </div>
                 <div>
-                  <p className="text-base font-bold text-white sm:text-xl">Premium Cotton T-Shirt</p>
-                  <p className="mt-1 text-sm font-medium text-white/55">$29.99 per unit</p>
+                  <p className="text-base font-bold text-white sm:text-xl">{c.productName}</p>
+                  <p className="mt-1 text-sm font-medium text-white/55">{c.perUnit}</p>
                 </div>
               </div>
 
               {/* Table header */}
               <div className="grid grid-cols-4 gap-2 border-b border-white/10 pb-2 text-xs font-semibold text-white/40 sm:text-sm">
-                <span>Size</span>
-                <span className="text-center">Black</span>
-                <span className="text-center">White</span>
-                <span className="text-center">Navy</span>
+                <span>{c.colSize}</span>
+                <span className="text-center">{c.colBlack}</span>
+                <span className="text-center">{c.colWhite}</span>
+                <span className="text-center">{c.colNavy}</span>
               </div>
 
               {/* Rows */}
@@ -149,11 +149,11 @@ export default function Hero() {
               {/* Footer */}
               <div className="mt-5 flex items-center justify-between">
                 <div>
-                  <p className="text-xs text-white/40">Total: 12 items</p>
+                  <p className="text-xs text-white/40">{c.total}</p>
                   <p className="mt-1 text-xl font-black text-white">$359.88</p>
                 </div>
                 <button className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_20px_rgba(92,106,196,0.5)] hover:bg-primary-dark hover:shadow-[0_0_30px_rgba(92,106,196,0.7)] transition-all">
-                  Add All to Cart
+                  {c.addAll}
                 </button>
               </div>
             </div>
@@ -167,8 +167,8 @@ export default function Hero() {
                   </svg>
                 </span>
                 <div>
-                  <p className="text-[13px] font-bold text-white">10x Faster</p>
-                  <p className="text-[11px] text-white/45">Than default Shopify</p>
+                  <p className="text-[13px] font-bold text-white">{c.badgeTitle}</p>
+                  <p className="text-[11px] text-white/45">{c.badgeSub}</p>
                 </div>
               </div>
             </div>

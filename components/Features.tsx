@@ -1,5 +1,7 @@
 import Link from "next/link";
 import AnimateIn from "./AnimateIn";
+import type { Dictionary } from "@/i18n/dictionaries";
+import type { HomeContent } from "@/i18n/content";
 
 function ShopifyBtn() {
   return (
@@ -21,17 +23,18 @@ function DemoBtn({ href = "#" }: { href?: string }) {
   );
 }
 
-const features = [
+function buildFeatures(t: HomeContent["features"]) {
+  return [
   {
-    badge: "Mix n Match",
+    badge: t.items.mixMatch.badge,
     demoUrl: "https://multivariant.myshopify.com/products/box-of-12-items",
-    title: "Let Your Customers Build Their Own Box",
-    body: "Mix and Match allows clients to submit orders that meet minimum or maximum order limits. A great way to increase sales by enabling customers to create a more personalized shopping experience.",
+    title: t.items.mixMatch.title,
+    body: t.items.mixMatch.body,
     demo: (
       <div className="glass rounded-[20px] p-6 border-white/15 min-h-[280px] flex flex-col gap-3">
-        <p className="text-[12px] font-semibold text-white/40 uppercase tracking-wider">Build Your Box</p>
+        <p className="text-[12px] font-semibold text-white/40 uppercase tracking-wider">{t.items.mixMatch.mockTitle}</p>
         <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-          <p className="font-bold text-[15px] mb-3 text-white">Premium T-Shirt Bundle</p>
+          <p className="font-bold text-[15px] mb-3 text-white">{t.items.mixMatch.mockProduct}</p>
           <div className="grid grid-cols-3 gap-2 mb-3">
             {[
               { label: "Red ✓",  cls: "border-emerald-500/40 bg-emerald-500/15 text-emerald-400" },
@@ -45,33 +48,33 @@ const features = [
             ))}
           </div>
           <div className="flex items-center gap-2 mb-3 text-[12px] font-semibold">
-            <span className="flex-1 text-white/40">Total: 4 of 6 required</span>
+            <span className="flex-1 text-white/40">{t.items.mixMatch.mockProgress}</span>
             <div className="flex-1 h-1.5 bg-white/15 rounded-full overflow-hidden">
               <div className="h-full w-[66%] bg-primary rounded-full" />
             </div>
           </div>
-          <button className="w-full py-2.5 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-dark transition-all">Add Box to Cart</button>
+          <button className="w-full py-2.5 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-dark transition-all">{t.items.mixMatch.mockCta}</button>
         </div>
       </div>
     ),
     reverse: false,
   },
   {
-    badge: "Apply Multiple Restrictions",
+    badge: t.items.restrictions.badge,
     demoUrl: "https://multivariant.myshopify.com/products/box-of-12-items",
-    title: "Minimum Order Value Restriction",
-    body: "Apply multiple restrictions to a single product page, including per product and per variant restrictions. Set maximum order quantities, enforce minimums per color or size, and prevent overselling effortlessly.",
-    highlight: { label: "Example:", text: "Max 5 T-shirts total, min 3 red. Customers must order 3 red + at least 2 of any other color." },
+    title: t.items.restrictions.title,
+    body: t.items.restrictions.body,
+    highlight: { label: t.items.restrictions.highlightLabel, text: t.items.restrictions.highlightText },
     demo: (
       <div className="glass rounded-[20px] p-6 border-white/15 min-h-[280px] flex flex-col gap-3">
-        <p className="text-[12px] font-semibold text-white/40 uppercase tracking-wider">Order Restrictions</p>
+        <p className="text-[12px] font-semibold text-white/40 uppercase tracking-wider">{t.items.restrictions.mockTitle}</p>
         <div className="bg-white/5 rounded-xl p-4 border border-white/10 flex flex-col divide-y divide-white/10">
           {[
-            { color: "#ef4444", label: "Red T-Shirt",   vals: [{ v: "Min 3", red: false }] },
-            { color: "#3b82f6", label: "Blue T-Shirt",  vals: [{ v: "Min 0", red: false }] },
-            { color: "#22c55e", label: "Green T-Shirt", vals: [{ v: "Min 0", red: false }] },
-            { color: "#5C6AC4", label: "Total Order",   vals: [{ v: "Min 5", red: false }, { v: "Max 20", red: true }] },
-          ].map((r) => (
+            { color: "#ef4444", vals: [{ v: "Min 3", red: false }] },
+            { color: "#3b82f6", vals: [{ v: "Min 0", red: false }] },
+            { color: "#22c55e", vals: [{ v: "Min 0", red: false }] },
+            { color: "#5C6AC4", vals: [{ v: "Min 5", red: false }, { v: "Max 20", red: true }] },
+          ].map((row, ri) => ({ ...row, label: t.items.restrictions.mockRows[ri] })).map((r) => (
             <div key={r.label} className="flex items-center gap-2.5 py-2 last:pb-0 first:pt-0 text-[13px]">
               <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: r.color }} />
               <span className="flex-1 font-medium text-white/70">{r.label}</span>
@@ -86,15 +89,15 @@ const features = [
     reverse: true,
   },
   {
-    badge: "Incremental Quantity",
+    badge: t.items.increments.badge,
     demoUrl: "https://multivariant.myshopify.com/products/minimum-order-quantity-increase-quantity-in-multiples",
-    title: "Add Incremental Quantity for Product Variants",
-    body: "Set product quantity increments with the MultiVariants Professional plan. For a quantity of 12, specify increments of 12, 24, 36, 48, and 60. Perfect for bulk product sellers — prevents overselling of limited-stock items.",
+    title: t.items.increments.title,
+    body: t.items.increments.body,
     demo: (
       <div className="glass rounded-[20px] p-6 border-white/15 min-h-[280px] flex flex-col gap-3">
-        <p className="text-[12px] font-semibold text-white/40 uppercase tracking-wider">Quantity Increments</p>
+        <p className="text-[12px] font-semibold text-white/40 uppercase tracking-wider">{t.items.increments.mockTitle}</p>
         <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-          <p className="text-[13px] font-semibold mb-2.5 text-white/80">Case of Cans (qty)</p>
+          <p className="text-[13px] font-semibold mb-2.5 text-white/80">{t.items.increments.mockProduct}</p>
           <div className="flex gap-1.5 flex-wrap mb-4">
             {[12, 24, 36, 48, 60].map((n) => (
               <span key={n} className={`border-[1.5px] rounded-md px-2.5 py-1 text-[12px] font-bold transition-all ${n === 24 ? "border-primary bg-primary text-white shadow-[0_0_12px_rgba(92,106,196,0.4)]" : "border-white/20 text-white/40"}`}>{n}</span>
@@ -105,15 +108,23 @@ const features = [
             <span className="w-16 text-center text-3xl font-black text-primary">24</span>
             <button className="w-9 h-9 border-[1.5px] border-white/20 bg-white/5 rounded-lg text-lg font-semibold text-white/50 flex items-center justify-center hover:border-primary hover:text-primary transition-all">+</button>
           </div>
-          <p className="text-[12px] text-white/40 text-center">Step: 12 · Range: 12 – 60</p>
+          <p className="text-[12px] text-white/40 text-center">{t.items.increments.mockStep}</p>
         </div>
       </div>
     ),
     reverse: false,
-  },
-];
+    },
+  ];
+}
 
-export default function Features() {
+export default function Features({
+  content,
+  dict,
+}: {
+  content: HomeContent["features"];
+  dict: Dictionary;
+}) {
+  const features = buildFeatures(content);
   return (
     <section
       className="relative px-[5%] py-16 lg:py-24 overflow-hidden"
@@ -129,12 +140,12 @@ export default function Features() {
       <div className="relative z-10 max-w-6xl mx-auto">
         <AnimateIn direction="up">
           <div className="text-center mb-16">
-            <p className="text-[13px] font-semibold text-primary-light uppercase tracking-widest mb-3">Key Features</p>
+            <p className="text-[13px] font-semibold text-primary-light uppercase tracking-widest mb-3">{content.eyebrow}</p>
             <h2 id="features-heading" className="text-3xl font-black tracking-tight text-white mb-4 md:text-4xl">
-              Everything You Need to Sell More
+              {content.title}
             </h2>
             <p className="text-[17px] text-white/55 max-w-xl mx-auto leading-relaxed">
-              MultiVariants enables easy bulk ordering for eCommerce through key features that increase conversions, value, and revenues.
+              {content.subtitle}
             </p>
           </div>
         </AnimateIn>
@@ -169,14 +180,14 @@ export default function Features() {
         <AnimateIn direction="up" delay={100}>
           <div className="text-center mt-16 flex flex-col items-center gap-5">
             <Link href="/features" className="inline-flex items-center px-7 py-3.5 rounded-xl text-base font-semibold border-[1.5px] border-white/25 text-white/70 hover:border-primary hover:text-primary transition-all glass">
-              See All Features
+              {dict.cta.seeAllFeatures}
             </Link>
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2.5 text-[13px] font-semibold flex-wrap justify-center border-white/20">
               <span className="text-amber-400">★★★★★</span>
-              <strong className="text-white">355 reviews</strong>
+              <strong className="text-white">355 {dict.common.reviewsSuffix}</strong>
               <span className="text-white/35">·</span>
-              <Link href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp" target="_blank" rel="noopener noreferrer" className="text-primary-light hover:text-accent transition-colors">Get on Shopify</Link>
-              <span className="text-white/35 text-[12px]">· Free plan · 14-Day Trial</span>
+              <Link href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp" target="_blank" rel="noopener noreferrer" className="text-primary-light hover:text-accent transition-colors">{dict.cta.getOnShopify}</Link>
+              <span className="text-white/35 text-[12px]">· {dict.common.freePlanTrial}</span>
             </div>
           </div>
         </AnimateIn>

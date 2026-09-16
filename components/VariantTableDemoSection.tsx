@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import AnimateIn from "./AnimateIn";
+import type { HomeContent } from "@/i18n/content";
 
 const unitPrice = 29.99;
 const sizes  = ["S", "M", "L", "XL", "XXL"] as const;
@@ -23,7 +24,11 @@ function formatCurrency(v: number) {
   return v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-export default function VariantTableDemoSection() {
+export default function VariantTableDemoSection({
+  content,
+}: {
+  content: HomeContent["demo"];
+}) {
   const [quantities, setQuantities] = useState<QuantityMap>(initialQuantities);
 
   const totalItems = useMemo(
@@ -51,13 +56,13 @@ export default function VariantTableDemoSection() {
         <AnimateIn direction="up">
           <div className="text-center mb-12">
             <span className="inline-flex rounded-full bg-accent/15 px-4 py-1.5 text-sm font-semibold text-accent border border-accent/30">
-              Live Demo
+              {content.badge}
             </span>
             <h2 id="variant-demo-heading" className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl">
-              Try the Variant Table
+              {content.title}
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base text-white/55 sm:text-lg">
-              Experience how your customers will order. Click +/− or type quantities directly.
+              {content.subtitle}
             </p>
           </div>
         </AnimateIn>
@@ -70,11 +75,11 @@ export default function VariantTableDemoSection() {
                 👕
               </div>
               <div>
-                <p className="text-xl font-bold text-white sm:text-2xl">Premium Cotton T-Shirt</p>
-                <p className="mt-1 text-base font-medium text-white/50">$29.99 per unit</p>
+                <p className="text-xl font-bold text-white sm:text-2xl">{content.productName}</p>
+                <p className="mt-1 text-base font-medium text-white/50">{content.perUnit}</p>
                 <div className="mt-1.5 flex items-center gap-3 text-xs font-semibold">
-                  <span className="rounded bg-accent/20 px-2 py-0.5 text-accent border border-accent/30">In Stock</span>
-                  <span className="text-white/30">SKU: PCT-001</span>
+                  <span className="rounded bg-accent/20 px-2 py-0.5 text-accent border border-accent/30">{content.inStock}</span>
+                  <span className="text-white/30">{content.sku}</span>
                 </div>
               </div>
             </div>
@@ -84,9 +89,11 @@ export default function VariantTableDemoSection() {
               <table className="min-w-[600px] w-full">
                 <thead>
                   <tr className="border-b border-white/10 text-left text-sm font-semibold text-white/40">
-                    <th className="px-5 py-4">Size</th>
-                    {colors.map((c) => (
-                      <th key={c} className="px-4 py-4 text-center">{c}</th>
+                    <th className="px-5 py-4">{content.colSize}</th>
+                    {colors.map((c, ci) => (
+                      <th key={c} className="px-4 py-4 text-center">
+                        {content.colors[ci] ?? c}
+                      </th>
                     ))}
                   </tr>
                 </thead>
@@ -133,11 +140,11 @@ export default function VariantTableDemoSection() {
             <div className="flex flex-col gap-5 border-t border-white/10 p-5 sm:flex-row sm:items-end sm:justify-between sm:p-6">
               <div className="flex flex-wrap items-end gap-8">
                 <div>
-                  <p className="text-xs font-medium text-white/40 mb-1">Total Items</p>
+                  <p className="text-xs font-medium text-white/40 mb-1">{content.totalItems}</p>
                   <p className="text-4xl font-black text-white leading-none">{totalItems}</p>
                 </div>
                 <div className="sm:border-l sm:border-white/10 sm:pl-8">
-                  <p className="text-xs font-medium text-white/40 mb-1">Total Price</p>
+                  <p className="text-xs font-medium text-white/40 mb-1">{content.totalPrice}</p>
                   <p className="text-4xl font-black text-[#8f95ff] leading-none">${formatCurrency(totalPrice)}</p>
                 </div>
               </div>
@@ -146,10 +153,10 @@ export default function VariantTableDemoSection() {
                   onClick={() => setQuantities(initialQuantities)}
                   className="rounded-xl border border-white/15 px-5 py-2.5 text-sm font-semibold text-white/60 hover:bg-white/8 hover:text-white transition-all"
                 >
-                  Reset
+                  {content.reset}
                 </button>
                 <button className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark shadow-[0_0_20px_rgba(92,106,196,0.4)] hover:shadow-[0_0_30px_rgba(92,106,196,0.6)] transition-all">
-                  Add All to Cart
+                  {content.addAll}
                 </button>
               </div>
             </div>
@@ -158,7 +165,7 @@ export default function VariantTableDemoSection() {
 
         <AnimateIn direction="up" delay={200}>
           <p className="mt-5 text-center text-sm text-white/35">
-            This is a live demo. Try adding quantities to see the total update in real-time!
+            {content.liveNote}
           </p>
         </AnimateIn>
       </div>

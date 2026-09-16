@@ -1,17 +1,9 @@
 import AnimateIn from "./AnimateIn";
+import type { HomeContent } from "@/i18n/content";
 
-const integrationItems = [
-  { title: "All Shopify Themes", desc: "Works with any theme out of the box" },
-  { title: "GemPages",           desc: "Full compatibility with page builder" },
-  { title: "PageFly",            desc: "Seamless integration" },
-  { title: "Shogun",             desc: "Drag and drop ready" },
-];
 
-const benefitItems = [
-  { key: "setup",       title: "Easy Setup",         desc: "Install and configure in under 5 minutes. No coding required." },
-  { key: "performance", title: "Fast Performance",   desc: "Optimized code that won't slow down your store." },
-  { key: "security",    title: "Secure & Reliable",  desc: "Built on Shopify's secure infrastructure with 99.9% uptime." },
-];
+// `key` selects the icon; the translated title/desc are merged by index.
+const benefitKeys = ["setup", "performance", "security"] as const;
 
 function BenefitIcon({ kind }: { kind: string }) {
   if (kind === "setup") return (
@@ -32,7 +24,11 @@ function BenefitIcon({ kind }: { kind: string }) {
   );
 }
 
-export default function IntegrationsSection() {
+export default function IntegrationsSection({
+  content,
+}: {
+  content: HomeContent["integrations"];
+}) {
   return (
     <section
       className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -51,17 +47,17 @@ export default function IntegrationsSection() {
         <AnimateIn direction="right">
           <div>
             <span className="mb-4 inline-flex rounded-full bg-emerald-500/20 px-4 py-1.5 text-sm font-semibold text-emerald-400 border border-emerald-500/30">
-              Integrations
+              {content.badge}
             </span>
             <h2 id="integrations-heading" className="mt-2 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-              Works with Your Existing Setup
+              {content.title}
             </h2>
             <p className="mt-4 max-w-lg text-base leading-relaxed text-white/55 sm:text-lg">
-              MultiVariants integrates seamlessly with all Shopify themes and popular page builders. No complex configuration needed.
+              {content.subtitle}
             </p>
 
             <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {integrationItems.map((item, i) => (
+              {content.items.map((item, i) => (
                 <AnimateIn key={item.title} direction="up" delay={i * 80}>
                   <article className="rounded-2xl p-4 glass border-white/10 hover:border-white/25 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(0,0,0,0.3)] transition-all duration-300">
                     <div className="flex items-start gap-3">
@@ -85,12 +81,12 @@ export default function IntegrationsSection() {
 
         {/* Right */}
         <div className="flex flex-col gap-4">
-          {benefitItems.map((item, i) => (
+          {content.cards.map((item, i) => (
             <AnimateIn key={item.title} direction="left" delay={i * 120}>
               <article className="rounded-3xl p-5 glass border-white/10 hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(0,0,0,0.35)] transition-all duration-300 sm:p-6">
                 <div className="flex items-start gap-4">
                   <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/25" aria-hidden="true">
-                    <BenefitIcon kind={item.key} />
+                    <BenefitIcon kind={benefitKeys[i]} />
                   </span>
                   <div>
                     <h3 className="text-lg font-black text-white sm:text-xl">{item.title}</h3>

@@ -1,33 +1,40 @@
 import AnimateIn from "./AnimateIn";
+import type { HomeContent } from "@/i18n/content";
 
-const cards = [
+// Icon + colour styling is structural, not language-dependent — the translated
+// title/desc from messages/home/<locale>.json are merged onto these by index.
+const cardStyles = [
   {
-    icon: "🛒", title: "Allow Variants Bulk Add to Cart",
-    grad: "from-blue-500/20 to-indigo-500/20", border: "border-blue-500/20 hover:border-blue-400/40",
+    icon: "🛒",
+    grad: "from-blue-500/20 to-indigo-500/20",
+    border: "border-blue-500/20 hover:border-blue-400/40",
     glow: "hover:shadow-[0_16px_40px_rgba(99,102,241,0.2)]",
-    desc: "Customers quickly buy products with variations in bulk. Add multiple colors, sizes, or other options to the cart with just one click — reducing cart abandonment dramatically.",
   },
   {
-    icon: "📈", title: "Increase Sales and Conversion",
-    grad: "from-emerald-500/20 to-teal-500/20", border: "border-emerald-500/20 hover:border-emerald-400/40",
+    icon: "📈",
+    grad: "from-emerald-500/20 to-teal-500/20",
+    border: "border-emerald-500/20 hover:border-emerald-400/40",
     glow: "hover:shadow-[0_16px_40px_rgba(52,211,153,0.2)]",
-    desc: "Makes the bulk ordering process quick so customers can easily buy multiple product variants without hassle. Drives increased wholesale sales and revenue growth.",
   },
   {
-    icon: "⚡", title: "Simple Installation",
-    grad: "from-amber-500/20 to-orange-500/20", border: "border-amber-500/20 hover:border-amber-400/40",
+    icon: "⚡",
+    grad: "from-amber-500/20 to-orange-500/20",
+    border: "border-amber-500/20 hover:border-amber-400/40",
     glow: "hover:shadow-[0_16px_40px_rgba(251,191,36,0.2)]",
-    desc: "A top-notch app with a simple, hassle-free setup. MultiVariants works seamlessly with all top eCommerce platforms and integrates without a single line of coding.",
   },
   {
-    icon: "🌎", title: "Multi-Language Support",
-    grad: "from-purple-500/20 to-pink-500/20", border: "border-purple-500/20 hover:border-purple-400/40",
+    icon: "🌎",
+    grad: "from-purple-500/20 to-pink-500/20",
+    border: "border-purple-500/20 hover:border-purple-400/40",
     glow: "hover:shadow-[0_16px_40px_rgba(168,85,247,0.2)]",
-    desc: "MultiVariants makes international expansion easy with multi-language capabilities. Easily localize your store for customers worldwide and grow beyond borders.",
   },
 ];
 
-export default function WhyMultivariantsSection() {
+export default function WhyMultivariantsSection({
+  content,
+}: {
+  content: HomeContent["whyMv"];
+}) {
   return (
     <section
       className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -43,22 +50,22 @@ export default function WhyMultivariantsSection() {
       <div className="relative z-10 mx-auto max-w-7xl">
         <AnimateIn direction="up">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <p className="mb-3 text-[13px] font-semibold uppercase tracking-widest text-primary-light">Why MultiVariants?</p>
+            <p className="mb-3 text-[13px] font-semibold uppercase tracking-widest text-primary-light">{content.eyebrow}</p>
             <h2 id="why-mv-heading" className="text-3xl font-black tracking-tight text-white leading-[1.2] sm:text-4xl lg:text-[2.8rem]">
-              Variants Bulk Add to Cart for Shopify
+              {content.title}
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">
-              Everything you need to streamline bulk ordering and grow your Shopify store&apos;s revenue.
+              {content.subtitle}
             </p>
           </div>
         </AnimateIn>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {cards.map((c, i) => (
+          {content.cards.map((c, i) => (
             <AnimateIn key={c.title} direction="up" delay={i * 100}>
-              <article className={`h-full rounded-3xl p-6 glass ${c.border} ${c.glow} hover:-translate-y-1.5 transition-all duration-300`}>
-                <div className={`mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${c.grad} text-2xl border border-white/10`} aria-hidden="true">
-                  {c.icon}
+              <article className={`h-full rounded-3xl p-6 glass ${cardStyles[i].border} ${cardStyles[i].glow} hover:-translate-y-1.5 transition-all duration-300`}>
+                <div className={`mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${cardStyles[i].grad} text-2xl border border-white/10`} aria-hidden="true">
+                  {cardStyles[i].icon}
                 </div>
                 <h3 className="mb-3 text-lg font-black leading-tight text-white">{c.title}</h3>
                 <p className="text-sm leading-relaxed text-white/55">{c.desc}</p>

@@ -1,0 +1,206 @@
+{
+  "hero": {
+    "aria": "Destaque",
+    "badge": "Escolhido por mais de 13.000 lojistas Shopify",
+    "titleLead": "Pedidos em massa de variantes",
+    "titleFor": "para",
+    "titleHighlight": "lojas Shopify",
+    "subtitle": "Deixe seus clientes pedirem várias variantes de produto em segundos com um formulário simples. Ideal para B2B, atacado e lojas com muitas variantes.",
+    "ctaInstall": "Instalar o app grátis",
+    "ctaDemo": "Ver demonstração",
+    "stats": {
+      "merchants": "Lojistas",
+      "countries": "Países",
+      "rating": "Nota do app"
+    },
+    "card": {
+      "productName": "Camiseta de algodão premium",
+      "perUnit": "US$ 29,99 por unidade",
+      "colSize": "Tamanho",
+      "colBlack": "Preto",
+      "colWhite": "Branco",
+      "colNavy": "Azul-marinho",
+      "total": "Total: 12 itens",
+      "addAll": "Adicionar tudo ao carrinho",
+      "badgeTitle": "10x mais rápido",
+      "badgeSub": "Que o Shopify padrão"
+    }
+  },
+  "why": {
+    "eyebrow": "O problema",
+    "title": "O problema do pedido padrão da Shopify",
+    "subtitle": "O seletor de variantes padrão da Shopify obriga o cliente a adicionar um produto por vez. Isso frustra quem compra em volume e derruba a conversão no atacado.",
+    "withoutTitle": "Sem o MultiVariants",
+    "withTitle": "Com o MultiVariants",
+    "typicalExperience": "Experiência comum:",
+    "mvExperience": "Experiência com o MultiVariants:",
+    "withoutNote": "Repita para cada variante... 😵",
+    "withNote": "Adicione os 6 itens com um clique! ✨",
+    "selectSteps": [
+      "Escolher tamanho ▼",
+      "Escolher cor ▼",
+      "Adicionar 1 item"
+    ],
+    "tableCols": [
+      "Tamanho",
+      "Preto",
+      "Branco",
+      "Azul-marinho"
+    ],
+    "withoutPoints": [
+      "Escolher a variante, adicionar ao carrinho, repetir... item por item",
+      "Mais de 20 cliques para pedir 5 tamanhos diferentes",
+      "Os clientes desistem de pedidos em massa"
+    ],
+    "withPoints": [
+      "Adicione todas as variantes em uma tabela simples",
+      "3 cliques para pedir qualquer quantidade de variantes",
+      "Mais conversão e pedidos maiores"
+    ]
+  },
+  "demo": {
+    "badge": "Demonstração ao vivo",
+    "title": "Experimente a tabela de variantes",
+    "subtitle": "Veja como seus clientes vão comprar. Clique em +/− ou digite as quantidades diretamente.",
+    "productName": "Camiseta de algodão premium",
+    "perUnit": "US$ 29,99 por unidade",
+    "sku": "SKU: PCT-001",
+    "totalItems": "Total de itens",
+    "totalPrice": "Preço total",
+    "inStock": "Em estoque",
+    "colSize": "Tamanho",
+    "reset": "Limpar",
+    "addAll": "Adicionar tudo ao carrinho",
+    "liveNote": "Esta é uma demonstração ao vivo. Adicione quantidades e veja o total atualizar em tempo real!",
+    "colors": [
+      "Preto",
+      "Branco",
+      "Azul-marinho",
+      "Cinza"
+    ]
+  },
+  "whyMv": {
+    "eyebrow": "Por que o MultiVariants?",
+    "title": "Adição em massa de variantes ao carrinho na Shopify",
+    "subtitle": "Tudo o que você precisa para simplificar pedidos em massa e aumentar a receita da sua loja Shopify.",
+    "cards": [
+      {
+        "title": "Permita a adição de variantes em massa",
+        "desc": "Seus clientes compram produtos com variações em massa rapidamente. Adicione várias cores, tamanhos ou outras opções ao carrinho com um só clique — reduzindo drasticamente o abandono de carrinho."
+      },
+      {
+        "title": "Aumente as vendas e a conversão",
+        "desc": "Torna o pedido em massa rápido, para que os clientes comprem várias variantes sem complicação. Impulsiona as vendas no atacado e o crescimento da receita."
+      },
+      {
+        "title": "Instalação simples",
+        "desc": "Um app de primeira linha com configuração simples e sem dor de cabeça. O MultiVariants funciona perfeitamente com as principais plataformas de e-commerce e se integra sem uma linha de código."
+      },
+      {
+        "title": "Suporte a vários idiomas",
+        "desc": "O MultiVariants facilita a expansão internacional com recursos multilíngues. Adapte sua loja para clientes do mundo todo e cresça além das fronteiras."
+      }
+    ]
+  },
+  "integrations": {
+    "badge": "Integrações",
+    "title": "Funciona com a sua configuração atual",
+    "subtitle": "O MultiVariants se integra perfeitamente a todos os temas Shopify e aos principais construtores de páginas. Sem configuração complexa.",
+    "items": [
+      {
+        "title": "Todos os temas Shopify",
+        "desc": "Funciona com qualquer tema, sem ajustes"
+      },
+      {
+        "title": "GemPages",
+        "desc": "Compatibilidade total com o construtor de páginas"
+      },
+      {
+        "title": "PageFly",
+        "desc": "Integração perfeita"
+      },
+      {
+        "title": "Shogun",
+        "desc": "Pronto para arrastar e soltar"
+      }
+    ],
+    "cards": [
+      {
+        "title": "Configuração fácil",
+        "desc": "Instale e configure em menos de 5 minutos. Sem programação."
+      },
+      {
+        "title": "Desempenho rápido",
+        "desc": "Código otimizado que não deixa sua loja lenta."
+      },
+      {
+        "title": "Seguro e confiável",
+        "desc": "Construído sobre a infraestrutura segura da Shopify, com 99,9% de disponibilidade."
+      }
+    ]
+  },
+  "stats": {
+    "aria": "Principais números",
+    "labels": [
+      "Lojistas Shopify B2B e B2C",
+      "Países no mundo todo",
+      "Avaliações 5 estrelas"
+    ]
+  },
+  "features": {
+    "eyebrow": "Principais recursos",
+    "title": "Tudo o que você precisa para vender mais",
+    "subtitle": "O MultiVariants facilita os pedidos em massa no e-commerce com recursos que aumentam conversão, valor do pedido e receita.",
+    "liveDemo": "Demonstração ao vivo",
+    "items": {
+      "mixMatch": {
+        "badge": "Mix n Match",
+        "title": "Deixe seus clientes montarem a própria caixa",
+        "body": "O Mix and Match permite que os clientes façam pedidos que respeitem limites mínimos ou máximos. Uma ótima forma de aumentar as vendas oferecendo uma experiência de compra mais personalizada.",
+        "mockTitle": "Monte sua caixa",
+        "mockProduct": "Kit de camisetas premium",
+        "mockProgress": "Total: 4 de 6 necessários",
+        "mockCta": "Adicionar caixa ao carrinho"
+      },
+      "restrictions": {
+        "badge": "Aplique várias restrições",
+        "title": "Restrição de valor mínimo do pedido",
+        "body": "Aplique várias restrições em uma única página de produto, por produto e por variante. Defina quantidades máximas, exija mínimos por cor ou tamanho e evite vender além do estoque sem esforço.",
+        "highlightLabel": "Exemplo:",
+        "highlightText": "No máximo 5 camisetas no total, no mínimo 3 vermelhas. O cliente precisa pedir 3 vermelhas + pelo menos 2 de qualquer outra cor.",
+        "mockTitle": "Restrições de pedido",
+        "mockRows": [
+          "Camiseta vermelha",
+          "Camiseta azul",
+          "Camiseta verde",
+          "Pedido total"
+        ]
+      },
+      "increments": {
+        "badge": "Quantidade incremental",
+        "title": "Adicione quantidade incremental às variantes",
+        "body": "Defina incrementos de quantidade com o plano Professional do MultiVariants. Para uma quantidade de 12, especifique incrementos de 12, 24, 36, 48 e 60. Perfeito para quem vende em grande volume — evita vender além do estoque disponível.",
+        "mockTitle": "Incrementos de quantidade",
+        "mockProduct": "Caixa de latas (qtd.)",
+        "mockStep": "Passo: 12 · Faixa: 12 – 60"
+      }
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Opiniões que importam",
+    "title": "Estamos todos crescendo juntos",
+    "ratingAria": "{rating} de 5 estrelas em {count} avaliações na Shopify App Store"
+  },
+  "blogs": {
+    "eyebrow": "Conteúdos",
+    "title": "Últimas novidades e artigos",
+    "seeAll": "Ver todos os artigos"
+  },
+  "cta": {
+    "badge": "Comece hoje mesmo",
+    "title": "Pronto para vender mais com pedidos em massa de variantes?",
+    "subtitle": "Adicione a compra em massa com um clique à sua loja Shopify e veja seu ticket médio crescer — sem risco.",
+    "primary": "Instalar o app na Shopify",
+    "secondary": "Ver preços"
+  }
+}

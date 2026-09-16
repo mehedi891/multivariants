@@ -1,19 +1,14 @@
 import AnimateIn from "./AnimateIn";
+import type { HomeContent } from "@/i18n/content";
 
-type Point = { icon: "clock" | "cursor" | "cart" | "bolt"; text: string };
+type PointIconName = "clock" | "cursor" | "cart" | "bolt";
 
-const withoutPoints: Point[] = [
-  { icon: "clock",  text: "Select variant, add to cart, repeat... for each item" },
-  { icon: "cursor", text: "20+ clicks to order 5 different sizes" },
-  { icon: "cart",   text: "Customers abandon bulk orders" },
-];
-const withPoints: Point[] = [
-  { icon: "bolt",   text: "Add all variants in one simple table view" },
-  { icon: "cursor", text: "3 clicks to order any number of variants" },
-  { icon: "cart",   text: "Higher conversion, larger orders" },
-];
+// Icons are structural, not language-dependent: the translated bullet text is
+// merged onto them by index.
+const withoutIcons: PointIconName[] = ["clock", "cursor", "cart"];
+const withIcons: PointIconName[] = ["bolt", "cursor", "cart"];
 
-function PointIcon({ icon, tone }: { icon: Point["icon"]; tone: "red" | "green" }) {
+function PointIcon({ icon, tone }: { icon: PointIconName; tone: "red" | "green" }) {
   const c = tone === "red" ? "#f87171" : "#34d399";
   if (icon === "clock") return (
     <svg className="h-5 w-5 shrink-0" viewBox="0 0 20 20" fill="none" stroke={c} strokeWidth="1.8" aria-hidden="true">
@@ -39,7 +34,7 @@ function PointIcon({ icon, tone }: { icon: Point["icon"]; tone: "red" | "green" 
   );
 }
 
-export default function WhySection() {
+export default function WhySection({ content }: { content: HomeContent["why"] }) {
   return (
     <section
       className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -55,13 +50,12 @@ export default function WhySection() {
       <div className="relative z-10 mx-auto max-w-6xl">
         <AnimateIn direction="up">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <p className="mb-3 text-[13px] font-semibold uppercase tracking-widest text-accent">The Problem</p>
+            <p className="mb-3 text-[13px] font-semibold uppercase tracking-widest text-accent">{content.eyebrow}</p>
             <h2 id="problem-heading" className="text-3xl font-black leading-[1.26] tracking-tight text-white sm:text-4xl lg:text-[2.8rem]">
-              The Problem with Default Shopify Ordering
+              {content.title}
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">
-              Shopify&apos;s default variant selector forces customers to add products one at a time.
-              This frustrates bulk buyers and kills wholesale conversions.
+              {content.subtitle}
             </p>
           </div>
         </AnimateIn>
@@ -76,27 +70,27 @@ export default function WhySection() {
                     <path d="M5 5L15 15M15 5L5 15" strokeLinecap="round"/>
                   </svg>
                 </span>
-                <h3 className="text-xl font-black text-white sm:text-2xl">Without MultiVariants</h3>
+                <h3 className="text-xl font-black text-white sm:text-2xl">{content.withoutTitle}</h3>
               </div>
               <ul className="mb-5 space-y-3.5">
-                {withoutPoints.map((p) => (
-                  <li key={p.text} className="flex items-center gap-3 text-[15px] text-white/60">
-                    <PointIcon icon={p.icon} tone="red" />
-                    <span>{p.text}</span>
+                {content.withoutPoints.map((text, i) => (
+                  <li key={text} className="flex items-center gap-3 text-[15px] text-white/60">
+                    <PointIcon icon={withoutIcons[i]} tone="red" />
+                    <span>{text}</span>
                   </li>
                 ))}
               </ul>
               <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
-                <p className="text-sm font-medium text-white/50 mb-3">Typical experience:</p>
+                <p className="text-sm font-medium text-white/50 mb-3">{content.typicalExperience}</p>
                 <div className="flex flex-wrap items-center gap-2 text-sm">
-                  {["Select Size ▼", "Select Color ▼", "Add 1 item"].map((t, i) => (
+                  {content.selectSteps.map((t, i) => (
                     <span key={t} className="flex items-center gap-2">
                       {i > 0 && <span className="text-white/25">→</span>}
                       <span className={`rounded-lg px-3 py-1.5 font-medium ${i === 2 ? "bg-red-500/20 text-red-400 border border-red-500/20" : "bg-white/8 text-white/60 border border-white/10"}`}>{t}</span>
                     </span>
                   ))}
                 </div>
-                <p className="mt-3 text-sm font-semibold text-red-400">Repeat for each variant... 😵</p>
+                <p className="mt-3 text-sm font-semibold text-red-400">{content.withoutNote}</p>
               </div>
             </article>
           </AnimateIn>
@@ -110,20 +104,22 @@ export default function WhySection() {
                     <path d="M4.8 10.5L8.3 13.8L15.2 6.7" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </span>
-                <h3 className="text-xl font-black text-white sm:text-2xl">With MultiVariants</h3>
+                <h3 className="text-xl font-black text-white sm:text-2xl">{content.withTitle}</h3>
               </div>
               <ul className="mb-5 space-y-3.5">
-                {withPoints.map((p) => (
-                  <li key={p.text} className="flex items-center gap-3 text-[15px] text-white/60">
-                    <PointIcon icon={p.icon} tone="green" />
-                    <span>{p.text}</span>
+                {content.withPoints.map((text, i) => (
+                  <li key={text} className="flex items-center gap-3 text-[15px] text-white/60">
+                    <PointIcon icon={withIcons[i]} tone="green" />
+                    <span>{text}</span>
                   </li>
                 ))}
               </ul>
               <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
-                <p className="text-sm font-medium text-white/50 mb-3">MultiVariants experience:</p>
+                <p className="text-sm font-medium text-white/50 mb-3">{content.mvExperience}</p>
                 <div className="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-white/40 mb-2">
-                  <span>Size</span><span>Black</span><span>White</span><span>Navy</span>
+                  {content.tableCols.map((col) => (
+                    <span key={col}>{col}</span>
+                  ))}
                 </div>
                 <div className="grid grid-cols-4 gap-2 text-center text-sm">
                   <span className="font-bold text-white/80">S</span>
@@ -131,7 +127,7 @@ export default function WhySection() {
                     <span key={i} className="rounded-lg bg-emerald-500/20 py-1 font-bold text-emerald-400 border border-emerald-500/20">{n}</span>
                   ))}
                 </div>
-                <p className="mt-3 text-sm font-semibold text-emerald-400">Add all 6 items with one click! ✨</p>
+                <p className="mt-3 text-sm font-semibold text-emerald-400">{content.withNote}</p>
               </div>
             </article>
           </AnimateIn>
