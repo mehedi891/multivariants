@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "title": "Apps parceiros e integrações",
+    "description": "Conheça os apps parceiros que funcionam perfeitamente junto com o MultiVariants para impulsionar sua loja Shopify.",
+    "pageSuffix": "– Página {page}",
+    "pageDescSuffix": "(Página {page})"
+  },
+  "badge": "Parceiros",
+  "title": "Parceiros de peso no ecossistema MultiVariants",
+  "subtitle": "Descubra apps e soluções parceiras que se somam ao MultiVariants para melhorar os fluxos de pedido, marketing, checkout e retenção.",
+  "exploreTitle": "Conheça nossos parceiros",
+  "exploreSubtitle": "Ferramentas integradas em que os lojistas confiam para crescer em toda a operação da loja.",
+  "viewMore": "Ver mais",
+  "paginationAria": "Paginação de parceiros",
+  "empty": {
+    "title": "Ainda não há parceiros",
+    "description": "Os parceiros aparecerão aqui assim que forem publicados.",
+    "helpText": "Volte em instantes."
+  }
+}

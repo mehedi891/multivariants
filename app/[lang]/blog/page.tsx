@@ -9,6 +9,7 @@ import ApiEmptyState from "@/components/ApiEmptyState";
 import { pageMetadata } from "@/lib/seo";
 import { toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getBlogContent } from "@/i18n/content";
 import { getPublicBlogPosts } from "@/lib/blog/public-api";
 
 export async function generateMetadata({
@@ -23,28 +24,31 @@ export async function generateMetadata({
   const category =
     categoryRaw && categoryRaw.toLowerCase() !== "all" ? categoryRaw : undefined;
 
-  const baseTitle = "Blog – Shopify Bulk Ordering & B2B Tips";
-  const baseDesc =
-    "Read the latest MultiVariants insights on bulk ordering, B2B conversion, restriction rules, and Shopify growth.";
+  const { meta } = await getBlogContent(locale);
+  const baseTitle = meta.title;
+  const baseDesc = meta.description;
 
   const prettyCategory = category
     ? category.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
     : undefined;
 
-  let title = prettyCategory ? `${prettyCategory} Articles` : baseTitle;
+  let title = prettyCategory
+    ? meta.categoryTitle.replace("{category}", prettyCategory)
+    : baseTitle;
   let description = prettyCategory
-    ? `${prettyCategory} articles from the MultiVariants blog on Shopify bulk ordering and variant selling.`
+    ? meta.categoryDescription.replace("{category}", prettyCategory)
     : baseDesc;
   let ogTitle = prettyCategory
-    ? `${prettyCategory} Articles – MultiVariants Blog`
+    ? meta.categoryOgTitle.replace("{category}", prettyCategory)
     : "MultiVariants Blog";
 
   // Distinct title/description per page so paginated pages aren't seen as
   // duplicates of page 1.
   if (page > 1) {
-    title = `${title} – Page ${page}`;
-    description = `${description} (Page ${page})`;
-    ogTitle = `${ogTitle} – Page ${page}`;
+    const pageSuffix = meta.pageSuffix.replace("{page}", String(page));
+    title = `${title} ${pageSuffix}`;
+    description = `${description} ${meta.pageDescSuffix.replace("{page}", String(page))}`;
+    ogTitle = `${ogTitle} ${pageSuffix}`;
   }
 
   // Self-referencing canonical per page/category (Google discourages pointing
@@ -132,6 +136,7 @@ export default async function BlogPage({
   const { lang } = await routeParams;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const content = await getBlogContent(locale);
   const params = await searchParams;
   const incomingHeaders = await headers();
   const selectedCategory = pickFirst(params.category) ?? "all";
@@ -174,21 +179,19 @@ export default async function BlogPage({
               <div className="flex flex-wrap items-end justify-between gap-6">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-light/90">
-                    Journal
+                    {content.badge}
                   </p>
                   <h1 className="mt-3 max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl">
-                    MultiVariants Blog
+                    {content.title}
                   </h1>
                   <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/[0.65] sm:text-lg">
-                    Guides, use cases, and product updates on Shopify bulk
-                    ordering and variant selling. Filter by category to find
-                    what you need.
+                    {content.subtitle}
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-white/[0.11] bg-white/[0.04] px-4 py-3 backdrop-blur-md">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/[0.45]">
-                    Listing
+                    {content.listing}
                   </p>
                   <p className="mt-1 text-sm font-semibold text-white/[0.8]">
                     Page {currentPage} of {totalPages}
@@ -217,7 +220,7 @@ export default async function BlogPage({
               <div className="rounded-2xl border border-white/[0.11] bg-gradient-to-b from-[#1a2442]/88 to-[#101a33]/94 p-4 shadow-[0_16px_40px_rgba(0,0,0,0.36)] backdrop-blur-xl sm:p-5">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary-light">
-                    Filter by Category
+                    {content.filterByCategory}
                   </p>
                   <p className="text-xs uppercase tracking-[0.08em] text-white/[0.48]">
                     {posts.length} results on this page
@@ -253,13 +256,13 @@ export default async function BlogPage({
             {posts.length === 0 ? (
               <div className="mt-8">
                 <ApiEmptyState
-                  title="No blog posts available"
+                  title={content.empty.title}
                   description={
                     selectedCategory.toLowerCase() !== "all"
-                      ? "No articles are published in this category yet."
-                      : "We're preparing new blog content for this page."
+                      ? content.empty.descriptionCategory
+                      : content.empty.descriptionAll
                   }
-                  helpText="Try another category or check back soon."
+                  helpText={content.empty.helpText}
                   error={error}
                   showDebugDetails={SHOW_BLOG_API_ERROR}
                 />

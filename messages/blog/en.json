@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "Blog – Shopify Bulk Ordering & B2B Tips",
+    "description": "Read the latest MultiVariants insights on bulk ordering, B2B conversion, restriction rules, and Shopify growth.",
+    "categoryTitle": "{category} Articles",
+    "categoryDescription": "{category} articles from the MultiVariants blog on Shopify bulk ordering and variant selling.",
+    "categoryOgTitle": "{category} Articles – MultiVariants Blog",
+    "pageSuffix": "– Page {page}",
+    "pageDescSuffix": "(Page {page})"
+  },
+  "badge": "Journal",
+  "title": "MultiVariants Blog",
+  "subtitle": "Guides, use cases, and product updates on Shopify bulk ordering and variant selling. Filter by category to find what you need.",
+  "listing": "Listing",
+  "filterByCategory": "Filter by Category",
+  "empty": {
+    "title": "No blog posts available",
+    "descriptionCategory": "No articles are published in this category yet.",
+    "descriptionAll": "We're preparing new blog content for this page.",
+    "helpText": "Try another category or check back soon."
+  }
+}

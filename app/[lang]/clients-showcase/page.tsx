@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getClientsContent } from "@/i18n/content";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -18,12 +19,12 @@ export async function generateMetadata({
   const locale = toLocale(lang);
   const params = await searchParams;
   const page = safePage(pickFirst(params.page));
-  let title = "Client Showcase – Merchant Stories";
-  let description =
-    "Explore businesses that use MultiVariants to scale bulk variant ordering on Shopify.";
+  const { meta } = await getClientsContent(locale);
+  let title = meta.title;
+  let description = meta.description;
   if (page > 1) {
-    title = `${title} – Page ${page}`;
-    description = `${description} (Page ${page})`;
+    title = `${title} ${meta.pageSuffix.replace("{page}", String(page))}`;
+    description = `${description} ${meta.pageDescSuffix.replace("{page}", String(page))}`;
   }
   return pageMetadata({
     title,
@@ -77,6 +78,7 @@ export default async function ClientsShowcasePage({
   const { lang } = await routeParams;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const content = await getClientsContent(locale);
   const params = await searchParams;
   const requestedPage = safePage(pickFirst(params.page));
 
@@ -104,14 +106,13 @@ export default async function ClientsShowcasePage({
           <div className="relative z-10 mx-auto max-w-5xl text-center">
             <AnimateIn direction="up">
               <span className="inline-flex rounded-full border border-accent/30 bg-accent/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-accent">
-                Featured Clients
+                {content.badge}
               </span>
               <h1 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-[1.38] tracking-tight text-white sm:text-4xl lg:text-5xl/tight">
-                Businesses Growing with MultiVariants
+                {content.title}
               </h1>
               <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/65 sm:text-lg">
-                A showcase of merchants using MultiVariants to improve bulk ordering,
-                increase conversion, and simplify complex variant workflows.
+                {content.subtitle}
               </p>
             </AnimateIn>
           </div>
@@ -132,9 +133,9 @@ export default async function ClientsShowcasePage({
           <div className="relative z-10 mx-auto max-w-6xl">
             {clientItems.length === 0 ? (
               <ApiEmptyState
-                title="No client stories available"
-                description="Client showcase stories will appear here once published."
-                helpText="Please check back soon."
+                title={content.empty.title}
+                description={content.empty.description}
+                helpText={content.empty.helpText}
                 error={error}
                 showDebugDetails={process.env.NODE_ENV !== "production"}
               />
@@ -175,7 +176,7 @@ export default async function ClientsShowcasePage({
                               rel="noopener noreferrer"
                               className="inline-flex items-center justify-center rounded-lg border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/85 transition-all hover:border-primary hover:text-primary-light"
                             >
-                              Read More
+                              {content.readMore}
                             </Link>
                           </div>
                         </div>

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "title": "Client Showcase – Merchant Stories",
+    "description": "Explore businesses that use MultiVariants to scale bulk variant ordering on Shopify.",
+    "pageSuffix": "– Page {page}",
+    "pageDescSuffix": "(Page {page})"
+  },
+  "badge": "Featured Clients",
+  "title": "Businesses Growing with MultiVariants",
+  "subtitle": "A showcase of merchants using MultiVariants to improve bulk ordering, increase conversion, and simplify complex variant workflows.",
+  "readMore": "Read More",
+  "empty": {
+    "title": "No client stories available",
+    "description": "Client showcase stories will appear here once published.",
+    "helpText": "Please check back soon."
+  }
+}

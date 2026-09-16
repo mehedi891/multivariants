@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getPartnersContent } from "@/i18n/content";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -40,12 +41,12 @@ export async function generateMetadata({
   const locale = toLocale(lang);
   const { page: pageParam } = await searchParams;
   const page = Math.max(1, Math.floor(Number(pageParam) || 1));
-  let title = "App Partners & Integrations";
-  let description =
-    "Explore app partners that work seamlessly alongside MultiVariants for Shopify growth.";
+  const { meta } = await getPartnersContent(locale);
+  let title = meta.title;
+  let description = meta.description;
   if (page > 1) {
-    title = `${title} – Page ${page}`;
-    description = `${description} (Page ${page})`;
+    title = `${title} ${meta.pageSuffix.replace("{page}", String(page))}`;
+    description = `${description} ${meta.pageDescSuffix.replace("{page}", String(page))}`;
   }
   return pageMetadata({
     title,
@@ -92,6 +93,7 @@ export default async function PartnersPage({
   const { lang } = await params;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const content = await getPartnersContent(locale);
   const { partners: partnerItems, error } = await getPublicPartners();
 
   const { page: pageParam } = await searchParams;
@@ -119,14 +121,13 @@ export default async function PartnersPage({
           <div className="relative z-10 mx-auto max-w-5xl text-center">
             <AnimateIn direction="up">
               <span className="inline-flex rounded-full border border-primary/35 bg-primary/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-light">
-                Partners
+                {content.badge}
               </span>
               <h1 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-[1.35] tracking-tight text-white sm:text-4xl lg:text-5xl/tight">
-                Powerful Partners in the MultiVariants Ecosystem
+                {content.title}
               </h1>
               <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/65 sm:text-lg">
-                Discover partner apps and solutions that combine with MultiVariants
-                to unlock better ordering, marketing, checkout, and retention workflows.
+                {content.subtitle}
               </p>
             </AnimateIn>
           </div>
@@ -147,20 +148,19 @@ export default async function PartnersPage({
           <div className="relative z-10 mx-auto max-w-6xl">
             <AnimateIn direction="up">
               <h2 className="text-center text-3xl font-black leading-[1.28] text-white sm:text-4xl">
-                Explore Our Partners
+                {content.exploreTitle}
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-white/60 sm:text-base">
-                Integrated tools trusted by merchants to enhance growth across
-                storefront operations.
+                {content.exploreSubtitle}
               </p>
             </AnimateIn>
 
             {partnerItems.length === 0 ? (
               <div className="mt-8">
                 <ApiEmptyState
-                  title="No partners available yet"
-                  description="Partner listings will appear here once they are published."
-                  helpText="Please check back shortly."
+                  title={content.empty.title}
+                  description={content.empty.description}
+                  helpText={content.empty.helpText}
                   error={error}
                   showDebugDetails={process.env.NODE_ENV !== "production"}
                 />
@@ -206,7 +206,7 @@ export default async function PartnersPage({
                               rel="noopener noreferrer"
                               className="inline-flex items-center justify-center rounded-lg border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/85 transition-all hover:border-primary hover:text-primary-light"
                             >
-                              View More
+                              {content.viewMore}
                             </a>
                           </div>
                         </div>
@@ -219,7 +219,7 @@ export default async function PartnersPage({
               {totalPages > 1 && (
                 <nav
                   className="mt-10 flex flex-wrap items-center justify-center gap-2.5"
-                  aria-label="Partners pagination"
+                  aria-label={content.paginationAria}
                 >
                   <Link
                     href={toPartnersHref(Math.max(1, currentPage - 1))}

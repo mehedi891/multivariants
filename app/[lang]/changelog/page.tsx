@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getChangelogContent } from "@/i18n/content";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -18,12 +19,12 @@ export async function generateMetadata({
   const locale = toLocale(lang);
   const params = await searchParams;
   const page = safePage(pickFirst(params.page));
-  let title = "Changelog – Product Updates & Releases";
-  let description =
-    "Track recent MultiVariants releases, features, improvements, and fixes.";
+  const { meta } = await getChangelogContent(locale);
+  let title = meta.title;
+  let description = meta.description;
   if (page > 1) {
-    title = `${title} – Page ${page}`;
-    description = `${description} (Page ${page})`;
+    title = `${title} ${meta.pageSuffix.replace("{page}", String(page))}`;
+    description = `${description} ${meta.pageDescSuffix.replace("{page}", String(page))}`;
   }
   return pageMetadata({
     title,
@@ -93,6 +94,7 @@ export default async function ChangelogPage({
   const { lang } = await routeParams;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const content = await getChangelogContent(locale);
   const params = await searchParams;
   const requestedPage = safePage(pickFirst(params.page));
   const { changelogs, totalPages, currentPage, error } = await getPublicChangelogs({
@@ -119,14 +121,13 @@ export default async function ChangelogPage({
           <div className="relative z-10 mx-auto max-w-5xl text-center">
             <AnimateIn direction="up">
               <span className="inline-flex rounded-full border border-primary/35 bg-primary/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-light">
-                Changelog
+                {content.badge}
               </span>
               <h1 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-[1.35] tracking-tight text-white sm:text-4xl lg:text-5xl">
-                Product Updates & Release Notes
+                {content.title}
               </h1>
               <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/65 sm:text-lg">
-                Follow the latest feature launches, improvements, and fixes shipped
-                across MultiVariants.
+                {content.subtitle}
               </p>
             </AnimateIn>
           </div>
@@ -150,9 +151,9 @@ export default async function ChangelogPage({
 
               {changelogs.length === 0 ? (
                 <ApiEmptyState
-                  title="No changelog entries yet"
-                  description="New updates, improvements, and fixes will appear here once published."
-                  helpText="Please check back shortly."
+                  title={content.empty.title}
+                  description={content.empty.description}
+                  helpText={content.empty.helpText}
                   error={error}
                   showDebugDetails={process.env.NODE_ENV !== "production"}
                 />

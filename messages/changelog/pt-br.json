@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "title": "Novidades – Atualizações e versões do produto",
+    "description": "Acompanhe as versões, os recursos, as melhorias e as correções mais recentes do MultiVariants.",
+    "pageSuffix": "– Página {page}",
+    "pageDescSuffix": "(Página {page})"
+  },
+  "badge": "Novidades",
+  "title": "Atualizações do produto e notas de versão",
+  "subtitle": "Acompanhe os lançamentos de recursos, as melhorias e as correções mais recentes do MultiVariants.",
+  "empty": {
+    "title": "Ainda não há novidades",
+    "description": "Novas atualizações, melhorias e correções aparecerão aqui assim que forem publicadas.",
+    "helpText": "Volte em instantes."
+  }
+}

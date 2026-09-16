@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "title": "Vitrine de clientes – Histórias de lojistas",
+    "description": "Conheça empresas que usam o MultiVariants para escalar os pedidos em massa de variantes na Shopify.",
+    "pageSuffix": "– Página {page}",
+    "pageDescSuffix": "(Página {page})"
+  },
+  "badge": "Clientes em destaque",
+  "title": "Empresas crescendo com o MultiVariants",
+  "subtitle": "Uma vitrine de lojistas que usam o MultiVariants para melhorar os pedidos em massa, aumentar a conversão e simplificar fluxos complexos de variantes.",
+  "readMore": "Leia mais",
+  "empty": {
+    "title": "Nenhuma história disponível",
+    "description": "As histórias de clientes aparecerão aqui assim que forem publicadas.",
+    "helpText": "Volte em breve."
+  }
+}

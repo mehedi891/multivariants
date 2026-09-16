@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "title": "Changelog – Product Updates & Releases",
+    "description": "Track recent MultiVariants releases, features, improvements, and fixes.",
+    "pageSuffix": "– Page {page}",
+    "pageDescSuffix": "(Page {page})"
+  },
+  "badge": "Changelog",
+  "title": "Product Updates & Release Notes",
+  "subtitle": "Follow the latest feature launches, improvements, and fixes shipped across MultiVariants.",
+  "empty": {
+    "title": "No changelog entries yet",
+    "description": "New updates, improvements, and fixes will appear here once published.",
+    "helpText": "Please check back shortly."
+  }
+}

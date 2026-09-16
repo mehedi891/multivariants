@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "title": "App Partners & Integrations",
+    "description": "Explore app partners that work seamlessly alongside MultiVariants for Shopify growth.",
+    "pageSuffix": "– Page {page}",
+    "pageDescSuffix": "(Page {page})"
+  },
+  "badge": "Partners",
+  "title": "Powerful Partners in the MultiVariants Ecosystem",
+  "subtitle": "Discover partner apps and solutions that combine with MultiVariants to unlock better ordering, marketing, checkout, and retention workflows.",
+  "exploreTitle": "Explore Our Partners",
+  "exploreSubtitle": "Integrated tools trusted by merchants to enhance growth across storefront operations.",
+  "viewMore": "View More",
+  "paginationAria": "Partners pagination",
+  "empty": {
+    "title": "No partners available yet",
+    "description": "Partner listings will appear here once they are published.",
+    "helpText": "Please check back shortly."
+  }
+}
