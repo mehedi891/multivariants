@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getFeaturesContent, type FeaturesContent } from "@/i18n/content";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
@@ -35,193 +36,58 @@ const appLink =
   "https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp";
 const demoLink = "https://multivariant.myshopify.com/collections/all";
 
-const featureItems: FeatureItem[] = [
-  {
-    icon: "🧩",
-    title: "Mix and Match Orders",
-    subtitle: "Let customers build their own bundle",
-    desc: "Let buyers combine sizes, colors, and variants in one order without bouncing between product pages.",
-    bullets: [
-      "Set quantity rules for complete bundles",
-      "Create flexible bulk packs for B2B buyers",
-      "Reduce drop-offs during large orders",
-    ],
-    demoLabel: "Mix and Match bundle preview",
-    imageSrc: "/images/features/mix-n-match-box.webp",
-    demoUrl: "https://multivariant.myshopify.com/collections/mix-n-match",
-  },
-  {
-    icon: "✅",
-    title: "Apply Multiple Restrictions",
-    subtitle: "Control ordering rules with precision",
-    desc: "Control minimum, maximum, and variant-level quantities to keep orders valid and profitable.",
-    bullets: [
-      "Min/Max quantity by product or variant",
-      "Block invalid combinations instantly",
-      "Prevent operational mistakes at checkout",
-    ],
-    demoLabel: "Order rule validation panel",
-    imageSrc: "/images/features/apply-restriction-minmax-value.webp",
-    demoUrl: "https://multivariant.myshopify.com/collections/minimum-order-limit",
-    reverse: true,
-  },
-  {
-    icon: "➕",
-    title: "Incremental Quantity Increase",
-    subtitle: "Sell in fixed quantity steps",
-    desc: "Offer fixed quantity steps like packs of 6 or 12 for warehouse-friendly, predictable order volumes.",
-    bullets: [
-      "Supports interval-based quantities",
-      "Improves stock and packing efficiency",
-      "Perfect for wholesale pack sales",
-    ],
-    demoLabel: "Increment quantity selector",
-    imageSrc: "/images/features/incremental-inc.webp",
-    demoUrl: "https://multivariant.myshopify.com/collections/quantity-interval",
-  },
-  {
-    icon: "📦",
-    title: "Bundle Quantity for Product Variants",
-    subtitle: "Group variants into smarter packs",
-    desc: "Set bundle quantities across variants and let customers complete orders quickly with less manual input.",
-    bullets: [
-      "Bundle-based variant ordering",
-      "Faster add-to-cart for repeated SKUs",
-      "Higher average order size",
-    ],
-    demoLabel: "Variant bundle matrix",
-    imageSrc: "/images/features/bundle-qty-demo.webp",
-    demoUrl: "https://multivariant.myshopify.com/collections/bundle-quantity",
-    reverse: true,
-  },
-  {
-    icon: "📱",
-    title: "Bulk Ordering from Any Device",
-    subtitle: "Desktop, tablet, and mobile ready",
-    desc: "Fully responsive bulk-order experience for desktop, tablet, and mobile storefronts.",
-    bullets: [
-      "Optimized for touch and keyboard input",
-      "Consistent UI across screen sizes",
-      "Better usability for field buyers",
-    ],
-    demoLabel: "Mobile bulk-order layout",
-    imageSrc: "/images/features/any-device.webp",
-    demoUrl: "https://multivariant.myshopify.com",
-  },
-  {
-    icon: "🧱",
-    title: "Customize Variant Display Layout",
-    subtitle: "Present variants your way",
-    desc: "Choose table style, list style, and display behavior based on your catalog and customer workflow.",
-    bullets: [
-      "Flexible layout controls",
-      "Clean variant grouping",
-      "Works with complex product catalogs",
-    ],
-    demoLabel: "Layout configuration preview",
-    imageSrc: "/images/features/customize-variants-display-layout.webp",
-    demoUrl: "https://multivariant.myshopify.com/collections/all",
-    reverse: true,
-  },
-  {
-    icon: "🛒",
-    title: "Cart Restrictions",
-    subtitle: "Keep every order valid before checkout",
-    desc: "Apply order constraints before checkout so customers always submit valid cart quantities.",
-    bullets: [
-      "Prevent invalid or partial bulk orders",
-      "Display clear validation messaging",
-      "Reduce support tickets and manual edits",
-    ],
-    demoLabel: "Cart restriction summary",
-    imageSrc: "/images/features/cart-estrictions.webp",
-    demoUrl: "https://multivariant.myshopify.com/collections/all",
-  },
-  {
-    icon: "⚖️",
-    title: "Fractional Quantity Support",
-    subtitle: "Support decimal ordering where needed",
-    desc: "Support decimal and weighted ordering where needed, ideal for select wholesale and specialty categories.",
-    bullets: [
-      "Decimal quantity compatibility",
-      "Controlled rounding behavior",
-      "Useful for measured goods and B2B units",
-    ],
-    demoLabel: "Fractional quantity control",
-    imageSrc: "/images/features/fractional-qty.webp",
-    demoUrl:
-      "https://multivariant.myshopify.com/collections/fraction-value-quantity",
-    reverse: true,
-  },
-  {
-    icon: "⚙️",
-    title: "Easy Setup — No Coding Required",
-    subtitle: "Launch quickly with simple setup",
-    desc: "Install quickly and configure without code. Launch your bulk-order flow in minutes.",
-    bullets: [
-      "Merchant-friendly setup",
-      "Simple in-app configuration",
-      "Fast onboarding for non-technical teams",
-    ],
-    demoLabel: "No-code setup wizard",
-    imageSrc: "/images/features/easy-to-use-and-configure.webp",
-    demoUrl: "https://multivariant.myshopify.com/collections/all",
-  },
+// Icons, screenshots and demo links are structural and stay in code; the
+// translated title/subtitle/desc/bullets are merged onto them by index from
+// messages/features/<locale>.json.
+const featureVisuals = [
+  { icon: "🧩", imageSrc: "/images/features/mix-n-match-box.webp", demoUrl: "https://multivariant.myshopify.com/collections/mix-n-match" },
+  { icon: "✅", imageSrc: "/images/features/apply-restriction-minmax-value.webp", demoUrl: "https://multivariant.myshopify.com/collections/minimum-order-limit" },
+  { icon: "➕", imageSrc: "/images/features/incremental-inc.webp", demoUrl: "https://multivariant.myshopify.com/collections/quantity-interval" },
+  { icon: "📦", imageSrc: "/images/features/bundle-qty-demo.webp", demoUrl: "https://multivariant.myshopify.com/collections/bundle-quantity" },
+  { icon: "📱", imageSrc: "/images/features/any-device.webp", demoUrl: "https://multivariant.myshopify.com" },
+  { icon: "🧱", imageSrc: "/images/features/customize-variants-display-layout.webp", demoUrl: "https://multivariant.myshopify.com/collections/all" },
+  { icon: "🛒", imageSrc: "/images/features/cart-estrictions.webp", demoUrl: "https://multivariant.myshopify.com/collections/all" },
+  { icon: "⚖️", imageSrc: "/images/features/fractional-qty.webp" },
+  { icon: "⚙️", imageSrc: "/images/features/easy-to-use-and-configure.webp", demoUrl: "https://multivariant.myshopify.com/collections/all" },
 ];
 
-const supportItems: SupportItem[] = [
-  {
-    kind: "installation",
-    label: "Installation",
-    detail: "Guided setup for your theme and product templates.",
-  },
-  {
-    kind: "customization",
-    label: "Customization",
-    detail: "Custom logic, styling, and workflow tuning for your store.",
-  },
-  {
-    kind: "feature-assistance",
-    label: "Feature Assistance",
-    detail: "Hands-on help with quantity rules and advanced options.",
-  },
-  {
-    kind: "collaboration",
-    label: "Collaboration",
-    detail: "Work directly with our team on your exact use case.",
-  },
-  {
-    kind: "live-support",
-    label: "Video/Audio Live Support",
-    detail: "Real-time troubleshooting over call and screen share.",
-  },
-];
+function buildFeatureItems(t: FeaturesContent): FeatureItem[] {
+  return featureVisuals.map((v, i) => {
+    const copy = t.core.items[i];
+    return {
+      ...v,
+      title: copy?.title ?? "",
+      subtitle: copy?.subtitle ?? "",
+      desc: copy?.desc ?? "",
+      bullets: copy?.bullets ?? [],
+      demoLabel: copy?.demoLabel ?? "",
+    };
+  });
+}
 
-const merchantBenefits = [
-  { icon: "⚡", text: "Faster ordering for B2B and wholesale" },
-  { icon: "💰", text: "Higher average order value" },
-  { icon: "🛒", text: "Reduced cart abandonment" },
-  { icon: "🎛️", text: "Flexible quantity and bundle control" },
-  { icon: "🎨", text: "Works with modern Shopify themes" },
-  { icon: "📱", text: "Mobile-friendly purchasing flow" },
-  { icon: "✨", text: "Cleaner variant selection experience" },
-  { icon: "🎯", text: "Lower operational error rate" },
-  { icon: "⚙️", text: "Customizable layouts and rules" },
-  { icon: "🤝", text: "Strong support and onboarding" },
-  { icon: "🚀", text: "Simple install and fast go-live" },
-  { icon: "📈", text: "Built to scale with growth" },
-];
+const supportKinds = ["installation", "customization", "feature-assistance", "collaboration", "live-support"] as const;
+
+function buildSupportItems(t: FeaturesContent): SupportItem[] {
+  return supportKinds.map((kind, i) => ({
+    kind,
+    label: t.support.items[i]?.label ?? "",
+    detail: t.support.items[i]?.detail ?? "",
+  }));
+}
+
+const benefitIcons = ["⚡", "💰", "🛒", "🎛️", "🎨", "📱", "✨", "🎯", "⚙️", "🤝", "🚀", "📈"];
 
 type PageProps = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { lang } = await params;
+  const locale = toLocale(lang);
+  const { meta } = await getFeaturesContent(locale);
   return pageMetadata({
-    title: "Bulk Order, Mix-and-Match & Restrictions",
-    description:
-      "Explore MultiVariants features for bulk ordering, restrictions, incremental quantities, bundle rules, and more.",
+    title: meta.title,
+    description: meta.description,
     path: "/features",
-    locale: toLocale(lang),
+    locale,
   });
 }
 
@@ -274,6 +140,13 @@ export default async function FeaturesPage({ params }: PageProps) {
   const { lang } = await params;
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
+  const content = await getFeaturesContent(locale);
+  const featureItems = buildFeatureItems(content);
+  const supportItems = buildSupportItems(content);
+  const merchantBenefits = content.benefits.items.map((text, i) => ({
+    icon: benefitIcons[i] ?? "",
+    text,
+  }));
   return (
     <>
       <Navbar locale={locale} dict={dict} />
@@ -294,15 +167,13 @@ export default async function FeaturesPage({ params }: PageProps) {
             <AnimateIn direction="up">
               <div className="text-center">
                 <span className="inline-flex rounded-full border border-accent/30 bg-accent/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-accent">
-                  Features
+                  {content.hero.badge}
                 </span>
                 <h1 className="mx-auto mt-4 max-w-4xl text-3xl font-black leading-[1.38] tracking-tight text-white sm:text-4xl lg:text-5xl/tight">
-                  Powerful Bulk Ordering Features for Shopify Stores
+                  {content.hero.title}
                 </h1>
                 <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/60 sm:text-lg">
-                  MultiVariants helps your customers place large variant orders
-                  quickly and accurately. From quantity logic to restriction
-                  control, everything is built for conversion and speed.
+                  {content.hero.subtitle}
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-3">
                   <Link
@@ -311,7 +182,7 @@ export default async function FeaturesPage({ params }: PageProps) {
                     rel="noopener noreferrer"
                     className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-all sm:w-auto"
                   >
-                    Get App on Shopify
+                    {content.hero.primary}
                   </Link>
                   <Link
                     href={demoLink}
@@ -319,7 +190,7 @@ export default async function FeaturesPage({ params }: PageProps) {
                     rel="noopener noreferrer"
                     className="inline-flex w-full items-center justify-center rounded-xl border border-white/25 px-6 py-3 text-sm font-semibold text-white/75 hover:border-primary hover:text-primary transition-all sm:w-auto"
                   >
-                    Live Demo
+                    {content.hero.secondary}
                   </Link>
                 </div>
               </div>
@@ -343,14 +214,13 @@ export default async function FeaturesPage({ params }: PageProps) {
             <AnimateIn direction="up">
               <div className="mb-10 text-center">
                 <span className="inline-flex rounded-full border border-primary/35 bg-primary/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-light">
-                  Core Capabilities
+                  {content.core.badge}
                 </span>
                 <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-black leading-[1.26] tracking-tight text-white sm:text-4xl">
-                  Modern Features Built for High-Converting Bulk Orders
+                  {content.core.title}
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
-                  Everything below is designed to make large variant ordering
-                  faster, cleaner, and easier for customers across devices.
+                  {content.core.subtitle}
                 </p>
               </div>
             </AnimateIn>
@@ -400,7 +270,7 @@ export default async function FeaturesPage({ params }: PageProps) {
                               rel="noopener noreferrer"
                               className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-all sm:w-auto"
                             >
-                              Get the app on Shopify
+                              {content.core.getApp}
                               <span aria-hidden="true">→</span>
                             </Link>
                             <Link
@@ -409,7 +279,7 @@ export default async function FeaturesPage({ params }: PageProps) {
                               rel="noopener noreferrer"
                               className="inline-flex w-full items-center justify-center rounded-xl border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white/80 hover:border-primary hover:text-primary-light transition-all sm:w-auto"
                             >
-                              Live Demo
+                              {content.core.liveDemo}
                             </Link>
                           </div>
                         </div>
@@ -459,16 +329,13 @@ export default async function FeaturesPage({ params }: PageProps) {
                 <div className="relative z-10">
                   <div className="mx-auto max-w-4xl text-center">
                     <span className="inline-flex rounded-full border border-primary/35 bg-primary/12 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-light">
-                      Premium Support
+                      {content.support.badge}
                     </span>
                     <h2 className="mt-4 text-3xl font-black leading-[1.26] tracking-tight text-white sm:text-4xl">
-                      Customer Support Is Our USP
+                      {content.support.title}
                     </h2>
                     <p className="mx-auto mt-5 max-w-4xl text-[15px] leading-relaxed text-white/65 sm:text-base">
-                      Questions at midnight? No sweat. Our team is available
-                      24/7 to solve real merchant problems with fast responses,
-                      practical guidance, and personalized support for complex
-                      B2B and wholesale workflows.
+                      {content.support.subtitle}
                     </p>
                   </div>
 
@@ -521,7 +388,7 @@ export default async function FeaturesPage({ params }: PageProps) {
           <AnimateIn direction="up">
             <div className="mx-auto max-w-6xl">
               <h2 className="text-center text-2xl font-black text-white sm:text-3xl">
-                Why Merchants Choose MultiVariants
+                {content.benefits.title}
               </h2>
               <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {merchantBenefits.map((b) => (
@@ -552,11 +419,10 @@ export default async function FeaturesPage({ params }: PageProps) {
           <AnimateIn direction="up">
             <div className="mx-auto max-w-4xl text-center">
               <h2 className="text-3xl font-black leading-[1.26] text-white sm:text-4xl">
-                Built for Bulk Variant Ordering
+                {content.cta.title}
               </h2>
               <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
-                From first-time setup to advanced quantity logic, MultiVariants
-                gives your store everything needed for high-converting bulk orders.
+                {content.cta.subtitle}
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
@@ -565,7 +431,7 @@ export default async function FeaturesPage({ params }: PageProps) {
                   rel="noopener noreferrer"
                   className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-all sm:w-auto"
                 >
-                  Get App on Shopify
+                  {content.cta.primary}
                 </Link>
                 <Link
                   href={demoLink}
@@ -573,7 +439,7 @@ export default async function FeaturesPage({ params }: PageProps) {
                   rel="noopener noreferrer"
                   className="inline-flex w-full items-center justify-center rounded-xl border border-white/25 px-6 py-3 text-sm font-semibold text-white/75 hover:border-primary hover:text-primary transition-all sm:w-auto"
                 >
-                  Live Demo
+                  {content.cta.secondary}
                 </Link>
               </div>
             </div>

@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "title": "Bulk Order, Mix-and-Match & Restrictions",
+    "description": "Explore MultiVariants features for bulk ordering, restrictions, incremental quantities, bundle rules, and more."
+  },
+  "hero": {
+    "badge": "Features",
+    "title": "Powerful Bulk Ordering Features for Shopify Stores",
+    "subtitle": "MultiVariants helps your customers place large variant orders quickly and accurately. From quantity logic to restriction control, everything is built for conversion and speed.",
+    "primary": "Get App on Shopify",
+    "secondary": "Live Demo"
+  },
+  "core": {
+    "badge": "Core Capabilities",
+    "title": "Modern Features Built for High-Converting Bulk Orders",
+    "subtitle": "Everything below is designed to make large variant ordering faster, cleaner, and easier for customers across devices.",
+    "getApp": "Get the app on Shopify",
+    "liveDemo": "Live Demo",
+    "items": [
+      {
+        "title": "Mix and Match Orders",
+        "subtitle": "Let customers build their own bundle",
+        "desc": "Let buyers combine sizes, colors, and variants in one order without bouncing between product pages.",
+        "bullets": [
+          "Set quantity rules for complete bundles",
+          "Create flexible bulk packs for B2B buyers",
+          "Reduce drop-offs during large orders"
+        ],
+        "demoLabel": "Mix and Match bundle preview"
+      },
+      {
+        "title": "Apply Multiple Restrictions",
+        "subtitle": "Control ordering rules with precision",
+        "desc": "Control minimum, maximum, and variant-level quantities to keep orders valid and profitable.",
+        "bullets": [
+          "Min/Max quantity by product or variant",
+          "Block invalid combinations instantly",
+          "Prevent operational mistakes at checkout"
+        ],
+        "demoLabel": "Order rule validation panel"
+      },
+      {
+        "title": "Incremental Quantity Increase",
+        "subtitle": "Sell in fixed quantity steps",
+        "desc": "Offer fixed quantity steps like packs of 6 or 12 for warehouse-friendly, predictable order volumes.",
+        "bullets": [
+          "Supports interval-based quantities",
+          "Improves stock and packing efficiency",
+          "Perfect for wholesale pack sales"
+        ],
+        "demoLabel": "Increment quantity selector"
+      },
+      {
+        "title": "Bundle Quantity for Product Variants",
+        "subtitle": "Group variants into smarter packs",
+        "desc": "Set bundle quantities across variants and let customers complete orders quickly with less manual input.",
+        "bullets": [
+          "Bundle-based variant ordering",
+          "Faster add-to-cart for repeated SKUs",
+          "Higher average order size"
+        ],
+        "demoLabel": "Variant bundle matrix"
+      },
+      {
+        "title": "Bulk Ordering from Any Device",
+        "subtitle": "Desktop, tablet, and mobile ready",
+        "desc": "Fully responsive bulk-order experience for desktop, tablet, and mobile storefronts.",
+        "bullets": [
+          "Optimized for touch and keyboard input",
+          "Consistent UI across screen sizes",
+          "Better usability for field buyers"
+        ],
+        "demoLabel": "Mobile bulk-order layout"
+      },
+      {
+        "title": "Customize Variant Display Layout",
+        "subtitle": "Present variants your way",
+        "desc": "Choose table style, list style, and display behavior based on your catalog and customer workflow.",
+        "bullets": [
+          "Flexible layout controls",
+          "Clean variant grouping",
+          "Works with complex product catalogs"
+        ],
+        "demoLabel": "Layout configuration preview"
+      },
+      {
+        "title": "Cart Restrictions",
+        "subtitle": "Keep every order valid before checkout",
+        "desc": "Apply order constraints before checkout so customers always submit valid cart quantities.",
+        "bullets": [
+          "Prevent invalid or partial bulk orders",
+          "Display clear validation messaging",
+          "Reduce support tickets and manual edits"
+        ],
+        "demoLabel": "Cart restriction summary"
+      },
+      {
+        "title": "Fractional Quantity Support",
+        "subtitle": "Support decimal ordering where needed",
+        "desc": "Support decimal and weighted ordering where needed, ideal for select wholesale and specialty categories.",
+        "bullets": [
+          "Decimal quantity compatibility",
+          "Controlled rounding behavior",
+          "Useful for measured goods and B2B units"
+        ],
+        "demoLabel": "Fractional quantity control"
+      },
+      {
+        "title": "Easy Setup — No Coding Required",
+        "subtitle": "Launch quickly with simple setup",
+        "desc": "Install quickly and configure without code. Launch your bulk-order flow in minutes.",
+        "bullets": [
+          "Merchant-friendly setup",
+          "Simple in-app configuration",
+          "Fast onboarding for non-technical teams"
+        ],
+        "demoLabel": "No-code setup wizard"
+      }
+    ]
+  },
+  "support": {
+    "badge": "Premium Support",
+    "title": "Customer Support Is Our USP",
+    "subtitle": "Questions at midnight? No sweat. Our team is available 24/7 to solve real merchant problems with fast responses, practical guidance, and personalized support for complex B2B and wholesale workflows.",
+    "items": [
+      {
+        "label": "Installation",
+        "detail": "Guided setup for your theme and product templates."
+      },
+      {
+        "label": "Customization",
+        "detail": "Custom logic, styling, and workflow tuning for your store."
+      },
+      {
+        "label": "Feature Assistance",
+        "detail": "Hands-on help with quantity rules and advanced options."
+      },
+      {
+        "label": "Collaboration",
+        "detail": "Work directly with our team on your exact use case."
+      },
+      {
+        "label": "Video/Audio Live Support",
+        "detail": "Real-time troubleshooting over call and screen share."
+      }
+    ]
+  },
+  "benefits": {
+    "title": "Why Merchants Choose MultiVariants",
+    "items": [
+      "Faster ordering for B2B and wholesale",
+      "Higher average order value",
+      "Reduced cart abandonment",
+      "Flexible quantity and bundle control",
+      "Works with modern Shopify themes",
+      "Mobile-friendly purchasing flow",
+      "Cleaner variant selection experience",
+      "Lower operational error rate",
+      "Customizable layouts and rules",
+      "Strong support and onboarding",
+      "Simple install and fast go-live",
+      "Built to scale with growth"
+    ]
+  },
+  "cta": {
+    "title": "Built for Bulk Variant Ordering",
+    "subtitle": "From first-time setup to advanced quantity logic, MultiVariants gives your store everything needed for high-converting bulk orders.",
+    "primary": "Get App on Shopify",
+    "secondary": "Live Demo"
+  }
+}

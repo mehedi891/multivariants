@@ -51,3 +51,11 @@ export const getPricingContent = makeLoader<PricingContent>({
   en: () => import("@/messages/pricing/en.json"),
   "pt-br": () => import("@/messages/pricing/pt-br.json"),
 });
+
+// --- features ---------------------------------------------------------------
+import type featuresEn from "@/messages/features/en.json";
+export type FeaturesContent = typeof featuresEn;
+export const getFeaturesContent = makeLoader<FeaturesContent>({
+  en: () => import("@/messages/features/en.json"),
+  "pt-br": () => import("@/messages/features/pt-br.json"),
+});

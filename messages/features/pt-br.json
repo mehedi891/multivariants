@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "title": "Pedidos em massa, Mix-and-Match e restrições",
+    "description": "Conheça os recursos do MultiVariants para pedidos em massa, restrições, quantidades incrementais, regras de pacote e muito mais."
+  },
+  "hero": {
+    "badge": "Recursos",
+    "title": "Recursos poderosos de pedido em massa para lojas Shopify",
+    "subtitle": "O MultiVariants ajuda seus clientes a fazer grandes pedidos de variantes com rapidez e precisão. Da lógica de quantidade ao controle de restrições, tudo foi feito para converter e agilizar.",
+    "primary": "Instalar na Shopify",
+    "secondary": "Demonstração ao vivo"
+  },
+  "core": {
+    "badge": "Principais recursos",
+    "title": "Recursos modernos feitos para pedidos em massa que convertem",
+    "subtitle": "Tudo abaixo foi pensado para tornar o pedido de muitas variantes mais rápido, mais limpo e mais fácil em qualquer dispositivo.",
+    "getApp": "Instalar o app na Shopify",
+    "liveDemo": "Demonstração ao vivo",
+    "items": [
+      {
+        "title": "Pedidos Mix and Match",
+        "subtitle": "Deixe o cliente montar o próprio kit",
+        "desc": "Permita que o comprador combine tamanhos, cores e variantes em um único pedido, sem ficar pulando de página em página.",
+        "bullets": [
+          "Defina regras de quantidade para kits completos",
+          "Crie pacotes flexíveis para compradores B2B",
+          "Reduza desistências em pedidos grandes"
+        ],
+        "demoLabel": "Prévia do kit Mix and Match"
+      },
+      {
+        "title": "Aplique várias restrições",
+        "subtitle": "Controle as regras de pedido com precisão",
+        "desc": "Controle quantidades mínimas, máximas e por variante para manter os pedidos válidos e rentáveis.",
+        "bullets": [
+          "Quantidade mín./máx. por produto ou variante",
+          "Bloqueie combinações inválidas na hora",
+          "Evite erros operacionais no checkout"
+        ],
+        "demoLabel": "Painel de validação de regras de pedido"
+      },
+      {
+        "title": "Aumento de quantidade incremental",
+        "subtitle": "Venda em passos fixos de quantidade",
+        "desc": "Ofereça passos fixos, como pacotes de 6 ou 12, para volumes de pedido previsíveis e fáceis de separar no estoque.",
+        "bullets": [
+          "Suporta quantidades por intervalo",
+          "Melhora a eficiência de estoque e embalagem",
+          "Perfeito para venda de pacotes no atacado"
+        ],
+        "demoLabel": "Seletor de quantidade incremental"
+      },
+      {
+        "title": "Quantidade em pacote para variantes",
+        "subtitle": "Agrupe variantes em pacotes inteligentes",
+        "desc": "Defina quantidades de pacote entre variantes e deixe o cliente concluir o pedido rapidamente, com menos digitação.",
+        "bullets": [
+          "Pedido de variantes por pacote",
+          "Adição ao carrinho mais rápida para SKUs repetidos",
+          "Pedidos de maior valor médio"
+        ],
+        "demoLabel": "Matriz de pacotes de variantes"
+      },
+      {
+        "title": "Pedido em massa em qualquer dispositivo",
+        "subtitle": "Pronto para desktop, tablet e celular",
+        "desc": "Experiência de pedido em massa totalmente responsiva para vitrines em desktop, tablet e celular.",
+        "bullets": [
+          "Otimizado para toque e teclado",
+          "Interface consistente em qualquer tela",
+          "Mais praticidade para compradores em campo"
+        ],
+        "demoLabel": "Layout de pedido em massa no celular"
+      },
+      {
+        "title": "Personalize o layout das variantes",
+        "subtitle": "Apresente as variantes do seu jeito",
+        "desc": "Escolha o estilo de tabela, de lista e o comportamento de exibição conforme seu catálogo e o fluxo dos seus clientes.",
+        "bullets": [
+          "Controles flexíveis de layout",
+          "Agrupamento limpo de variantes",
+          "Funciona com catálogos complexos"
+        ],
+        "demoLabel": "Prévia da configuração de layout"
+      },
+      {
+        "title": "Restrições de carrinho",
+        "subtitle": "Mantenha todo pedido válido antes do checkout",
+        "desc": "Aplique restrições antes do checkout para que o cliente sempre envie quantidades válidas no carrinho.",
+        "bullets": [
+          "Evite pedidos em massa inválidos ou incompletos",
+          "Exiba mensagens de validação claras",
+          "Reduza chamados de suporte e ajustes manuais"
+        ],
+        "demoLabel": "Resumo das restrições de carrinho"
+      },
+      {
+        "title": "Suporte a quantidade fracionada",
+        "subtitle": "Aceite pedidos com decimais quando precisar",
+        "desc": "Aceite quantidades decimais e por peso quando necessário — ideal para determinadas categorias de atacado e nichos específicos.",
+        "bullets": [
+          "Compatível com quantidades decimais",
+          "Comportamento de arredondamento controlado",
+          "Útil para produtos medidos e unidades B2B"
+        ],
+        "demoLabel": "Controle de quantidade fracionada"
+      },
+      {
+        "title": "Configuração fácil — sem programar",
+        "subtitle": "Coloque no ar rápido, com configuração simples",
+        "desc": "Instale rapidamente e configure sem código. Coloque seu fluxo de pedido em massa no ar em minutos.",
+        "bullets": [
+          "Configuração pensada para o lojista",
+          "Ajustes simples dentro do app",
+          "Integração rápida para times não técnicos"
+        ],
+        "demoLabel": "Assistente de configuração sem código"
+      }
+    ]
+  },
+  "support": {
+    "badge": "Suporte premium",
+    "title": "Nosso diferencial é o atendimento",
+    "subtitle": "Dúvida de madrugada? Sem problema. Nosso time está disponível 24/7 para resolver problemas reais de lojistas, com respostas rápidas, orientação prática e suporte personalizado para fluxos complexos de B2B e atacado.",
+    "items": [
+      {
+        "label": "Instalação",
+        "detail": "Configuração guiada para o seu tema e seus modelos de produto."
+      },
+      {
+        "label": "Personalização",
+        "detail": "Lógica, estilo e ajustes de fluxo sob medida para a sua loja."
+      },
+      {
+        "label": "Ajuda com recursos",
+        "detail": "Apoio prático com regras de quantidade e opções avançadas."
+      },
+      {
+        "label": "Colaboração",
+        "detail": "Trabalhe diretamente com nosso time no seu caso de uso."
+      },
+      {
+        "label": "Suporte ao vivo por vídeo/áudio",
+        "detail": "Resolução em tempo real por chamada e compartilhamento de tela."
+      }
+    ]
+  },
+  "benefits": {
+    "title": "Por que os lojistas escolhem o MultiVariants",
+    "items": [
+      "Pedidos mais rápidos para B2B e atacado",
+      "Ticket médio mais alto",
+      "Menos abandono de carrinho",
+      "Controle flexível de quantidade e pacotes",
+      "Funciona com temas Shopify modernos",
+      "Fluxo de compra adaptado ao celular",
+      "Seleção de variantes mais organizada",
+      "Menos erros operacionais",
+      "Layouts e regras personalizáveis",
+      "Suporte e integração de primeira",
+      "Instalação simples e entrada no ar rápida",
+      "Feito para crescer junto com você"
+    ]
+  },
+  "cta": {
+    "title": "Feito para pedidos em massa de variantes",
+    "subtitle": "Da primeira configuração à lógica avançada de quantidade, o MultiVariants dá à sua loja tudo o que ela precisa para pedidos em massa que convertem.",
+    "primary": "Instalar na Shopify",
+    "secondary": "Demonstração ao vivo"
+  }
+}
