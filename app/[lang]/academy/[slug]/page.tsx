@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import { localeAlternates } from "@/lib/seo";
+import { toLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -10,21 +14,27 @@ import {
   getPublicAcademyDoc,
 } from "@/lib/academy/public-api";
 
+// CMS content is authored in English only, so hreflang advertises just `en`
+// and a localized URL canonicals back to the English page.
+const CMS_LOCALES: readonly Locale[] = ["en"];
+
 type PageProps = {
   params: Promise<{
+    lang: string;
     slug: string;
   }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { lang, slug } = await params;
+  const locale = toLocale(lang);
   const doc = await getPublicAcademyDoc(slug);
 
   if (!doc) {
     return {
       title: "Academy Doc",
       description: "MultiVariants help documentation.",
-      alternates: { canonical: "/academy" },
+      alternates: localeAlternates("/academy", locale, CMS_LOCALES),
       robots: { index: false, follow: true },
     };
   }
@@ -38,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     // would produce a double "… | Academy | MultiVariants" suffix.
     title: { absolute: `${title} | MultiVariants Academy` },
     description,
-    alternates: { canonical: `/academy/${slug}` },
+    alternates: localeAlternates(`/academy/${slug}`, locale, CMS_LOCALES),
     openGraph: {
       type: "article",
       url,
@@ -58,6 +68,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function AcademyDocPage({ params }: PageProps) {
+  const { lang } = await params;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   const { slug } = await params;
   const [{ categories }, doc] = await Promise.all([
     getPublicAcademyCategories(),
@@ -117,7 +130,7 @@ export default async function AcademyDocPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content" className="overflow-x-clip">
         <section
           className="relative overflow-hidden px-[5%] py-12 lg:py-16"
@@ -223,7 +236,7 @@ export default async function AcademyDocPage({ params }: PageProps) {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

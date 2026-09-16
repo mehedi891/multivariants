@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { toLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
@@ -7,19 +9,28 @@ import AcademyExplorer from "@/components/AcademyExplorer";
 import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicAcademyCategories } from "@/lib/academy/public-api";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Academy – Setup Guides & Help Docs",
-  description:
-    "Browse MultiVariants help docs by category. Learn setup, quantity rules, layout customization, and integrations.",
-  path: "/academy",
-});
+type PageProps = { params: Promise<{ lang: string }> };
 
-export default async function AcademyPage() {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { lang } = await params;
+  return pageMetadata({
+    title: "Academy – Setup Guides & Help Docs",
+    description:
+      "Browse MultiVariants help docs by category. Learn setup, quantity rules, layout customization, and integrations.",
+    path: "/academy",
+    locale: toLocale(lang),
+  });
+}
+
+export default async function AcademyPage({ params }: PageProps) {
+  const { lang } = await params;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   const { categories, error } = await getPublicAcademyCategories();
 
   return (
     <>
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content" className="overflow-x-clip">
         <section
           className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -69,7 +80,7 @@ export default async function AcademyPage() {
           </section>
         )}
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

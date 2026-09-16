@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { toLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -9,8 +11,11 @@ import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicChangelogs } from "@/lib/changelog/public-api";
 
 export async function generateMetadata({
+  params: routeParams,
   searchParams,
 }: PageProps): Promise<Metadata> {
+  const { lang } = await routeParams;
+  const locale = toLocale(lang);
   const params = await searchParams;
   const page = safePage(pickFirst(params.page));
   let title = "Changelog – Product Updates & Releases";
@@ -24,10 +29,12 @@ export async function generateMetadata({
     title,
     description,
     path: page > 1 ? `/changelog?page=${page}` : "/changelog",
+    locale,
   });
 }
 
 type PageProps = {
+  params: Promise<{ lang: string }>;
   searchParams: Promise<{
     page?: string | string[];
   }>;
@@ -79,7 +86,13 @@ function hexToRgba(hex: string, alpha: number) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-export default async function ChangelogPage({ searchParams }: PageProps) {
+export default async function ChangelogPage({
+  params: routeParams,
+  searchParams,
+}: PageProps) {
+  const { lang } = await routeParams;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   const params = await searchParams;
   const requestedPage = safePage(pickFirst(params.page));
   const { changelogs, totalPages, currentPage, error } = await getPublicChangelogs({
@@ -89,7 +102,7 @@ export default async function ChangelogPage({ searchParams }: PageProps) {
 
   return (
     <>
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content" className="overflow-x-clip">
         <section
           className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -260,7 +273,7 @@ export default async function ChangelogPage({ searchParams }: PageProps) {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

@@ -1,20 +1,31 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { toLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Privacy Policy",
-  description:
-    "Read the MultiVariants Privacy Policy regarding collection, use, disclosure, and protection of personal data.",
-  path: "/privacy-policy",
-});
+type PageProps = { params: Promise<{ lang: string }> };
 
-export default function PrivacyPolicyPage() {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { lang } = await params;
+  return pageMetadata({
+    title: "Privacy Policy",
+    description:
+      "Read the MultiVariants Privacy Policy regarding collection, use, disclosure, and protection of personal data.",
+    path: "/privacy-policy",
+    locale: toLocale(lang),
+  });
+}
+
+export default async function PrivacyPolicyPage({ params }: PageProps) {
+  const { lang } = await params;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   return (
     <>
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content" className="overflow-x-clip">
         <section
           className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -379,7 +390,7 @@ export default function PrivacyPolicyPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

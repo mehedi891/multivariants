@@ -52,3 +52,8 @@ export function barePathOf(pathname: string): string {
     : pathname;
   return bare === "" ? "/" : bare;
 }
+
+/** Coerces a raw `[lang]` route param to a known locale (falls back to English). */
+export function toLocale(lang: string): Locale {
+  return isLocale(lang) ? lang : defaultLocale;
+}

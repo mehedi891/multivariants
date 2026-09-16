@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import { localeAlternates } from "@/lib/seo";
+import { toLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -7,8 +11,13 @@ import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import { getPublicClient, type PublicClient } from "@/lib/clients-showcase/public-api";
 
+// CMS content is authored in English only, so hreflang advertises just `en`
+// and a localized URL canonicals back to the English page.
+const CMS_LOCALES: readonly Locale[] = ["en"];
+
 type PageProps = {
   params: Promise<{
+    lang: string;
     slug: string;
   }>;
 };
@@ -80,14 +89,15 @@ function wrapPostTables(contentHtml: string) {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { lang, slug } = await params;
+  const locale = toLocale(lang);
   const client = await getPublicClient(slug);
 
   if (!client) {
     return {
       title: GENERIC_TITLE,
       description: GENERIC_DESCRIPTION,
-      alternates: { canonical: "/clients-showcase" },
+      alternates: localeAlternates("/clients-showcase", locale, CMS_LOCALES),
       robots: {
         index: false,
         follow: true,
@@ -108,9 +118,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
-    alternates: {
-      canonical: canonicalPath,
-    },
+    alternates: localeAlternates(canonicalPath, locale, CMS_LOCALES),
     robots: {
       index: true,
       follow: true,
@@ -143,6 +151,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ClientDetailsPage({ params }: PageProps) {
+  const { lang } = await params;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   const { slug } = await params;
   const client = await getPublicClient(slug);
 
@@ -189,7 +200,7 @@ export default async function ClientDetailsPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content">
         <section
           className="relative overflow-hidden px-[5%] py-14 lg:py-20"
@@ -333,7 +344,7 @@ export default async function ClientDetailsPage({ params }: PageProps) {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

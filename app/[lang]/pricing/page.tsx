@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { toLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -153,14 +155,23 @@ const comparisonRows: ComparisonRow[] = [
   },
 ];
 
-export const metadata: Metadata = pageMetadata({
-  title: "Pricing Plans for Shopify Bulk Ordering",
-  description:
-    "Simple pricing plans for every Shopify store. Start free with the Starter plan and scale with Standard or Professional as your bulk ordering grows.",
-  path: "/pricing",
-});
+type PageProps = { params: Promise<{ lang: string }> };
 
-export default function PricingPage() {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { lang } = await params;
+  return pageMetadata({
+    title: "Pricing Plans for Shopify Bulk Ordering",
+    description:
+      "Simple pricing plans for every Shopify store. Start free with the Starter plan and scale with Standard or Professional as your bulk ordering grows.",
+    path: "/pricing",
+    locale: toLocale(lang),
+  });
+}
+
+export default async function PricingPage({ params }: PageProps) {
+  const { lang } = await params;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   const renderComparisonCell = (value: ComparisonCell, emphasize = false) => {
     if (typeof value === "boolean") {
       if (value) {
@@ -210,7 +221,7 @@ export default function PricingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content" className="overflow-x-clip">
         <section
           className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -445,7 +456,7 @@ export default function PricingPage() {
           </AnimateIn>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

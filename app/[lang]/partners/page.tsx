@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { toLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -28,10 +30,14 @@ function getPageItems(current: number, total: number): (number | "ellipsis")[] {
 }
 
 export async function generateMetadata({
+  params,
   searchParams,
 }: {
+  params: Promise<{ lang: string }>;
   searchParams: Promise<{ page?: string }>;
 }): Promise<Metadata> {
+  const { lang } = await params;
+  const locale = toLocale(lang);
   const { page: pageParam } = await searchParams;
   const page = Math.max(1, Math.floor(Number(pageParam) || 1));
   let title = "App Partners & Integrations";
@@ -45,6 +51,7 @@ export async function generateMetadata({
     title,
     description,
     path: page > 1 ? `/partners?page=${page}` : "/partners",
+    locale,
   });
 }
 
@@ -76,10 +83,15 @@ function getInitials(name: string) {
 }
 
 export default async function PartnersPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ lang: string }>;
   searchParams: Promise<{ page?: string }>;
 }) {
+  const { lang } = await params;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   const { partners: partnerItems, error } = await getPublicPartners();
 
   const { page: pageParam } = await searchParams;
@@ -90,7 +102,7 @@ export default async function PartnersPage({
 
   return (
     <>
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content" className="overflow-x-clip">
         <section
           className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -265,7 +277,7 @@ export default async function PartnersPage({
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

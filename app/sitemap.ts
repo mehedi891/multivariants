@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPublicAcademySlugs } from "@/lib/academy/public-api";
 import { getPublicBlogSlugs } from "@/lib/blog/public-api";
 import { getPublicClientSlugs } from "@/lib/clients-showcase/public-api";
+import { locales, localizePath } from "@/i18n/config";
 
 // Regenerate the sitemap every 15 min so new CMS content (blog posts, academy
 // docs, client showcases) appears quickly, and a one-off failed/empty
@@ -9,6 +10,16 @@ import { getPublicClientSlugs } from "@/lib/clients-showcase/public-api";
 export const revalidate = 900;
 
 const SITE_URL = "https://multivariants.com";
+
+/**
+ * Absolute URL for a bare path in a locale. A sitemap must list only CANONICAL
+ * URLs — the home path is "" rather than "/" so the English home stays
+ * `https://multivariants.com` with no trailing slash.
+ */
+function absUrl(barePath: string, locale: (typeof locales)[number]): string {
+  const p = localizePath(barePath || "/", locale);
+  return `${SITE_URL}${p === "/" ? "" : p}`;
+}
 
 // Static marketing/legal pages that always exist in the app.
 const staticRoutes: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
@@ -30,27 +41,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const slugs = await getPublicBlogSlugs(1000);
   const clientSlugs = await getPublicClientSlugs(1000);
 
+  // Static pages exist in every locale, so each expands to one <url> per
+  // locale. CMS content (academy docs, blog posts, client stories) is authored
+  // in English only — its localized URLs canonical back to English, and a
+  // sitemap must never list a non-canonical URL, so those stay English-only.
   return [
-    ...staticRoutes.map((r) => ({
-      url: `${SITE_URL}${r.path}`,
-      lastModified: new Date(),
-      changeFrequency: r.changeFrequency,
-      priority: r.priority,
-    })),
+    ...staticRoutes.flatMap((r) =>
+      locales.map((locale) => ({
+        url: absUrl(r.path, locale),
+        lastModified: new Date(),
+        changeFrequency: r.changeFrequency,
+        priority: r.priority,
+      })),
+    ),
     ...docs.map((docSlug) => ({
-      url: `https://multivariants.com/academy/${docSlug}`,
+      url: `${SITE_URL}/academy/${docSlug}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
     ...slugs.map((slug) => ({
-      url: `https://multivariants.com/blog/${slug}`,
+      url: `${SITE_URL}/blog/${slug}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
     ...clientSlugs.map((slug) => ({
-      url: `https://multivariants.com/clients-showcase/${slug}`,
+      url: `${SITE_URL}/clients-showcase/${slug}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.7,

@@ -2,33 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import AnimateIn from "./AnimateIn";
 import BookDemoButton from "./BookDemoButton";
+import { localizePath, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-const usefulLinks = [
-  { label: "Changelog", href: "/changelog" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Book a Demo", href: "#", demo: true },
-  { label: "Support", href: "mailto:support@multivariants.com" },
-  { label: "Hire a MultiVariants Expert", href: "https://shopexperts.com/partners/multivariants-shopify-experts?utm_source=multivariants&utm_medium=footer&utm_campaign=hire-an-expert" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
-];
-
+// Product and company names are brand nouns — they stay untranslated in every
+// locale. Only the surrounding copy and the one-line app descriptors come from
+// the dictionary.
 const integrationLinks = [
   { label: "Discount Ray", href: "https://discountray.com/" },
   { label: "Shopify", href: "https://shopify.com/" },
-];
-
-const appLinks = [
-  { label: "DiscountRay", desc: "Custom Price", href: "https://discountray.com/" },
-  { label: "QuotWay", desc: "B2B Quote-Negotiation", href: "https://www.quotway.com" },
-  { label: "OrderRules", desc: "Store Open Limits", href: "https://orderrules.com" },
-  { label: "EmbedUp", desc: "Affiliate Buy Button", href: "https://embedup.com" },
-  { label: "Push Bundle", desc: "Build a Box App", href: "https://pushbundle.com/" },
-];
-
-const legalLinks = [
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Changelog", href: "/changelog" },
-  { label: "llms.txt", href: "/llms.txt" },
 ];
 
 const socials = [
@@ -70,7 +52,41 @@ function ExternalArrow() {
   );
 }
 
-export default function Footer() {
+export default function Footer({
+  locale,
+  dict,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+}) {
+  const f = dict.footer;
+
+  const usefulLinks = [
+    { label: dict.nav.changelog, href: localizePath("/changelog", locale) },
+    { label: dict.nav.faq, href: localizePath("/faq", locale) },
+    { label: dict.cta.bookDemo, href: "#", demo: true },
+    { label: f.support, href: "mailto:support@multivariants.com" },
+    {
+      label: dict.nav.hireExpert,
+      href: "https://shopexperts.com/partners/multivariants-shopify-experts?utm_source=multivariants&utm_medium=footer&utm_campaign=hire-an-expert",
+    },
+    { label: dict.nav.privacy, href: localizePath("/privacy-policy", locale) },
+  ];
+
+  const appLinks = [
+    { label: "DiscountRay", desc: f.apps.discountray, href: "https://discountray.com/" },
+    { label: "QuotWay", desc: f.apps.quotway, href: "https://www.quotway.com" },
+    { label: "OrderRules", desc: f.apps.orderrules, href: "https://orderrules.com" },
+    { label: "EmbedUp", desc: f.apps.embedup, href: "https://embedup.com" },
+    { label: "Push Bundle", desc: f.apps.pushbundle, href: "https://pushbundle.com/" },
+  ];
+
+  const legalLinks = [
+    { label: dict.nav.privacy, href: localizePath("/privacy-policy", locale) },
+    { label: dict.nav.changelog, href: localizePath("/changelog", locale) },
+    { label: "llms.txt", href: "/llms.txt" },
+  ];
+
   return (
     <footer className="relative overflow-hidden bg-brand-dark text-white/75 px-[5%] pt-16 pb-8">
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -84,7 +100,11 @@ export default function Footer() {
           {/* Brand */}
           <AnimateIn direction="up">
             <div className="max-w-sm">
-              <Link href="/" className="inline-flex items-center mb-5" aria-label="MultiVariants home">
+              <Link
+                href={localizePath("/", locale)}
+                className="inline-flex items-center mb-5"
+                aria-label={dict.common.homeAriaLabel}
+              >
                 <Image
                   src="/images/logo.webp"
                   alt="MultiVariants logo"
@@ -94,11 +114,9 @@ export default function Footer() {
                 />
               </Link>
               <p className="text-[14px] text-white/55 leading-relaxed mb-6">
-                Let your customers order multiple variants and quantities of the
-                same product in just one click. Increase your sales and conversion
-                rate with our bulk ordering solution.
+                {f.tagline}
               </p>
-              <nav aria-label="Social links">
+              <nav aria-label={f.socialLinks}>
                 <ul className="flex gap-2.5 list-none" role="list">
                   {socials.map((s) => (
                     <li key={s.label}>
@@ -122,9 +140,9 @@ export default function Footer() {
 
           {/* Useful Links */}
           <AnimateIn direction="up" delay={80}>
-            <nav aria-label="Useful links">
+            <nav aria-label={f.usefulLinksAria}>
               <h3 className="text-[12px] font-bold uppercase tracking-[1.2px] text-white/90 mb-4">
-                Useful Links
+                {f.usefulLinks}
               </h3>
               <ul className="list-none flex flex-col gap-3" role="list">
                 {usefulLinks.map((l) =>
@@ -152,9 +170,9 @@ export default function Footer() {
 
           {/* Integration */}
           <AnimateIn direction="up" delay={160}>
-            <nav aria-label="Integration links">
+            <nav aria-label={f.integrationAria}>
               <h3 className="text-[12px] font-bold uppercase tracking-[1.2px] text-white/90 mb-4">
-                Integration
+                {f.integration}
               </h3>
               <ul className="list-none flex flex-col gap-3" role="list">
                 {integrationLinks.map((l) => (
@@ -175,9 +193,9 @@ export default function Footer() {
 
           {/* Our Apps */}
           <AnimateIn direction="up" delay={240}>
-            <nav aria-label="Other apps by eFoli">
+            <nav aria-label={f.moreByEfoliAria}>
               <h3 className="text-[12px] font-bold uppercase tracking-[1.2px] text-white/90 mb-4">
-                More by eFoli
+                {f.moreByEfoli}
               </h3>
               <ul className="list-none flex flex-col gap-1" role="list">
                 {appLinks.map((app) => (
@@ -208,10 +226,10 @@ export default function Footer() {
         {/* Bottom */}
         <div className="flex items-center justify-between flex-wrap gap-4 text-[13px] text-white/40">
           <p>
-            ©{new Date().getFullYear()} | MultiVariants — A Product of{" "}
+            {f.copyright.replace("{year}", String(new Date().getFullYear()))}{" "}
             <strong className="text-white/55">eFoli</strong>
           </p>
-          <nav aria-label="Legal links">
+          <nav aria-label={f.legalAria}>
             <ul className="flex flex-wrap gap-x-5 gap-y-2 list-none" role="list">
               {legalLinks.map((l) => (
                 <li key={l.label}>

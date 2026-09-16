@@ -1,17 +1,25 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { toLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import { getPublicFaqs, type PublicFaqItem } from "@/lib/faq/public-api";
 
-export const metadata: Metadata = pageMetadata({
-  title: "FAQ – Bulk Add to Cart & Order Rules",
-  description:
-    "Answers to common questions about MultiVariants — bulk add to cart, Mix n Match, order restrictions, quantity increments, pricing, and installation.",
-  path: "/faq",
-});
+type PageProps = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { lang } = await params;
+  return pageMetadata({
+    title: "FAQ – Bulk Add to Cart & Order Rules",
+    description:
+      "Answers to common questions about MultiVariants — bulk add to cart, Mix n Match, order restrictions, quantity increments, pricing, and installation.",
+    path: "/faq",
+    locale: toLocale(lang),
+  });
+}
 
 const appLink =
   "https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp";
@@ -39,7 +47,10 @@ function FaqAccordion({ item, delay }: { item: PublicFaqItem; delay: number }) {
   );
 }
 
-export default async function FaqPage() {
+export default async function FaqPage({ params }: PageProps) {
+  const { lang } = await params;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   const { categories, uncategorized } = await getPublicFaqs();
 
   const allItems: PublicFaqItem[] = [
@@ -67,7 +78,7 @@ export default async function FaqPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content" className="overflow-x-clip">
         <section
           className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -192,7 +203,7 @@ export default async function FaqPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

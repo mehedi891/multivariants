@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { toLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -9,8 +11,11 @@ import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicClients } from "@/lib/clients-showcase/public-api";
 
 export async function generateMetadata({
+  params: routeParams,
   searchParams,
 }: PageProps): Promise<Metadata> {
+  const { lang } = await routeParams;
+  const locale = toLocale(lang);
   const params = await searchParams;
   const page = safePage(pickFirst(params.page));
   let title = "Client Showcase – Merchant Stories";
@@ -24,10 +29,12 @@ export async function generateMetadata({
     title,
     description,
     path: page > 1 ? `/clients-showcase?page=${page}` : "/clients-showcase",
+    locale,
   });
 }
 
 type PageProps = {
+  params: Promise<{ lang: string }>;
   searchParams: Promise<{
     page?: string | string[];
   }>;
@@ -63,7 +70,13 @@ function isRemoteImage(src: string) {
   return src.startsWith("http://") || src.startsWith("https://");
 }
 
-export default async function ClientsShowcasePage({ searchParams }: PageProps) {
+export default async function ClientsShowcasePage({
+  params: routeParams,
+  searchParams,
+}: PageProps) {
+  const { lang } = await routeParams;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   const params = await searchParams;
   const requestedPage = safePage(pickFirst(params.page));
 
@@ -74,7 +87,7 @@ export default async function ClientsShowcasePage({ searchParams }: PageProps) {
 
   return (
     <>
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content" className="overflow-x-clip">
         <section
           className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -218,7 +231,7 @@ export default async function ClientsShowcasePage({ searchParams }: PageProps) {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

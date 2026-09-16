@@ -7,11 +7,16 @@ import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import ApiEmptyState from "@/components/ApiEmptyState";
 import { pageMetadata } from "@/lib/seo";
+import { toLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import { getPublicBlogPosts } from "@/lib/blog/public-api";
 
 export async function generateMetadata({
+  params: routeParams,
   searchParams,
 }: PageProps): Promise<Metadata> {
+  const { lang } = await routeParams;
+  const locale = toLocale(lang);
   const params = await searchParams;
   const page = safePage(pickFirst(params.page));
   const categoryRaw = pickFirst(params.category);
@@ -50,10 +55,11 @@ export async function generateMetadata({
   const qs = query.toString();
   const path = qs ? `/blog?${qs}` : "/blog";
 
-  return pageMetadata({ title, description, path, ogTitle });
+  return pageMetadata({ title, description, path, ogTitle, locale });
 }
 
 type PageProps = {
+  params: Promise<{ lang: string }>;
   searchParams: Promise<{
     page?: string | string[];
     category?: string | string[];
@@ -119,7 +125,13 @@ function isRemoteImage(src: string) {
   return src.startsWith("http://") || src.startsWith("https://");
 }
 
-export default async function BlogPage({ searchParams }: PageProps) {
+export default async function BlogPage({
+  params: routeParams,
+  searchParams,
+}: PageProps) {
+  const { lang } = await routeParams;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   const params = await searchParams;
   const incomingHeaders = await headers();
   const selectedCategory = pickFirst(params.category) ?? "all";
@@ -142,7 +154,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
 
   return (
     <>
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content" className="overflow-x-clip">
         <section
           className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -362,7 +374,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

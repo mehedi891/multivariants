@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { toLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
@@ -210,12 +212,18 @@ const merchantBenefits = [
   { icon: "📈", text: "Built to scale with growth" },
 ];
 
-export const metadata: Metadata = pageMetadata({
-  title: "Bulk Order, Mix-and-Match & Restrictions",
-  description:
-    "Explore MultiVariants features for bulk ordering, restrictions, incremental quantities, bundle rules, and more.",
-  path: "/features",
-});
+type PageProps = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { lang } = await params;
+  return pageMetadata({
+    title: "Bulk Order, Mix-and-Match & Restrictions",
+    description:
+      "Explore MultiVariants features for bulk ordering, restrictions, incremental quantities, bundle rules, and more.",
+    path: "/features",
+    locale: toLocale(lang),
+  });
+}
 
 function SupportIcon({ kind }: { kind: SupportItem["kind"] }) {
   if (kind === "installation") {
@@ -262,10 +270,13 @@ function SupportIcon({ kind }: { kind: SupportItem["kind"] }) {
   );
 }
 
-export default function FeaturesPage() {
+export default async function FeaturesPage({ params }: PageProps) {
+  const { lang } = await params;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   return (
     <>
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content" className="overflow-x-clip">
         <section
           className="relative overflow-hidden px-[5%] py-16 lg:py-24"
@@ -569,7 +580,7 @@ export default function FeaturesPage() {
           </AnimateIn>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import { localeAlternates } from "@/lib/seo";
+import { toLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -14,8 +18,13 @@ import {
   type PublicBlogPost,
 } from "@/lib/blog/public-api";
 
+// CMS content is authored in English only, so hreflang advertises just `en`
+// and a localized URL canonicals back to the English page.
+const CMS_LOCALES: readonly Locale[] = ["en"];
+
 type PageProps = {
   params: Promise<{
+    lang: string;
     slug: string;
   }>;
 };
@@ -291,20 +300,24 @@ function SocialIcon({ id }: { id: SocialProfile["id"] }) {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { lang, slug } = await params;
+  const locale = toLocale(lang);
   const incomingHeaders = await headers();
   const requestHeaders = {
     cookie: incomingHeaders.get("cookie"),
     authorization: incomingHeaders.get("authorization"),
   };
-  const { preview, locale } = await resolvePreviewContext();
-  const post = await getPublicBlogPost(slug, requestHeaders, { preview, locale });
+  const { preview, locale: previewLocale } = await resolvePreviewContext();
+  const post = await getPublicBlogPost(slug, requestHeaders, {
+    preview,
+    locale: previewLocale,
+  });
 
   if (!post) {
     return {
       title: GENERIC_POST_TITLE,
       description: GENERIC_POST_DESCRIPTION,
-      alternates: { canonical: "/blog" },
+      alternates: localeAlternates("/blog", locale, CMS_LOCALES),
       robots: {
         index: false,
         follow: true,
@@ -323,9 +336,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description,
     category: post.category,
     keywords: [post.category, "Shopify", "MultiVariants", "Bulk ordering"],
-    alternates: {
-      canonical: canonicalPath,
-    },
+    alternates: localeAlternates(canonicalPath, locale, CMS_LOCALES),
     // Unpublished content must never be indexed, even on the production domain.
     robots: preview
       ? { index: false, follow: false, nocache: true }
@@ -359,14 +370,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
+  const { lang } = await params;
+  const locale = toLocale(lang);
+  const dict = await getDictionary(locale);
   const { slug } = await params;
   const incomingHeaders = await headers();
   const requestHeaders = {
     cookie: incomingHeaders.get("cookie"),
     authorization: incomingHeaders.get("authorization"),
   };
-  const { preview, locale } = await resolvePreviewContext();
-  const post = await getPublicBlogPost(slug, requestHeaders, { preview, locale });
+  const { preview, locale: previewLocale } = await resolvePreviewContext();
+  const post = await getPublicBlogPost(slug, requestHeaders, {
+    preview,
+    locale: previewLocale,
+  });
 
   if (!post) notFound();
 
@@ -458,7 +475,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       {preview && (
         <PreviewBanner
           status={post.status}
-          locale={locale}
+          locale={previewLocale}
           exitRedirect={`/blog/${post.slug}`}
         />
       )}
@@ -482,7 +499,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           )}
         </>
       )}
-      <Navbar />
+      <Navbar locale={locale} dict={dict} />
       <main id="main-content">
         <section
           className="relative overflow-hidden px-[5%] py-14 lg:py-20"
@@ -759,7 +776,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </section>
         )}
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }
