@@ -10,7 +10,7 @@
  * routing, the switcher, hreflang, and the sitemap.
  */
 
-export const locales = ["en", "pt-br"] as const;
+export const locales = ["en", "pt"] as const;
 export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = "en";
@@ -18,17 +18,17 @@ export const defaultLocale: Locale = "en";
 /**
  * Per-locale metadata: native name (for the switcher) + the hreflang code.
  *
- * The URL segment and the hreflang code deliberately differ for Brazilian
- * Portuguese: the path stays lowercase (`/pt-br/pricing`) because URLs are
- * case-sensitive and lowercase is the convention, while hreflang must use the
- * canonical region casing (`pt-BR`) that search engines expect.
+ * The URL segment and the hreflang code deliberately differ: the path is the
+ * short `/pt/pricing`, while hreflang declares the specific regional variant
+ * the copy is actually written in (`pt-BR`), which is what search engines
+ * match against a reader's language settings.
  */
 export const localeMeta: Record<
   Locale,
   { name: string; hreflang: string; flag: string }
 > = {
   en: { name: "English", hreflang: "en", flag: "🇺🇸" },
-  "pt-br": { name: "Português (BR)", hreflang: "pt-BR", flag: "🇧🇷" },
+  pt: { name: "Português (BR)", hreflang: "pt-BR", flag: "🇧🇷" },
 };
 
 export function isLocale(value: string): value is Locale {
@@ -37,7 +37,7 @@ export function isLocale(value: string): value is Locale {
 
 /**
  * URL path for a route in a given locale. The default locale is unprefixed
- * (`/pricing`); every other locale is prefixed (`/pt-br/pricing`).
+ * (`/pricing`); every other locale is prefixed (`/pt/pricing`).
  */
 export function localizePath(path: string, locale: Locale): string {
   const clean = path === "/" ? "" : path;

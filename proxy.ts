@@ -18,7 +18,7 @@ import { defaultLocale, isLocale } from "@/i18n/config";
  *     the canonical production domain.
  *  3. Locale routing (as-needed prefix) — the default locale (`en`) is served
  *     UNPREFIXED by internally rewriting `/pricing` → `/en/pricing`, so the URL
- *     stays clean. Prefixed locales (`/pt-br/pricing`) pass straight through.
+ *     stays clean. Prefixed locales (`/pt/pricing`) pass straight through.
  *     `/en/*` 308s to the unprefixed form so there is one canonical URL per page.
  */
 

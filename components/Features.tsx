@@ -3,14 +3,14 @@ import AnimateIn from "./AnimateIn";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { HomeContent } from "@/i18n/content";
 
-function ShopifyBtn() {
+function ShopifyBtn({ label }: { label: string }) {
   return (
     <Link href="https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp" className="inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary-dark hover:-translate-y-px transition-all shadow-[0_0_16px_rgba(92,106,196,0.3)] hover:shadow-[0_0_24px_rgba(92,106,196,0.5)]" target="_blank" rel="noopener noreferrer">
-      Get the App on Shopify
+      {label}
     </Link>
   );
 }
-function DemoBtn({ href = "#" }: { href?: string }) {
+function DemoBtn({ href = "#", label }: { href?: string; label: string }) {
   const external = href.startsWith("http");
   return (
     <Link
@@ -18,7 +18,7 @@ function DemoBtn({ href = "#" }: { href?: string }) {
       className="inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-semibold border border-white/25 text-white/70 hover:border-primary hover:text-primary transition-all"
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
-      Live Demo
+      {label}
     </Link>
   );
 }
@@ -166,7 +166,8 @@ export default function Features({
                     </p>
                   )}
                   <div className="flex gap-3 flex-wrap">
-                    <ShopifyBtn /><DemoBtn href={f.demoUrl} />
+                    <ShopifyBtn label={content.getApp} />
+                    <DemoBtn href={f.demoUrl} label={content.liveDemoBtn} />
                   </div>
                 </div>
               </AnimateIn>

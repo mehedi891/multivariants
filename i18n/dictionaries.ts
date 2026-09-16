@@ -12,7 +12,7 @@ import { defaultLocale, type Locale } from "./config";
  */
 const loaders: Record<Locale, () => Promise<{ default: Dictionary }>> = {
   en: () => import("@/messages/en.json"),
-  "pt-br": () => import("@/messages/pt-br.json"),
+  pt: () => import("@/messages/pt.json"),
 };
 
 export type Dictionary = typeof import("@/messages/en.json");

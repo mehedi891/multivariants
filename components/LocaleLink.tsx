@@ -8,8 +8,8 @@ import { barePathOf, isLocale, localizePath, defaultLocale, type Locale } from "
  * Locale-aware internal link.
  *
  * Auto-prefixes an internal `href` with the locale of the current URL, so
- * navigation stays inside the active language (on `/pt-br/blog`, a card linking
- * to `/blog/x` resolves to `/pt-br/blog/x`). External, mailto and hash hrefs
+ * navigation stays inside the active language (on `/pt/blog`, a card linking
+ * to `/blog/x` resolves to `/pt/blog/x`). External, mailto and hash hrefs
  * pass through untouched. It is a client component so it can read the URL, but
  * it can be rendered from server components.
  */

@@ -7,7 +7,7 @@ import { barePathOf, localeMeta, locales, localizePath, type Locale } from "@/i1
 /**
  * Language switcher.
  *
- * Preserves the current page when switching locale (`/pt-br/pricing` →
+ * Preserves the current page when switching locale (`/pt/pricing` →
  * `/pricing`) by stripping the locale prefix and re-localizing the bare path.
  * Styled to match the navbar's "Resources" menu — hover/focus-within reveal, so
  * it needs no open/close state and stays keyboard accessible.

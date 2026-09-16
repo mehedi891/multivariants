@@ -184,7 +184,9 @@
         "mockProduct": "Case of Cans (qty)",
         "mockStep": "Step: 12 · Range: 12 – 60"
       }
-    }
+    },
+    "getApp": "Get the App on Shopify",
+    "liveDemoBtn": "Live Demo"
   },
   "testimonials": {
     "eyebrow": "Opinions That Matter",

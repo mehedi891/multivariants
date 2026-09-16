@@ -184,7 +184,9 @@
         "mockProduct": "Caixa de latas (qtd.)",
         "mockStep": "Passo: 12 · Faixa: 12 – 60"
       }
-    }
+    },
+    "getApp": "Instalar o app na Shopify",
+    "liveDemoBtn": "Demonstração ao vivo"
   },
   "testimonials": {
     "eyebrow": "Opiniões que importam",
