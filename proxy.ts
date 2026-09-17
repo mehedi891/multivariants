@@ -24,6 +24,20 @@ import { defaultLocale, isLocale } from "@/i18n/config";
 
 const INDEXABLE_HOSTS = new Set(["multivariants.com", "www.multivariants.com"]);
 
+/**
+ * Request header carrying the resolved locale. `not-found.tsx` receives no
+ * props — no route params — so this is how it knows which language to render
+ * the 404 in. Set on the request (not the response), so it never reaches the
+ * browser.
+ */
+export const LOCALE_HEADER = "x-mv-locale";
+
+function withLocale(req: NextRequest, locale: string): Headers {
+  const headers = new Headers(req.headers);
+  headers.set(LOCALE_HEADER, locale);
+  return headers;
+}
+
 // Files (anything with an extension) and non-localized route handlers must never
 // be locale-rewritten — they have no `[lang]` segment to rewrite into.
 const PUBLIC_FILE = /\.[^/]+$/;
@@ -75,13 +89,21 @@ export function proxy(req: NextRequest) {
   // A prefixed non-default locale already maps onto app/[lang] — serve directly.
   const firstSegment = pathname.split("/")[1] ?? "";
   if (isLocale(firstSegment) && firstSegment !== defaultLocale) {
-    return withSeoHeaders(NextResponse.next(), host, isDraftMode);
+    return withSeoHeaders(
+      NextResponse.next({ request: { headers: withLocale(req, firstSegment) } }),
+      host,
+      isDraftMode,
+    );
   }
 
   // Unprefixed path → rewrite to the default locale internally (URL unchanged).
   const url = req.nextUrl.clone();
   url.pathname = `/${defaultLocale}${pathname === "/" ? "" : pathname}`;
-  return withSeoHeaders(NextResponse.rewrite(url), host, isDraftMode);
+  return withSeoHeaders(
+    NextResponse.rewrite(url, { request: { headers: withLocale(req, defaultLocale) } }),
+    host,
+    isDraftMode,
+  );
 }
 
 export const config = {

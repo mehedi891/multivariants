@@ -41,7 +41,7 @@ export async function generateMetadata({
     : baseDesc;
   let ogTitle = prettyCategory
     ? meta.categoryOgTitle.replace("{category}", prettyCategory)
-    : "MultiVariants Blog";
+    : meta.ogTitle;
 
   // Distinct title/description per page so paginated pages aren't seen as
   // duplicates of page 1.

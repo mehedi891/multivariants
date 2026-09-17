@@ -52,6 +52,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: localeAlternates(`/academy/${slug}`, locale, CMS_LOCALES),
     openGraph: {
       type: "article",
+      // CMS content is English-only and canonicals to the English URL.
+      locale: "en_US",
       url,
       siteName: "MultiVariants",
       title,

@@ -25,10 +25,10 @@ export const defaultLocale: Locale = "en";
  */
 export const localeMeta: Record<
   Locale,
-  { name: string; hreflang: string; flag: string }
+  { name: string; hreflang: string; ogLocale: string; flag: string }
 > = {
-  en: { name: "English", hreflang: "en", flag: "🇺🇸" },
-  pt: { name: "Português (BR)", hreflang: "pt-BR", flag: "🇧🇷" },
+  en: { name: "English", hreflang: "en", ogLocale: "en_US", flag: "🇺🇸" },
+  pt: { name: "Português (BR)", hreflang: "pt-BR", ogLocale: "pt_BR", flag: "🇧🇷" },
 };
 
 export function isLocale(value: string): value is Locale {

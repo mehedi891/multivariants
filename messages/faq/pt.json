@@ -17,5 +17,37 @@
     "subtitle": "Nosso time terá prazer em ajudar com a configuração, fluxos personalizados e o que mais você precisar para vender mais rápido.",
     "primary": "Instalar o app na Shopify",
     "secondary": "Falar com o suporte"
-  }
+  },
+  "fallbackItems": [
+    {
+      "id": "what-is",
+      "question": "O que é o MultiVariants?",
+      "answer": "O MultiVariants é um app da Shopify que permite que seus clientes adicionem várias variantes de produto ao carrinho com um único clique. Foi criado para lojas B2B, de atacado e B2C de alto volume que precisam de pedidos em massa mais rápidos, restrições de pedido e regras de quantidade flexíveis."
+    },
+    {
+      "id": "bulk-add",
+      "question": "O que é a adição em massa ao carrinho?",
+      "answer": "Em vez de adicionar uma variante por vez, o cliente vê todas as variantes (cores, tamanhos e outras opções) em uma única tabela, define a quantidade de cada uma e adiciona tudo ao carrinho de uma vez. Isso reduz drasticamente os cliques e o abandono de carrinho."
+    },
+    {
+      "id": "mix-n-match",
+      "question": "O que é o Mix n Match?",
+      "answer": "O Mix n Match permite que o cliente monte a própria caixa ou kit com diferentes variantes, respeitando os limites mínimos ou máximos de pedido que você definir. É uma ótima forma de aumentar o ticket médio e oferecer uma experiência de compra mais personalizada."
+    },
+    {
+      "id": "restrictions",
+      "question": "Posso definir quantidades mínimas, máximas e incrementos de pedido?",
+      "answer": "Sim. Você pode exigir quantidades mínimas e máximas por produto ou por variante, definir mínimos por cor ou tamanho e configurar quantidades incrementais (por exemplo, aceitar pedidos apenas em múltiplos de 12, 24, 36)."
+    },
+    {
+      "id": "free-plan",
+      "question": "Existe plano gratuito ou teste grátis?",
+      "answer": "Sim. O MultiVariants oferece um plano gratuito para começar, além de 14 dias de teste grátis nos planos pagos, para você experimentar os recursos avançados sem risco."
+    },
+    {
+      "id": "support",
+      "question": "Vocês oferecem suporte?",
+      "answer": "Sim. Nosso time oferece suporte e integração de primeira, com configuração guiada, ajuda na personalização e resolução de problemas em tempo real por chamada e compartilhamento de tela. Você também pode escrever para support@multivariants.com."
+    }
+  ]
 }

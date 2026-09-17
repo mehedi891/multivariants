@@ -343,6 +343,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       : { index: true, follow: true },
     openGraph: {
       type: "article",
+      // CMS content is English-only and canonicals to the English URL.
+      locale: "en_US",
       url: canonicalUrl,
       siteName: "MultiVariants",
       title,

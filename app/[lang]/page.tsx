@@ -20,12 +20,13 @@ type PageProps = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { lang } = await params;
+  const locale = toLocale(lang);
+  const { meta } = await getHomeContent(locale);
   return pageMetadata({
-    title: "MultiVariants – One-Click Bulk Add to Cart for Shopify Variants",
-    description:
-      "Let Shopify customers bulk-add multiple product variants to cart in one click. Boost B2B/B2C orders with Mix n Match, restrictions & quantity rules. Free plan.",
+    title: meta.title,
+    description: meta.description,
     path: "/",
-    locale: toLocale(lang),
+    locale,
   });
 }
 

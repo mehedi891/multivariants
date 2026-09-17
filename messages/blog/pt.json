@@ -6,7 +6,8 @@
     "categoryDescription": "Artigos sobre {category} no blog do MultiVariants, com foco em pedidos em massa e venda de variantes na Shopify.",
     "categoryOgTitle": "Artigos sobre {category} – Blog do MultiVariants",
     "pageSuffix": "– Página {page}",
-    "pageDescSuffix": "(Página {page})"
+    "pageDescSuffix": "(Página {page})",
+    "ogTitle": "Blog do MultiVariants"
   },
   "badge": "Blog",
   "title": "Blog do MultiVariants",

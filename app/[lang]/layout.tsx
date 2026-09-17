@@ -6,7 +6,8 @@ import Analytics from "@/components/Analytics";
 import LiveChat from "@/components/LiveChat";
 import { LocaleProvider } from "@/components/LocaleProvider";
 import { getDictionary, type Dictionary } from "@/i18n/dictionaries";
-import { isLocale, locales, localeMeta, type Locale } from "@/i18n/config";
+import { isLocale, locales, localeMeta, localizePath, type Locale } from "@/i18n/config";
+import { ogImageFor, ogLocaleFields } from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,66 +15,63 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://multivariants.com"),
-  title: {
-    default: "MultiVariants – Bulk Add-to-Cart App for Shopify",
-    template: "%s | MultiVariants",
-  },
-  description:
-    "MultiVariants lets Shopify customers bulk-add multiple product variants to cart in one click. Boost B2B/B2C sales with Mix n Match, order restrictions & quantity rules. Free plan.",
-  keywords: [
-    "Shopify bulk order app",
-    "variants bulk add to cart",
-    "Shopify B2B app",
-    "multiple variants cart",
-    "bulk order Shopify",
-    "mix and match Shopify",
-    "wholesale Shopify app",
-    "quantity increment Shopify",
-    "MultiVariants",
-  ],
-  authors: [{ name: "eFoli", url: "https://multivariants.com" }],
-  creator: "eFoli",
-  publisher: "eFoli",
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://multivariants.com",
-    siteName: "MultiVariants",
-    title: "MultiVariants – One-Click Bulk Add to Cart for Shopify Variants",
-    description:
-      "Allow customers to bulk order multiple product variants in one click. Trusted by 13,000+ Shopify merchants across 120+ countries.",
-    images: [
-      {
-        url: "/og-image",
-        width: 1200,
-        height: 630,
-        alt: "MultiVariants – Bulk Order App for Shopify",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "MultiVariants – Bulk Order App for Shopify",
-    description:
-      "One-click bulk add to cart for Shopify product variants. 13,000+ merchants. Free plan available.",
-    images: ["/og-image"],
-    creator: "@multivariants",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+/**
+ * Site-wide defaults. Generated per locale rather than exported as a static
+ * object: every field here is inherited by pages that don't override it —
+ * `keywords` on all of them, and everything on the 404 page — so a static
+ * English object leaked English into every localized page.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const locale: Locale = isLocale(lang) ? lang : "en";
+  const { meta } = await getDictionary(locale);
+
+  return {
+    metadataBase: new URL("https://multivariants.com"),
+    title: {
+      default: meta.defaultTitle,
+      template: "%s | MultiVariants",
     },
-  },
-  // Favicon is supplied by the app/favicon.ico file convention (the brand mark).
-};
+    description: meta.description,
+    keywords: meta.keywords,
+    authors: [{ name: "eFoli", url: "https://multivariants.com" }],
+    creator: "eFoli",
+    publisher: "eFoli",
+    openGraph: {
+      type: "website",
+      url: `https://multivariants.com${localizePath("/", locale) === "/" ? "" : localizePath("/", locale)}`,
+      siteName: "MultiVariants",
+      title: meta.ogTitle,
+      description: meta.ogDescription,
+      ...ogLocaleFields(locale),
+      images: [
+        { url: ogImageFor(locale), width: 1200, height: 630, alt: meta.ogImageAlt },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.twitterTitle,
+      description: meta.twitterDescription,
+      images: [ogImageFor(locale)],
+      creator: "@multivariants",
+    },
+    // No explicit `index, follow`: that is the default, and declaring it made
+    // 404 pages ship it next to Next's injected `noindex` — two contradictory
+    // robots tags. Only the non-default Googlebot preview directives remain.
+    robots: {
+      googleBot: {
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    // Favicon is supplied by the app/favicon.ico file convention (the brand mark).
+  };
+}
 
 // Site-wide entity graph: a single Organization + WebSite that other pages'
 // JSON-LD (BlogPosting/Article publishers, breadcrumbs) can reference by @id,
@@ -120,16 +118,18 @@ function buildJsonLd(dict: Dictionary) {
       "@id": "https://multivariants.com/#website",
       url: "https://multivariants.com",
       name: "MultiVariants",
+      // Every language the site is published in, as hreflang codes.
+      inLanguage: locales.map((l) => localeMeta[l].hreflang),
       publisher: { "@id": "https://multivariants.com/#organization" },
     },
     {
       "@type": "SoftwareApplication",
-      name: "MultiVariants – Bulk Order App",
+      name: dict.schemaApp.name,
       applicationCategory: "BusinessApplication",
       operatingSystem: "Shopify",
       url: "https://multivariants.com",
-      description:
-        "Allow customers to bulk add multiple product variants to cart in one click on Shopify.",
+      description: dict.schemaApp.description,
+      inLanguage: dict.schemaApp.inLanguage,
       offers: {
         "@type": "AggregateOffer",
         priceCurrency: "USD",

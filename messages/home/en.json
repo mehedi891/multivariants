@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "title": "MultiVariants – One-Click Bulk Add to Cart for Shopify Variants",
+    "description": "Let Shopify customers bulk-add multiple product variants to cart in one click. Boost B2B/B2C orders with Mix n Match, restrictions & quantity rules. Free plan."
+  },
   "hero": {
     "aria": "Hero",
     "badge": "Trusted by 13,000+ Shopify merchants",

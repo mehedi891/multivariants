@@ -141,8 +141,15 @@ function normalizePayload(payload: unknown): PublicFaqResult {
   };
 }
 
+/**
+ * `fallbackItems` is shown whenever the CMS has no FAQs published (or is
+ * unreachable). It is static copy, so the caller passes it in already
+ * localized from messages/faq/<locale>.json — keeping it here in English meant
+ * the localized FAQ page, and its FAQPage structured data, rendered English.
+ */
 export async function getPublicFaqs(
-  category?: string
+  category?: string,
+  fallbackItems: PublicFaqItem[] = [],
 ): Promise<PublicFaqResult> {
   try {
     const errors: string[] = [];
@@ -174,7 +181,7 @@ export async function getPublicFaqs(
           normalized.categories.length === 0 &&
           normalized.uncategorized.length === 0;
         if (isEmpty && FAQ_API_FALLBACK_ENABLED && !category) {
-          return fallbackFaqs();
+          return fallbackFaqs(fallbackItems);
         }
 
         return normalized;
@@ -186,52 +193,14 @@ export async function getPublicFaqs(
     throw new Error(errors.join(" | "));
   } catch (error) {
     if (FAQ_API_FALLBACK_ENABLED) {
-      return { ...fallbackFaqs(), error: toErrorMessage(error) };
+      return { ...fallbackFaqs(fallbackItems), error: toErrorMessage(error) };
     }
     return { categories: [], uncategorized: [], total: 0, error: toErrorMessage(error) };
   }
 }
 
-// Local fallback so the page still renders if the CMS is unreachable.
-function fallbackFaqs(): PublicFaqResult {
-  const uncategorized: PublicFaqItem[] = [
-    {
-      id: "what-is",
-      question: "What is MultiVariants?",
-      answer:
-        "MultiVariants is a Shopify app that lets your customers add multiple product variants to the cart in a single click. It's built for B2B, wholesale, and high-volume B2C stores that need faster bulk ordering, order restrictions, and flexible quantity rules.",
-    },
-    {
-      id: "bulk-add",
-      question: "What is Bulk Add to Cart?",
-      answer:
-        "Instead of adding one variant at a time, shoppers see all variants (colors, sizes, and other options) in a single table, set quantities for each, then add everything to the cart at once. This dramatically reduces clicks and cart abandonment.",
-    },
-    {
-      id: "mix-n-match",
-      question: "What is Mix n Match?",
-      answer:
-        "Mix n Match lets customers build their own box or bundle from different variants while meeting minimum or maximum order limits you define. It's a great way to increase average order value and offer a more personalized shopping experience.",
-    },
-    {
-      id: "restrictions",
-      question: "Can I set order minimums, maximums, and quantity increments?",
-      answer:
-        "Yes. You can enforce minimum and maximum quantities per product or per variant, require minimums per color or size, and set incremental quantities (for example only allow orders in multiples of 12, 24, 36).",
-    },
-    {
-      id: "free-plan",
-      question: "Is there a free plan or a trial?",
-      answer:
-        "Yes. MultiVariants offers a free plan to get started, plus a 14-day free trial on paid plans so you can test the advanced features risk-free.",
-    },
-    {
-      id: "support",
-      question: "Do you offer support?",
-      answer:
-        "Yes. Our team offers strong support and onboarding, including guided setup, customization help, and real-time troubleshooting over live call and screen share. You can also email support@multivariants.com.",
-    },
-  ];
-
+// Local fallback so the page still renders if the CMS is empty or unreachable.
+function fallbackFaqs(uncategorized: PublicFaqItem[]): PublicFaqResult {
   return { categories: [], uncategorized, total: uncategorized.length };
 }
+

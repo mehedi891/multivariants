@@ -65,5 +65,44 @@
   },
   "schema": {
     "offerDescription": "Plano Starter gratuito; planos pagos a partir de US$ 12,99/mês com 14 dias de teste grátis"
+  },
+  "meta": {
+    "defaultTitle": "MultiVariants – App de compra em massa para Shopify",
+    "description": "O MultiVariants permite que clientes Shopify adicionem várias variantes de produto ao carrinho com um clique. Aumente as vendas B2B/B2C com Mix n Match, restrições de pedido e regras de quantidade. Plano gratuito.",
+    "ogTitle": "MultiVariants – Adição em massa de variantes ao carrinho com um clique na Shopify",
+    "ogDescription": "Permita que seus clientes peçam várias variantes de produto com um clique. Escolhido por mais de 13.000 lojistas Shopify em mais de 120 países.",
+    "twitterTitle": "MultiVariants – App de pedidos em massa para Shopify",
+    "twitterDescription": "Adição em massa ao carrinho com um clique para variantes de produto na Shopify. Mais de 13.000 lojistas. Plano gratuito disponível.",
+    "ogImageAlt": "MultiVariants – App de pedidos em massa para Shopify",
+    "keywords": [
+      "app de pedidos em massa Shopify",
+      "adicionar variantes em massa ao carrinho",
+      "app B2B Shopify",
+      "várias variantes no carrinho",
+      "pedido em massa Shopify",
+      "mix and match Shopify",
+      "app de atacado Shopify",
+      "quantidade incremental Shopify",
+      "MultiVariants"
+    ]
+  },
+  "schemaApp": {
+    "name": "MultiVariants – App de pedidos em massa",
+    "description": "Permita que seus clientes adicionem várias variantes de produto ao carrinho com um clique na Shopify.",
+    "inLanguage": "pt-BR"
+  },
+  "ogImage": {
+    "badge": "Escolhido por mais de 13.000 lojistas Shopify",
+    "titleLine1": "Pedidos em massa",
+    "titleLine2": "de variantes na Shopify",
+    "subtitle": "Adição em massa ao carrinho com um clique. Feito para B2B, atacado e lojas de alto volume."
+  },
+  "notFound": {
+    "eyebrow": "404",
+    "title": "Esta página sumiu",
+    "body": "A página que você procura não existe ou foi movida. Vamos voltar aos pedidos em massa.",
+    "home": "Voltar ao início",
+    "contact": "Falar com o suporte",
+    "popular": "Páginas populares"
   }
 }

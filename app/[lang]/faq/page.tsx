@@ -54,7 +54,7 @@ export default async function FaqPage({ params }: PageProps) {
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
   const content = await getFaqContent(locale);
-  const { categories, uncategorized } = await getPublicFaqs();
+  const { categories, uncategorized } = await getPublicFaqs(undefined, content.fallbackItems);
 
   const allItems: PublicFaqItem[] = [
     ...categories.flatMap((c) => c.faqs),

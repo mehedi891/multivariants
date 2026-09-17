@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { toLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 // Default social share card, served at a stable /og-image URL and referenced
 // explicitly from metadata (root layout + lib/seo helper). We use a plain route
@@ -8,7 +10,16 @@ import { ImageResponse } from "next/og";
 // posts, client stories) still override this with their own per-item image.
 export const contentType = "image/png";
 
-export function GET() {
+export async function GET(req: Request) {
+  const lang = new URL(req.url).searchParams.get("lang") ?? "";
+  const { ogImage: t } = await getDictionary(toLocale(lang));
+
+  // Translations run longer than the English they replace. Shrink the headline
+  // when its longest line would otherwise wrap and crowd the footer, so a copy
+  // edit can never break the card's layout.
+  const longest = Math.max(t.titleLine1.length, t.titleLine2.length);
+  const titleSize = longest > 24 ? 68 : longest > 21 ? 78 : 88;
+
   return new ImageResponse(
     (
       <div
@@ -35,23 +46,31 @@ export function GET() {
             color: "#c7b2ff",
           }}
         >
-          <span style={{ color: "#fbbf24", letterSpacing: 2 }}>★★★★★</span>
-          Trusted by 13,000+ Shopify merchants
+          {/* SVG stars: the image renderer's built-in font has no ★ glyph, so
+              the character rendered as five empty boxes. */}
+          <span style={{ display: "flex", gap: 4 }}>
+            {[0, 1, 2, 3, 4].map((i) => (
+              <svg key={i} width="28" height="28" viewBox="0 0 24 24" fill="#fbbf24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+              </svg>
+            ))}
+          </span>
+          {t.badge}
         </div>
 
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            fontSize: 88,
+            fontSize: titleSize,
             fontWeight: 800,
             lineHeight: 1.05,
             letterSpacing: "-0.03em",
             marginTop: 28,
           }}
         >
-          <span>Bulk Variant Ordering</span>
-          <span>for Shopify Stores</span>
+          <span>{t.titleLine1}</span>
+          <span>{t.titleLine2}</span>
         </div>
 
         <div
@@ -62,8 +81,7 @@ export function GET() {
             maxWidth: 940,
           }}
         >
-          One-click bulk add-to-cart for product variants. Built for B2B,
-          wholesale &amp; high-volume stores.
+          {t.subtitle}
         </div>
 
         <div

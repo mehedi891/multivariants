@@ -6,7 +6,8 @@
     "categoryDescription": "{category} articles from the MultiVariants blog on Shopify bulk ordering and variant selling.",
     "categoryOgTitle": "{category} Articles – MultiVariants Blog",
     "pageSuffix": "– Page {page}",
-    "pageDescSuffix": "(Page {page})"
+    "pageDescSuffix": "(Page {page})",
+    "ogTitle": "MultiVariants Blog"
   },
   "badge": "Journal",
   "title": "MultiVariants Blog",

@@ -11,8 +11,28 @@ const SITE_URL = "https://multivariants.com";
 
 // Generated share card served by app/og-image/route.tsx. Referenced explicitly
 // because a page that defines its own `openGraph` replaces the root's entirely,
-// so the image must be restated per page.
-const OG_IMAGE = "/og-image";
+// so the image must be restated per page. The card has text baked into it, so
+// non-default locales get their own rendering via `?lang=`.
+export function ogImageFor(locale: Locale = defaultLocale): string {
+  return locale === defaultLocale ? "/og-image" : `/og-image?lang=${locale}`;
+}
+
+/**
+ * OpenGraph locale tags. A page that sets its own `openGraph` drops the root
+ * layout's, so without this every page shipped with no og:locale at all.
+ * `alternateLocale` lists the other languages the page exists in.
+ */
+export function ogLocaleFields(
+  locale: Locale = defaultLocale,
+  availableLocales: readonly Locale[] = locales,
+) {
+  return {
+    locale: localeMeta[locale].ogLocale,
+    alternateLocale: availableLocales
+      .filter((l) => l !== locale)
+      .map((l) => localeMeta[l].ogLocale),
+  };
+}
 
 /**
  * hreflang alternates for a bare (locale-independent) path.
@@ -89,13 +109,14 @@ export function pageMetadata({
       siteName: "MultiVariants",
       title: socialTitle,
       description,
-      images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: socialTitle }],
+      ...ogLocaleFields(locale, availableLocales),
+      images: [{ url: ogImageFor(locale), width: 1200, height: 630, alt: socialTitle }],
     },
     twitter: {
       card: "summary_large_image",
       title: socialTitle,
       description,
-      images: [OG_IMAGE],
+      images: [ogImageFor(locale)],
       creator: "@multivariants",
     },
   };
