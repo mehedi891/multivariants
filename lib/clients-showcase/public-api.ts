@@ -27,9 +27,20 @@ type LocalClient = {
   readMoreUrl: string;
 };
 
+export type ClientTag = {
+  name: string;
+  slug: string;
+};
+
 export type PublicClient = {
   id: string;
+  /** Showcase headline — the H1 on the story page. */
   title: string;
+  /**
+   * The merchant's own brand name, edited separately from the headline. Used as
+   * the card title on the grid; can be null on older CMS entries.
+   */
+  clientName?: string;
   slug: string;
   excerpt: string;
   coverImage?: string;
@@ -45,6 +56,7 @@ export type PublicClient = {
   metaTitle?: string;
   metaDescription?: string;
   ogImage?: string;
+  tags: ClientTag[];
 };
 
 export type PublicClientsResult = {
@@ -154,6 +166,28 @@ function buildSingleClientUrlCandidates(slug: string) {
   return candidates;
 }
 
+// Tags share the site's tag pool with blog posts and arrive as
+// `[{ name, slug }]`. Entries without a usable name are dropped.
+function mapTags(value: unknown): ClientTag[] {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((entry) => {
+      if (typeof entry === "string") {
+        const name = entry.trim();
+        return name ? { name, slug: slugify(name) || name } : null;
+      }
+      if (typeof entry !== "object" || entry === null) return null;
+
+      const tag = entry as Record<string, unknown>;
+      const name = String(tag.name ?? tag.title ?? "").trim();
+      if (!name) return null;
+      const slug = String(tag.slug ?? "").trim() || slugify(name) || name;
+      return { name, slug };
+    })
+    .filter((tag): tag is ClientTag => tag !== null);
+}
+
 function mapApiClient(raw: Record<string, unknown>, fallbackSlug?: string): PublicClient {
   const title = String(raw.title ?? raw.businessName ?? "Client Story");
   const slug = String(raw.slug ?? "").trim() || fallbackSlug || slugify(title) || "client";
@@ -170,6 +204,8 @@ function mapApiClient(raw: Record<string, unknown>, fallbackSlug?: string): Publ
   return {
     id: String(raw.id ?? slug),
     title,
+    clientName:
+      String(raw.clientName ?? raw.businessName ?? "").trim() || undefined,
     slug,
     excerpt: String(raw.excerpt ?? raw.description ?? ""),
     coverImage: String(raw.coverImage ?? raw.image ?? "").trim() || undefined,
@@ -191,6 +227,7 @@ function mapApiClient(raw: Record<string, unknown>, fallbackSlug?: string): Publ
       ).trim() || undefined,
     ogImage:
       String(seoObject?.image ?? raw.ogImage ?? raw.og_image ?? "").trim() || undefined,
+    tags: mapTags(raw.tags),
   };
 }
 
@@ -241,6 +278,8 @@ function fallbackClients(page: number, limit: number): PublicClientsResult {
     return {
       id: item.id,
       title,
+      // The local fallback records the merchant's brand name, nothing else.
+      clientName: title,
       slug,
       excerpt: item.description,
       link: item.readMoreUrl || "#",
@@ -252,6 +291,7 @@ function fallbackClients(page: number, limit: number): PublicClientsResult {
       metaTitle: undefined,
       metaDescription: undefined,
       ogImage: undefined,
+      tags: [],
     } as PublicClient;
   });
 
@@ -353,6 +393,7 @@ function fallbackClientBySlug(slug: string): PublicClient | null {
   return {
     id: matched.id,
     title,
+    clientName: title,
     slug: resolvedSlug,
     excerpt: matched.description,
     coverImage: undefined,
@@ -368,6 +409,7 @@ function fallbackClientBySlug(slug: string): PublicClient | null {
     metaTitle: `${title} | MultiVariants Client Story`,
     metaDescription: matched.description,
     ogImage: undefined,
+    tags: [],
   };
 }
 

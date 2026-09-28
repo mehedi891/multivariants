@@ -10,6 +10,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import { getPublicClient, type PublicClient } from "@/lib/clients-showcase/public-api";
+import { buildContentWithToc, stripHtml } from "@/lib/content-html";
 
 // CMS content is authored in English only, so hreflang advertises just `en`
 // and a localized URL canonicals back to the English page.
@@ -68,10 +69,6 @@ function toIsoDate(value: string | undefined) {
   return parsed.toISOString();
 }
 
-function stripHtml(value: string) {
-  return value.replaceAll(/<[^>]*>/g, "");
-}
-
 function getMetaDescription(client: PublicClient) {
   if (client.metaDescription?.trim()) return client.metaDescription.trim();
   if (client.excerpt.trim()) return client.excerpt.trim();
@@ -79,13 +76,6 @@ function getMetaDescription(client: PublicClient) {
   if (!plain) return GENERIC_DESCRIPTION;
   if (plain.length <= 170) return plain;
   return `${plain.slice(0, 167).trimEnd()}...`;
-}
-
-function wrapPostTables(contentHtml: string) {
-  return contentHtml.replaceAll(
-    /<table\b[\s\S]*?<\/table>/gi,
-    (tableHtml) => `<div class="post-table-wrap">${tableHtml}</div>`
-  );
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -161,7 +151,12 @@ export default async function ClientDetailsPage({ params }: PageProps) {
 
   if (!client) notFound();
 
-  const contentHtml = wrapPostTables(client.contentHtml ?? "<p>No details available.</p>");
+  // Same treatment as a blog post: any table of contents baked into the CMS
+  // body is removed and rebuilt from the real headings, so every story gets the
+  // same sidebar whether or not the author wrote one.
+  const { contentWithAnchors, tocItems } = buildContentWithToc(
+    client.contentHtml ?? "<p>No details available.</p>"
+  );
   const canonicalUrl = toAbsoluteUrl(`/clients-showcase/${client.slug}`);
   const imageUrl = client.ogImage || client.coverImage;
   const clientJsonLd = {
@@ -261,7 +256,36 @@ export default async function ClientDetailsPage({ params }: PageProps) {
             <div className="absolute right-[-80px] bottom-10 h-[260px] w-[260px] rounded-full bg-accent/12 blur-[80px]" />
           </div>
 
-          <div className="relative z-10 mx-auto max-w-5xl">
+          <div className="relative z-10 mx-auto max-w-6xl lg:grid lg:grid-cols-[260px_minmax(0,1fr)] lg:items-start lg:gap-6">
+            <aside className="hidden lg:block lg:sticky lg:top-24 lg:h-fit lg:self-start">
+              <div className="rounded-2xl border border-white/[0.18] bg-white/[0.04] p-4 backdrop-blur-lg">
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-primary-light">
+                  Table of Contents
+                </p>
+
+                {tocItems.length > 0 ? (
+                  <nav aria-label="Table of contents" className="mt-3">
+                    <ul className="space-y-1.5">
+                      {tocItems.map((item) => (
+                        <li key={item.id}>
+                          <a
+                            href={`#${item.id}`}
+                            className={`block rounded-md px-2 py-1.5 text-sm text-white/65 transition-colors hover:text-white ${
+                              item.level === 3 ? "pl-5" : ""
+                            }`}
+                          >
+                            {item.text}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                ) : (
+                  <p className="mt-3 text-sm text-white/45">No sections available.</p>
+                )}
+              </div>
+            </aside>
+
             <article className="overflow-hidden rounded-[24px] border border-white/14 bg-gradient-to-b from-[#1a2441]/92 to-[#101933]/96 shadow-[0_18px_42px_rgba(0,0,0,0.34)]">
               {client.coverImage ? (
                 <div className="relative aspect-[16/8] border-b border-white/10">
@@ -301,10 +325,31 @@ export default async function ClientDetailsPage({ params }: PageProps) {
 
               <div className="p-6 sm:p-8">
                 <div
-                  className="blog-post-content space-y-5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px] [&_h2]:mt-7 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:leading-tight [&_h2]:text-white [&_h3]:mt-6 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-white [&_p]:text-white/[0.82] [&_ul]:ml-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_li]:text-white/[0.82] [&_a]:font-medium [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_a:hover]:decoration-accent [&_figure]:my-6 [&_figure]:overflow-hidden [&_figure]:rounded-xl [&_figure]:border [&_figure]:border-white/14 [&_figure]:bg-white/[0.03] [&_figure]:p-2 [&_figure_img]:h-auto [&_figure_img]:w-full [&_figure_img]:rounded-lg [&_:not(figure)>img]:inline-block [&_:not(figure)>img]:h-[1em] [&_:not(figure)>img]:w-auto [&_:not(figure)>img]:align-[-0.1em] [&_figcaption]:px-1 [&_figcaption]:pt-2 [&_figcaption]:text-xs [&_figcaption]:text-white/[0.45]"
-                  dangerouslySetInnerHTML={{ __html: contentHtml }}
+                  className="blog-post-content space-y-5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px] [&_h2]:mt-7 [&_h2]:scroll-mt-24 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:leading-tight [&_h2]:text-white [&_h3]:mt-6 [&_h3]:scroll-mt-24 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-white [&_p]:text-white/[0.82] [&_ul]:ml-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_li]:text-white/[0.82] [&_a]:font-medium [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_a:hover]:decoration-accent [&_figure]:my-6 [&_figure]:overflow-hidden [&_figure]:rounded-xl [&_figure]:border [&_figure]:border-white/14 [&_figure]:bg-white/[0.03] [&_figure]:p-2 [&_figure_img]:h-auto [&_figure_img]:w-full [&_figure_img]:rounded-lg [&_:not(figure)>img]:inline-block [&_:not(figure)>img]:h-[1em] [&_:not(figure)>img]:w-auto [&_:not(figure)>img]:align-[-0.1em] [&_figcaption]:px-1 [&_figcaption]:pt-2 [&_figcaption]:text-xs [&_figcaption]:text-white/[0.45]"
+                  dangerouslySetInnerHTML={{ __html: contentWithAnchors }}
                 />
               </div>
+
+              {client.tags.length > 0 && (
+                <section
+                  aria-label="Tags"
+                  className="border-t border-white/12 px-6 py-5 sm:px-8"
+                >
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary-light">
+                    Tags
+                  </p>
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {client.tags.map((tag) => (
+                      <li
+                        key={tag.slug}
+                        className="rounded-full border border-white/20 bg-white/[0.06] px-3 py-1 text-xs font-medium text-white/[0.75]"
+                      >
+                        {tag.name}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
 
               <section
                 aria-label="Author details"

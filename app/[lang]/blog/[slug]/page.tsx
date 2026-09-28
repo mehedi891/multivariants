@@ -17,6 +17,11 @@ import {
   getPublicBlogPosts,
   type PublicBlogPost,
 } from "@/lib/blog/public-api";
+import {
+  buildContentWithToc,
+  decodeHtmlEntities,
+  stripHtml,
+} from "@/lib/content-html";
 
 // CMS content is authored in English only, so hreflang advertises just `en`
 // and a localized URL canonicals back to the English page.
@@ -27,12 +32,6 @@ type PageProps = {
     lang: string;
     slug: string;
   }>;
-};
-
-type TocItem = {
-  id: string;
-  text: string;
-  level: 2 | 3;
 };
 
 type SocialProfile = {
@@ -89,40 +88,6 @@ function getAuthorBio(name: string, bio?: string) {
   return `${name} shares practical strategies and implementation guidance to help merchants grow with MultiVariants.`;
 }
 
-function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replaceAll(/[^a-z0-9\s-]/g, "")
-    .replaceAll(/\s+/g, "-")
-    .replaceAll(/-+/g, "-");
-}
-
-// Decode HTML entities so extracted text (TOC, meta description, summaries)
-// reads as real characters instead of raw "&#8217;" etc.
-function decodeHtmlEntities(value: string) {
-  return value
-    .replaceAll(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
-    .replaceAll(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
-    .replaceAll(/&nbsp;/g, " ")
-    .replaceAll(/&rsquo;/g, "’")
-    .replaceAll(/&lsquo;/g, "‘")
-    .replaceAll(/&rdquo;/g, "”")
-    .replaceAll(/&ldquo;/g, "“")
-    .replaceAll(/&hellip;/g, "…")
-    .replaceAll(/&mdash;/g, "—")
-    .replaceAll(/&ndash;/g, "–")
-    .replaceAll(/&quot;/g, '"')
-    .replaceAll(/&apos;/g, "'")
-    .replaceAll(/&lt;/g, "<")
-    .replaceAll(/&gt;/g, ">")
-    .replaceAll(/&amp;/g, "&");
-}
-
-function stripHtml(value: string) {
-  return decodeHtmlEntities(value.replaceAll(/<[^>]*>/g, ""));
-}
-
 // Strip WordPress byline chrome ("Written by … Reviewed by … Published … Share in X")
 // and a trailing "[...]" that the migration dumped into some excerpt fields, so only
 // the real summary text remains.
@@ -163,20 +128,6 @@ function resolvePostSeo(post: PublicBlogPost) {
   return { title, description };
 }
 
-// WordPress-imported posts often bake their own "Table of Contents" (a heading
-// plus a list of anchor links) into the body. That duplicates the auto-generated
-// sidebar TOC, so strip it here — the sidebar TOC is regenerated from the real
-// section headings below. If a post has no inline TOC, this is a no-op.
-function stripInlineToc(html: string): string {
-  return html.replace(
-    /<(h[1-4])\b[^>]*>([\s\S]*?)<\/\1>\s*(?:<(ul|ol)\b[^>]*>[\s\S]*?<\/\3>)?/gi,
-    (match, _tag, inner) => {
-      const text = stripHtml(inner).replaceAll(/\s+/g, " ").trim().toLowerCase();
-      return text === "table of contents" || text === "contents" ? "" : match;
-    }
-  );
-}
-
 type FaqEntry = { question: string; answer: string };
 
 // The CMS ships FAQ blocks inside the post body as
@@ -203,43 +154,6 @@ function extractFaqEntries(html: string): FaqEntry[] {
   }
 
   return entries;
-}
-
-function buildContentWithToc(contentHtml: string): {
-  contentWithAnchors: string;
-  tocItems: TocItem[];
-} {
-  const usedIds = new Map<string, number>();
-  const tocItems: TocItem[] = [];
-  const contentWithTableWrap = stripInlineToc(contentHtml).replaceAll(
-    /<table\b[\s\S]*?<\/table>/gi,
-    (tableHtml) => `<div class="post-table-wrap">${tableHtml}</div>`
-  );
-
-  const contentWithAnchors = contentWithTableWrap.replaceAll(
-    /<(h[23])([^>]*)>([\s\S]*?)<\/\1>/gi,
-    (match, tag: string, attrs: string, inner: string) => {
-      const level = tag.toLowerCase() === "h2" ? 2 : 3;
-      const text = stripHtml(inner).replaceAll(/\s+/g, " ").trim();
-      if (!text) return match;
-
-      const existingIdMatch = attrs.match(/\sid=["']([^"']+)["']/i);
-      const baseId = existingIdMatch?.[1] ?? (slugify(text) || "section");
-      const seen = usedIds.get(baseId) ?? 0;
-      usedIds.set(baseId, seen + 1);
-      const id = seen === 0 ? baseId : `${baseId}-${seen + 1}`;
-
-      tocItems.push({ id, text, level });
-
-      const nextAttrs = existingIdMatch
-        ? attrs.replace(existingIdMatch[0], ` id="${id}"`)
-        : `${attrs} id="${id}"`;
-
-      return `<${tag}${nextAttrs}>${inner}</${tag}>`;
-    }
-  );
-
-  return { contentWithAnchors, tocItems };
 }
 
 function SocialIcon({ id }: { id: SocialProfile["id"] }) {

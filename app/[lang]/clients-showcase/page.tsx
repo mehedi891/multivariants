@@ -143,7 +143,12 @@ export default async function ClientsShowcasePage({
               />
             ) : (
               <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-                {clientItems.map((client, index) => (
+                {clientItems.map((client, index) => {
+                  // The grid is a list of merchants, so the card is titled with
+                  // the brand name; the showcase headline (`title`) is the H1 on
+                  // the story page. Older CMS entries have no `clientName`.
+                  const cardTitle = client.clientName || client.title;
+                  return (
                   <li key={client.id}>
                     <AnimateIn direction="up" delay={(index % 3) * 70}>
                       <article className="group relative h-full overflow-hidden rounded-2xl border border-white/18 bg-gradient-to-b from-white/[0.12] to-white/[0.04] p-4 shadow-[0_14px_30px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_18px_38px_rgba(28,118,188,0.28)] sm:p-5">
@@ -153,7 +158,7 @@ export default async function ClientsShowcasePage({
                             <div className="relative inline-flex h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-accent/35 bg-accent/10 shadow-[0_0_18px_rgba(71,193,191,0.22)]">
                               <Image
                                 src={client.logoUrl}
-                                alt={client.title}
+                                alt={cardTitle}
                                 fill
                                 unoptimized={isRemoteImage(client.logoUrl)}
                                 sizes="44px"
@@ -162,15 +167,27 @@ export default async function ClientsShowcasePage({
                             </div>
                           ) : (
                             <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-accent/35 bg-accent/15 text-[12px] font-black tracking-wide text-accent shadow-[0_0_18px_rgba(71,193,191,0.22)]">
-                              {initials(client.title)}
+                              {initials(cardTitle)}
                             </span>
                           )}
                           <h2 className="mt-3 break-words text-lg font-black leading-tight text-white sm:text-xl">
-                            {client.title}
+                            {cardTitle}
                           </h2>
                           <p className="mt-2 text-sm leading-relaxed text-white/65 sm:text-[15px] line-clamp-3">
                             {client.excerpt.replace(/\s*\[(?:\.\.\.|…)\]\s*$/u, "")}
                           </p>
+                          {client.tags.length > 0 && (
+                            <ul className="mt-3 flex flex-wrap gap-1.5">
+                              {client.tags.slice(0, 3).map((tag) => (
+                                <li
+                                  key={tag.slug}
+                                  className="rounded-full border border-white/18 bg-white/[0.07] px-2.5 py-0.5 text-[11px] font-medium text-white/70"
+                                >
+                                  {tag.name}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                           <div className="mt-auto pt-4">
                             <Link
                               href={`/clients-showcase/${client.slug}`}
@@ -185,7 +202,8 @@ export default async function ClientsShowcasePage({
                       </article>
                     </AnimateIn>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             )}
 
