@@ -16,9 +16,13 @@ function renderOffer(template: string) {
     .replace(" {code}", " {code}")
     .split(/(\{discount\}|\{code\})/)
     .map((part, i) =>
-      part === "{discount}" || part === "{code}" ? (
-        <span key={i} className="text-amber-200">
-          {part === "{discount}" ? promo.discount : promo.code}
+      part === "{discount}" ? (
+        <span key={i} className="text-yellow-200">
+          {promo.discount}
+        </span>
+      ) : part === "{code}" ? (
+        <span key={i} className="rounded-md bg-white px-1.5 py-px text-pink-700 shadow-sm">
+          {promo.code}
         </span>
       ) : (
         part
@@ -37,7 +41,15 @@ export default function PromoBanner({
   return (
     <aside
       aria-label={copy.ariaLabel}
-      style={{ background: "linear-gradient(90deg, #1f4f8f 0%, #285f80 50%, #2a6e60 100%)" }}
+      // A warm sale gradient that stands apart from the navy navbar below,
+      // drifting slowly (mirrored stops loop seamlessly). Every stop keeps
+      // white text above 5:1 contrast.
+      className="motion-safe:animate-gradient-shift"
+      style={{
+        backgroundImage:
+          "linear-gradient(90deg, #6d28d9 0%, #be185d 25%, #c2410c 50%, #be185d 75%, #6d28d9 100%)",
+        backgroundSize: "200% 100%",
+      }}
     >
       <a
         href={promo.href}
