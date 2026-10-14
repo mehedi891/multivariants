@@ -26,6 +26,13 @@
     "viewAll": "Ver tudo",
     "readMore": "Leia mais"
   },
+  "promo": {
+    "ariaLabel": "Oferta de Black Friday e Cyber Monday",
+    "title": "Oferta Black Friday",
+    "offer": "Economize {discount} por 12 meses com o código {code}",
+    "endsOn": "Só até {date}",
+    "cta": "Garanta já"
+  },
   "common": {
     "skipToContent": "Pular para o conteúdo",
     "homeAriaLabel": "Página inicial da MultiVariants",

@@ -26,6 +26,13 @@
     "viewAll": "View All",
     "readMore": "Read More"
   },
+  "promo": {
+    "ariaLabel": "Black Friday Cyber Monday offer",
+    "title": "Black Friday Deal",
+    "offer": "Save {discount} for 12 months with code {code}",
+    "endsOn": "Only until {date}",
+    "cta": "Claim now"
+  },
   "common": {
     "skipToContent": "Skip to content",
     "homeAriaLabel": "MultiVariants home",
