@@ -46,6 +46,10 @@ const NON_LOCALIZED_ROUTES = new Set([
   "/llms.txt",
   "/robots.txt",
   "/sitemap.xml",
+  // Standalone English-only landing page with its own root layout
+  // (app/whats-new). /pt/whats-new has no translation and falls through to the
+  // [lang] catch-all 404.
+  "/whats-new",
 ]);
 
 function withSeoHeaders(

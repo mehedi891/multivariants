@@ -51,6 +51,7 @@ MultiVariants has a **5.0-star rating from 355 reviews** on the Shopify App Stor
 ## Key pages
 
 - [Home](${SITE}/)
+- [What's New](${SITE}/whats-new): order restrictions, tiered discounts, product options and bulk order pages in one app, plus the five-step guided onboarding
 - [Features](${SITE}/features)
 - [Pricing](${SITE}/pricing)
 - [FAQ](${SITE}/faq)

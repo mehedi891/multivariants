@@ -54,6 +54,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: r.priority,
       })),
     ),
+    // Standalone landing page (app/whats-new) — English only, no locale variants.
+    {
+      url: `${SITE_URL}/whats-new`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
     ...docs.map((docSlug) => ({
       url: `${SITE_URL}/academy/${docSlug}`,
       lastModified: new Date(),
