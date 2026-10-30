@@ -1,4 +1,5 @@
 import localChangelogs from "@/lib/changelog/changelog.json";
+import { stripHtml } from "@/lib/content-html";
 
 function normalizeEnvUrl(value: string | undefined) {
   const trimmed = value?.trim();
@@ -113,10 +114,6 @@ function slugify(value: string) {
     .replaceAll(/[^a-z0-9\s-]/g, "")
     .replaceAll(/\s+/g, "-")
     .replaceAll(/-+/g, "-");
-}
-
-function stripHtml(value: string) {
-  return value.replaceAll(/<[^>]*>/g, "");
 }
 
 function summarizeContent(html: string) {

@@ -33,8 +33,51 @@ export function decodeHtmlEntities(value: string) {
     .replaceAll(/&amp;/g, "&");
 }
 
+// Script/style bodies are code, not text — drop them with their tags so CSS or
+// JS from a custom HTML block never leaks into a meta description or excerpt.
 export function stripHtml(value: string) {
-  return decodeHtmlEntities(value.replaceAll(/<[^>]*>/g, ""));
+  return decodeHtmlEntities(
+    value
+      .replaceAll(/<(script|style|template|noscript)\b[\s\S]*?<\/\1\s*>/gi, "")
+      .replaceAll(/<!--[\s\S]*?-->/g, "")
+      .replaceAll(/<[^>]*>/g, "")
+  );
+}
+
+const HTML_BLOCK_OPEN = /<div\b[^>]*\sdata-html-block(?=[\s=>/])[^>]*>/gi;
+// Tokens that matter when walking to a block's closing </div>. Comments,
+// scripts and styles are matched whole so a "<div" inside them isn't counted.
+const DIV_TOKEN = /<!--[\s\S]*?-->|<(script|style)\b[\s\S]*?<\/\1\s*>|<(\/?)div\b[^>]*>/gi;
+
+/**
+ * Apply `transform` to the article HTML outside CMS custom HTML blocks
+ * (`<div data-html-block>…</div>`). Those blocks are author-written markup and
+ * pass through byte-for-byte: no table wrapping, heading ids or TOC stripping.
+ */
+function transformOutsideHtmlBlocks(html: string, transform: (segment: string) => string) {
+  let out = "";
+  let cursor = 0;
+  HTML_BLOCK_OPEN.lastIndex = 0;
+
+  for (let open = HTML_BLOCK_OPEN.exec(html); open; open = HTML_BLOCK_OPEN.exec(html)) {
+    let depth = 1;
+    let end = html.length; // Unclosed block: keep the rest untouched.
+    DIV_TOKEN.lastIndex = open.index + open[0].length;
+    for (let token = DIV_TOKEN.exec(html); token; token = DIV_TOKEN.exec(html)) {
+      if (token[1] || token[0].startsWith("<!--")) continue;
+      depth += token[2] === "/" ? -1 : 1;
+      if (depth === 0) {
+        end = token.index + token[0].length;
+        break;
+      }
+    }
+
+    out += transform(html.slice(cursor, open.index)) + html.slice(open.index, end);
+    cursor = end;
+    HTML_BLOCK_OPEN.lastIndex = end;
+  }
+
+  return out + transform(html.slice(cursor));
 }
 
 function slugify(value: string) {
@@ -63,6 +106,7 @@ function stripInlineToc(html: string): string {
 /**
  * Give every h2/h3 a stable id and collect them into a table of contents.
  * Tables are wrapped so wide ones scroll instead of blowing out the layout.
+ * CMS custom HTML blocks are left exactly as authored.
  */
 export function buildContentWithToc(contentHtml: string): {
   contentWithAnchors: string;
@@ -70,32 +114,35 @@ export function buildContentWithToc(contentHtml: string): {
 } {
   const usedIds = new Map<string, number>();
   const tocItems: TocItem[] = [];
-  const contentWithTableWrap = stripInlineToc(contentHtml).replaceAll(
-    /<table\b[\s\S]*?<\/table>/gi,
-    (tableHtml) => `<div class="post-table-wrap">${tableHtml}</div>`
-  );
 
-  const contentWithAnchors = contentWithTableWrap.replaceAll(
-    /<(h[23])([^>]*)>([\s\S]*?)<\/\1>/gi,
-    (match, tag: string, attrs: string, inner: string) => {
-      const level = tag.toLowerCase() === "h2" ? 2 : 3;
-      const text = stripHtml(inner).replaceAll(/\s+/g, " ").trim();
-      if (!text) return match;
+  const contentWithAnchors = transformOutsideHtmlBlocks(contentHtml, (segment) =>
+    stripInlineToc(segment)
+      .replaceAll(
+        /<table\b[\s\S]*?<\/table>/gi,
+        (tableHtml) => `<div class="post-table-wrap">${tableHtml}</div>`
+      )
+      .replaceAll(
+        /<(h[23])([^>]*)>([\s\S]*?)<\/\1>/gi,
+        (match, tag: string, attrs: string, inner: string) => {
+          const level = tag.toLowerCase() === "h2" ? 2 : 3;
+          const text = stripHtml(inner).replaceAll(/\s+/g, " ").trim();
+          if (!text) return match;
 
-      const existingIdMatch = attrs.match(/\sid=["']([^"']+)["']/i);
-      const baseId = existingIdMatch?.[1] ?? (slugify(text) || "section");
-      const seen = usedIds.get(baseId) ?? 0;
-      usedIds.set(baseId, seen + 1);
-      const id = seen === 0 ? baseId : `${baseId}-${seen + 1}`;
+          const existingIdMatch = attrs.match(/\sid=["']([^"']+)["']/i);
+          const baseId = existingIdMatch?.[1] ?? (slugify(text) || "section");
+          const seen = usedIds.get(baseId) ?? 0;
+          usedIds.set(baseId, seen + 1);
+          const id = seen === 0 ? baseId : `${baseId}-${seen + 1}`;
 
-      tocItems.push({ id, text, level });
+          tocItems.push({ id, text, level });
 
-      const nextAttrs = existingIdMatch
-        ? attrs.replace(existingIdMatch[0], ` id="${id}"`)
-        : `${attrs} id="${id}"`;
+          const nextAttrs = existingIdMatch
+            ? attrs.replace(existingIdMatch[0], ` id="${id}"`)
+            : `${attrs} id="${id}"`;
 
-      return `<${tag}${nextAttrs}>${inner}</${tag}>`;
-    }
+          return `<${tag}${nextAttrs}>${inner}</${tag}>`;
+        }
+      )
   );
 
   return { contentWithAnchors, tocItems };

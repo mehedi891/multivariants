@@ -22,6 +22,7 @@ import {
   decodeHtmlEntities,
   stripHtml,
 } from "@/lib/content-html";
+import CmsHtml from "@/components/CmsHtml";
 
 // CMS content is authored in English only, so hreflang advertises just `en`
 // and a localized URL canonicals back to the English page.
@@ -539,9 +540,9 @@ export default async function BlogPostPage({ params }: PageProps) {
               </section>
 
               <div className="p-6 sm:p-8">
-                <div
-                  className="blog-post-content space-y-5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px] [&_h2]:mt-7 [&_h2]:scroll-mt-24 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:leading-tight [&_h2]:text-white [&_h3]:mt-6 [&_h3]:scroll-mt-24 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-white [&_p]:text-white/[0.82] [&_ul]:ml-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_li]:text-white/[0.82] [&_a]:font-medium [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_a:hover]:decoration-accent [&_figure]:my-6 [&_figure]:overflow-hidden [&_figure]:rounded-xl [&_figure]:border [&_figure]:border-white/14 [&_figure]:bg-white/[0.03] [&_figure]:p-2 [&_figure_img]:h-auto [&_figure_img]:w-full [&_figure_img]:rounded-lg [&_:not(figure)>img]:inline-block [&_:not(figure)>img]:h-[1em] [&_:not(figure)>img]:w-auto [&_:not(figure)>img]:align-[-0.1em] [&_figcaption]:px-1 [&_figcaption]:pt-2 [&_figcaption]:text-xs [&_figcaption]:text-white/[0.45]"
-                  dangerouslySetInnerHTML={{ __html: contentWithAnchors }}
+                <CmsHtml
+                  className="blog-post-content space-y-5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px] cms-[h2]:mt-7 cms-[h2]:scroll-mt-24 cms-[h2]:text-2xl cms-[h2]:font-black cms-[h2]:leading-tight cms-[h2]:text-white cms-[h3]:mt-6 cms-[h3]:scroll-mt-24 cms-[h3]:text-xl cms-[h3]:font-bold cms-[h3]:text-white cms-[p]:text-white/[0.82] cms-[ul]:ml-4 cms-[ul]:list-disc cms-[ul]:space-y-2 cms-[li]:text-white/[0.82] cms-[a]:font-medium cms-[a]:text-primary-light cms-[a]:underline cms-[a]:underline-offset-2 cms-[a:hover]:text-accent cms-[a:hover]:decoration-accent cms-[figure]:my-6 cms-[figure]:overflow-hidden cms-[figure]:rounded-xl cms-[figure]:border cms-[figure]:border-white/14 cms-[figure]:bg-white/[0.03] cms-[figure]:p-2 cms-[figure_img]:h-auto cms-[figure_img]:w-full cms-[figure_img]:rounded-lg cms-[:not(figure)>img]:inline-block cms-[:not(figure)>img]:h-[1em] cms-[:not(figure)>img]:w-auto cms-[:not(figure)>img]:align-[-0.1em] cms-[figcaption]:px-1 cms-[figcaption]:pt-2 cms-[figcaption]:text-xs cms-[figcaption]:text-white/[0.45]"
+                  html={contentWithAnchors}
                 />
               </div>
 

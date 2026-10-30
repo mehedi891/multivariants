@@ -14,6 +14,7 @@ import {
   getPublicAcademyCategories,
   getPublicAcademyDoc,
 } from "@/lib/academy/public-api";
+import CmsHtml from "@/components/CmsHtml";
 
 // CMS content is authored in English only, so hreflang advertises just `en`
 // and a localized URL canonicals back to the English page.
@@ -198,9 +199,9 @@ export default async function AcademyDocPage({ params }: PageProps) {
             <AnimateIn direction="left" delay={80} className="order-first lg:order-last">
               <article className="rounded-2xl border border-white/[0.07] bg-[#0e1730]/85 p-5 shadow-[0_18px_42px_rgba(0,0,0,0.34)] backdrop-blur-xl sm:p-8 lg:p-10">
                 {hasHtml ? (
-                  <div
-                    className="max-w-3xl space-y-5 text-[15px] leading-[1.78] text-white/80 sm:text-base [&_h2]:mt-9 [&_h2]:scroll-mt-24 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:leading-snug [&_h2]:text-white [&_h3]:mt-7 [&_h3]:scroll-mt-24 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-white [&_p]:text-white/80 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:space-y-2 [&_li]:text-white/80 [&_strong]:font-semibold [&_strong]:text-white [&_a]:font-medium [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_a:hover]:decoration-accent [&_img]:my-6 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-xl [&_img]:border [&_img]:border-white/[0.08] [&_img]:shadow-[0_14px_30px_rgba(0,0,0,0.35)] [&_blockquote]:border-l-2 [&_blockquote]:border-primary/50 [&_blockquote]:pl-4 [&_blockquote]:text-white/70"
-                    dangerouslySetInnerHTML={{ __html: contentHtml }}
+                  <CmsHtml
+                    className="max-w-3xl space-y-5 text-[15px] leading-[1.78] text-white/80 sm:text-base cms-[h2]:mt-9 cms-[h2]:scroll-mt-24 cms-[h2]:text-2xl cms-[h2]:font-black cms-[h2]:leading-snug cms-[h2]:text-white cms-[h3]:mt-7 cms-[h3]:scroll-mt-24 cms-[h3]:text-xl cms-[h3]:font-bold cms-[h3]:text-white cms-[p]:text-white/80 cms-[ul]:ml-5 cms-[ul]:list-disc cms-[ul]:space-y-2 cms-[ol]:ml-5 cms-[ol]:list-decimal cms-[ol]:space-y-2 cms-[li]:text-white/80 cms-[strong]:font-semibold cms-[strong]:text-white cms-[a]:font-medium cms-[a]:text-primary-light cms-[a]:underline cms-[a]:underline-offset-2 cms-[a:hover]:text-accent cms-[a:hover]:decoration-accent cms-[img]:my-6 cms-[img]:h-auto cms-[img]:max-w-full cms-[img]:rounded-xl cms-[img]:border cms-[img]:border-white/[0.08] cms-[img]:shadow-[0_14px_30px_rgba(0,0,0,0.35)] cms-[blockquote]:border-l-2 cms-[blockquote]:border-primary/50 cms-[blockquote]:pl-4 cms-[blockquote]:text-white/70"
+                    html={contentHtml}
                   />
                 ) : (
                   <div className="space-y-8">

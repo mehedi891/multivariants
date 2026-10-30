@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import ApiEmptyState from "@/components/ApiEmptyState";
 import { getPublicChangelogs } from "@/lib/changelog/public-api";
+import CmsHtml from "@/components/CmsHtml";
 
 export async function generateMetadata({
   params: routeParams,
@@ -198,9 +199,9 @@ export default async function ChangelogPage({
                           </h2>
 
                           {entry.contentHtml ? (
-                            <div
-                              className="mt-3 space-y-5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px] [&_p]:text-white/[0.82] [&_ul]:ml-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_li]:text-white/[0.86] [&_a]:font-medium [&_a]:text-primary-light [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-accent [&_a:hover]:decoration-accent [&_img]:my-4 [&_img]:h-auto [&_img]:w-full [&_img]:max-w-full [&_img]:rounded-xl [&_img]:border [&_img]:border-white/16 [&_img]:bg-white/[0.03] [&_img]:object-contain"
-                              dangerouslySetInnerHTML={{ __html: entry.contentHtml }}
+                            <CmsHtml
+                              className="mt-3 space-y-5 text-sm leading-relaxed text-white/[0.82] sm:text-[15px] cms-[p]:text-white/[0.82] cms-[ul]:ml-4 cms-[ul]:list-disc cms-[ul]:space-y-2 cms-[li]:text-white/[0.86] cms-[a]:font-medium cms-[a]:text-primary-light cms-[a]:underline cms-[a]:underline-offset-2 cms-[a:hover]:text-accent cms-[a:hover]:decoration-accent cms-[img]:my-4 cms-[img]:h-auto cms-[img]:w-full cms-[img]:max-w-full cms-[img]:rounded-xl cms-[img]:border cms-[img]:border-white/16 cms-[img]:bg-white/[0.03] cms-[img]:object-contain"
+                              html={entry.contentHtml}
                             />
                           ) : (
                             <p className="mt-3 text-sm leading-relaxed text-white/80 sm:text-[15px]">

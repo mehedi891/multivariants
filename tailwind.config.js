@@ -84,5 +84,16 @@ module.exports = {
       backgroundSize: { '200%': '200%' },
     },
   },
-  plugins: [],
+  plugins: [
+    // `cms-[img]:h-auto` styles <img> inside CMS article HTML, like `[&_img]:`,
+    // but never inside a CMS custom HTML block (`<div data-html-block>`) — that
+    // markup keeps its own styling. `:where()` adds no specificity, so the
+    // cascade against the globals.css CMS rules is unchanged. As in `[&_…]`,
+    // `_` stands for a space: `cms-[figure_img]` targets `figure img`.
+    ({ matchVariant }) => {
+      matchVariant('cms', (selector) =>
+        `& ${selector.replaceAll('_', ' ')}:where(:not([data-html-block] *))`
+      )
+    },
+  ],
 }

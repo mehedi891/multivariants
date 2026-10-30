@@ -1,4 +1,5 @@
 import type { AcademyCategory, AcademyDoc, AcademySection } from "@/lib/academy/docs-data";
+import { stripHtml as stripHtmlTags } from "@/lib/content-html";
 import {
   getAcademyCategories,
   getAcademyDocBySlug,
@@ -71,7 +72,7 @@ function formatUpdatedDate(value: unknown) {
 }
 
 function stripHtml(value: string) {
-  return value.replaceAll(/<[^>]*>/g, "").replaceAll(/\s+/g, " ").trim();
+  return stripHtmlTags(value).replaceAll(/\s+/g, " ").trim();
 }
 
 function sectionsToHtml(sections: AcademySection[]) {
