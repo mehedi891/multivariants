@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { BfcmNeonSign, BfcmPill } from "./BfcmOffer";
 import { EXTERNAL, INSTALL_URL } from "./links";
 
 // Feature icons, shared by the "4 separate apps" cards and the MultiVariants panel.
@@ -75,16 +76,31 @@ function Check({ size, stroke, width }: { size: number; stroke: string; width: s
   );
 }
 
-/** Hero: headline + CTAs, and the animated "4 separate apps → 1 app" diagram. */
-export default function Hero() {
+const newBadge = (
+  <a className="hero-badge" href="#bulk" style={{ display: "inline-flex", alignItems: "center", gap: "10px", padding: "7px 18px 7px 8px", background: "#FFFFFF", border: "1px solid #E7E7E1", borderRadius: "999px", fontSize: "14px", fontWeight: "500", boxShadow: "0 6px 20px -14px rgba(11,13,18,0.3)" }}>
+    <span style={{ background: "#0B7A55", color: "#FFFFFF", fontSize: "12px", fontWeight: "700", padding: "3px 9px", borderRadius: "999px" }}>NEW</span>
+    <span>Bulk Order for wholesale buyers</span>
+  </a>
+);
+
+/**
+ * Hero: headline + CTAs, and the animated "4 separate apps → 1 app" diagram.
+ * `offer` adds the BFCM pill beside the NEW badge and the neon sign above the
+ * MultiVariants panel; without it the hero renders exactly as before.
+ */
+export default function Hero({ offer = false }: { offer?: boolean }) {
   return (
     <section className="hero" id="top" aria-labelledby="wn-hero-title" style={{ position: "relative", padding: "72px 16px 0 16px", textAlign: "center" }}>
       <div className="hero-glow" aria-hidden="true" style={{ position: "absolute", inset: "-120px 0 auto 0", height: "760px", background: "radial-gradient(48% 52% at 50% 30%, rgba(59,191,138,0.16), rgba(250,250,247,0) 70%), radial-gradient(30% 40% at 82% 18%, rgba(200,242,90,0.22), rgba(250,250,247,0) 70%)", pointerEvents: "none" }} />
       <div className="hero-copy" style={{ position: "relative", maxWidth: "980px", margin: "0 auto" }}>
-        <a className="hero-badge" href="#bulk" style={{ display: "inline-flex", alignItems: "center", gap: "10px", padding: "7px 18px 7px 8px", background: "#FFFFFF", border: "1px solid #E7E7E1", borderRadius: "999px", fontSize: "14px", fontWeight: "500", boxShadow: "0 6px 20px -14px rgba(11,13,18,0.3)" }}>
-          <span style={{ background: "#0B7A55", color: "#FFFFFF", fontSize: "12px", fontWeight: "700", padding: "3px 9px", borderRadius: "999px" }}>NEW</span>
-          <span>Bulk Order for wholesale buyers</span>
-        </a>
+        {offer ? (
+          <div className="hero-badges">
+            <BfcmPill />
+            {newBadge}
+          </div>
+        ) : (
+          newBadge
+        )}
         <h1 id="wn-hero-title" className="hero-h" style={{ margin: "14px 0 0 0", fontSize: "clamp(40px, 6.6vw, 84px)", lineHeight: "1.16", letterSpacing: "-0.045em", fontWeight: "800" }}>
           Four Shopify apps
           <br />
@@ -161,6 +177,7 @@ export default function Hero() {
                   <span style={{ display: "block", marginTop: "2px", fontSize: "15px", color: "#5B6170" }}>All four, in one app</span>
                 </span>
                 <span style={{ fontSize: "13px", fontWeight: "800", color: "#0B0D12", background: "#C8F25A", borderRadius: "999px", padding: "6px 12px" }}>4-in-1</span>
+                {offer && <BfcmNeonSign />}
               </div>
               <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "10px", flex: "1" }}>
                 {APPS.map((a) => (

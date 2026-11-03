@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, isLocale } from "@/i18n/config";
+import { isWhatsNewOfferLive, isWhatsNewOfferRequest } from "@/lib/whats-new-offer";
 
 /**
  * Locale routing + staging noindex + Draft Mode guard.
@@ -48,7 +49,8 @@ const NON_LOCALIZED_ROUTES = new Set([
   "/sitemap.xml",
   // Standalone English-only landing page with its own root layout
   // (app/whats-new). /pt/whats-new has no translation and falls through to the
-  // [lang] catch-all 404.
+  // [lang] catch-all 404. Its offer variant (/whats-new/offer) is reachable only
+  // through the ?bfcm=offer rewrite above — requested directly it 404s.
   "/whats-new",
 ]);
 
@@ -70,6 +72,19 @@ export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const host = (req.headers.get("host") ?? "").split(":")[0].toLowerCase();
   const isDraftMode = req.cookies.has("__prerender_bypass");
+
+  // /whats-new?bfcm=offer → the offer variant of the landing page, while the
+  // deal is live. The URL the visitor shared stays in the address bar. Without
+  // the parameter (or after the deal ends) the plain page is served below.
+  if (
+    pathname === "/whats-new" &&
+    isWhatsNewOfferRequest(req.nextUrl.searchParams) &&
+    isWhatsNewOfferLive()
+  ) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/whats-new/offer";
+    return withSeoHeaders(NextResponse.rewrite(url), host, isDraftMode);
+  }
 
   // API routes, SEO route handlers and static files pass through untouched —
   // never locale-rewritten, but still noindexed on staging.

@@ -223,4 +223,38 @@ footer{padding-top:48px !important}
 .wn .cta-actions > span{font-size:12px !important}
 }
 
+/* ---------- BFCM offer (only on /whats-new?bfcm=offer) ----------
+ * From multivariants-landing-bfcm-neon_3.html. These elements exist only in the
+ * offer variant; the one rule that touches shared markup is scoped to .wn-offer
+ * so the plain page is unaffected. */
+.hero-badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px}
+.wn .hero-badges{justify-content:flex-start}
+@media (max-width:1100px){.wn .hero-badges{justify-content:center}}
+.bfcm-pill{display:inline-flex;align-items:center;gap:10px;padding:7px 16px 7px 7px;background:#0A0714;color:#FFFFFF;border-radius:999px;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 0 0 1px #2A1F40,0 0 18px -4px rgba(255,46,136,.55),0 10px 24px -14px rgba(11,13,18,.6)}
+.bfcm-pill > span:first-child{color:#FFE3F1;font-size:12px;font-weight:800;letter-spacing:.06em;padding:3px 10px;border-radius:999px;border:1.5px solid #FF2E88;box-shadow:0 0 6px #FF2E88,inset 0 0 6px rgba(255,46,136,.6);text-shadow:0 0 6px #FF2E88}
+.bfcm-pill b{color:#FFFFFF;font-weight:800}
+.bfcm-pill > span:last-child{color:#C9C2DD}
+@media (max-width:420px){.bfcm-pill{font-size:13px;gap:8px;padding-right:13px}}
+.bfx-top{position:absolute;right:-6px;bottom:calc(100% + 18px);z-index:6;text-align:left}
+/* Room above the diagram for the hanging sign once the hero stacks. */
+@media (max-width:1100px){.wn-offer .hero > .hs-wrap{margin-top:120px !important}}
+.bfx-neon{width:340px;padding-top:34px}
+.bfx-neon .ne-wire{position:absolute;top:0;width:2px;height:40px;background:#3A3F4A}
+.bfx-neon .ne-wire.l{left:60px}.bfx-neon .ne-wire.r{right:60px}
+.bfx-neon .ne-box{position:relative;background:#0A0714;border-radius:18px;padding:16px 18px 14px 18px;text-align:center;box-shadow:0 0 0 2px #1E1630,0 22px 40px -16px rgba(11,13,18,.6),0 0 60px -10px rgba(255,46,136,.45);background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:14px 14px;animation:bfxOn 1.4s steps(1) .2s both}
+.bfx-neon .ne-1{font-family:var(--wn-display),sans-serif;font-size:32px;font-weight:800;letter-spacing:.06em;color:#FFE3F1;text-shadow:0 0 3px #FF2E88,0 0 10px #FF2E88,0 0 24px #FF2E88,0 0 44px #FF2E88;line-height:1}
+.bfx-neon .ne-1 .fl{animation:bfxFlick 5s infinite}
+.bfx-neon .ne-2{margin-top:10px;font-family:var(--wn-display),sans-serif;font-size:30px;font-weight:800;color:#E6FEFF;text-shadow:0 0 3px #36F1FF,0 0 10px #36F1FF,0 0 24px #36F1FF;line-height:1;letter-spacing:-.01em}
+.bfx-neon .ne-2 span{display:inline-block;border:2.5px solid #E6FEFF;box-shadow:0 0 8px #36F1FF,inset 0 0 8px #36F1FF;border-radius:10px;padding:4px 10px 6px 10px;margin-right:6px}
+.bfx-neon .ne-3{margin-top:10px;font-size:11px;font-weight:700;letter-spacing:.2em;color:#B9A9E0}
+/* A real <button>, reset to look like the design's inline chip. */
+.bfx-neon .ne-code{appearance:none;background:none;font:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;text-align:inherit;position:relative;display:inline-block;margin:0 6px;padding:1px 7px 2px 7px;border:1.5px dashed #FFE08A;border-radius:6px;box-shadow:0 0 6px rgba(255,210,63,.5);cursor:pointer;pointer-events:auto;vertical-align:middle}
+.bfx-neon .ne-code b{font-family:var(--wn-display),sans-serif;font-size:14px;font-weight:800;letter-spacing:.1em;color:#FFF6D6;text-shadow:0 0 3px #FFC93C,0 0 9px #FFC93C,0 0 18px #FFB800}
+.bfx-neon .ne-copied{position:absolute;inset:0;display:grid;place-items:center;background:#0A0714;border-radius:5px;font-size:10px;font-weight:800;letter-spacing:.18em;color:#C8F25A;text-shadow:0 0 6px #C8F25A;opacity:0;transition:opacity .2s}
+.bfx-neon .ne-code.ok .ne-copied{opacity:1}
+.bfx-neon,.bfx-neon .ne-box{pointer-events:auto}
+@keyframes bfxFlick{0%,18%,22%,25%,53%,57%,100%{opacity:1}20%,24%,55%{opacity:.25}}
+@keyframes bfxOn{0%{opacity:.2}10%{opacity:1}15%{opacity:.3}25%{opacity:1}30%{opacity:.5}40%,100%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.bfx-neon .ne-1 .fl,.bfx-neon .ne-box{animation:none}}
+
 @media (prefers-reduced-motion:reduce){.marq,.wn .mk .mh-chip,.orb-ring,.orb-sweep,.orb-flow,.orb-core,.orb-node,.orb-p,.stp-fill,.stp-dot,.m41-app,.m41-flow,.m41-main{animation:none}}
