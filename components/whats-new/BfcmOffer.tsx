@@ -1,9 +1,9 @@
 import { whatsNewOffer } from "@/lib/whats-new-offer";
 import CopyCode from "./CopyCode";
 
-// The two BFCM elements of the /whats-new offer variant, ported from the design
-// file multivariants-landing-bfcm-neon_3.html. Rendered only when Hero gets
-// `offer` (the ?bfcm=offer link); styles live in whats-new.css under "BFCM".
+// The two BFCM elements of /whats-new/offer, ported from the design file
+// multivariants-landing-bfcm-neon_3.html. Rendered only when Hero gets `offer`;
+// styles live in whats-new.css under "BFCM".
 
 /** Neon "BFCM" pill shown beside the NEW badge; jumps to the closing install CTA. */
 export function BfcmPill() {

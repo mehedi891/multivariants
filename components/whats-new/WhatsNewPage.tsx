@@ -15,14 +15,17 @@ import { whatsNewJsonLd } from "./seo";
 
 /**
  * The /whats-new landing page. `offer` adds the BFCM pill and neon sign; it is
- * only set by the offer variant, which proxy.ts serves for `?bfcm=offer`.
+ * set only by /whats-new/offer, which is never indexed and so carries no
+ * structured data.
  */
 export default function WhatsNewPage({ offer = false }: { offer?: boolean }) {
   return (
     <>
       {/* Rendered as a plain string child: React escapes `</script`, and `<` is
           unicode-escaped below, so no raw-HTML injection is needed. */}
-      <script type="application/ld+json">{JSON.stringify(whatsNewJsonLd).replace(/</g, "\\u003c")}</script>
+      {!offer && (
+        <script type="application/ld+json">{JSON.stringify(whatsNewJsonLd).replace(/</g, "\\u003c")}</script>
+      )}
       <div className={offer ? "wn wn-offer" : "wn"} style={{ minWidth: 0, overflowX: "clip" }}>
         <Header />
         <main>

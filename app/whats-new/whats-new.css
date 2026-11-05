@@ -223,9 +223,9 @@ footer{padding-top:48px !important}
 .wn .cta-actions > span{font-size:12px !important}
 }
 
-/* ---------- BFCM offer (only on /whats-new?bfcm=offer) ----------
- * From multivariants-landing-bfcm-neon_3.html. These elements exist only in the
- * offer variant; the one rule that touches shared markup is scoped to .wn-offer
+/* ---------- BFCM offer (only on /whats-new/offer) ----------
+ * From multivariants-landing-bfcm-neon_3.html. These elements exist only on the
+ * offer page; the one rule that touches shared markup is scoped to .wn-offer
  * so the plain page is unaffected. */
 .hero-badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px}
 .wn .hero-badges{justify-content:flex-start}

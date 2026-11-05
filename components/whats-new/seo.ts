@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { whatsNewOffer } from "@/lib/whats-new-offer";
 import { SITE_URL, SOCIAL_LINKS } from "./links";
 
-// Metadata and structured data for /whats-new, shared by the plain page and
-// its offer variant (app/whats-new/offer).
+// Metadata and structured data for /whats-new. The offer page
+// (app/whats-new/offer) shares the copy but is never indexed.
 
 const PATH = "/whats-new";
 const PAGE_URL = `${SITE_URL}${PATH}`;
@@ -11,18 +12,36 @@ const TITLE = "Four Shopify Apps, Replaced by One";
 const DESCRIPTION =
   "MultiVariants brings order restrictions, tiered discounts, product options and bulk order forms into one Shopify app — one install, one setup, one dashboard.";
 
+function metadataFor(path: string): Metadata {
+  return {
+    ...pageMetadata({
+      title: TITLE,
+      description: DESCRIPTION,
+      path,
+      locale: "en",
+      availableLocales: ["en"],
+      ogTitle: "MultiVariants — Four Shopify apps, replaced by one",
+    }),
+    // A layout's title.template doesn't apply to a page in the same segment, so
+    // the brand suffix is spelled out here.
+    title: `${TITLE} | MultiVariants`,
+  };
+}
+
+/**
+ * /whats-new/offer: noindex, with a self-referencing canonical and og:url.
+ * Pointing its canonical at /whats-new would send Google conflicting signals
+ * (noindex here, "index that one" there), and a shared card would open the plain
+ * page instead of the offer.
+ */
+export const whatsNewOfferMetadata: Metadata = {
+  ...metadataFor(whatsNewOffer.path),
+  alternates: { canonical: `${SITE_URL}${whatsNewOffer.path}` },
+  robots: { index: false, follow: true },
+};
+
 export const whatsNewMetadata: Metadata = {
-  ...pageMetadata({
-    title: TITLE,
-    description: DESCRIPTION,
-    path: PATH,
-    locale: "en",
-    availableLocales: ["en"],
-    ogTitle: "MultiVariants — Four Shopify apps, replaced by one",
-  }),
-  // A layout's title.template doesn't apply to a page in the same segment, so
-  // the brand suffix is spelled out here.
-  title: `${TITLE} | MultiVariants`,
+  ...metadataFor(PATH),
   keywords: [
     "Shopify bulk order form",
     "Shopify order restrictions",
