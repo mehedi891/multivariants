@@ -210,7 +210,7 @@ export default function Footer({
                         <span className="block text-[14px] font-medium text-white/80 group-hover:text-accent transition-colors">
                           {app.label}
                         </span>
-                        <span className="block truncate text-[12px] text-white/40">{app.desc}</span>
+                        <span className="block truncate text-[12px] text-white/50">{app.desc}</span>
                       </span>
                       <span className="text-accent">
                         <ExternalArrow />
@@ -224,7 +224,7 @@ export default function Footer({
         </div>
 
         {/* Bottom */}
-        <div className="flex items-center justify-between flex-wrap gap-4 text-[13px] text-white/40">
+        <div className="flex items-center justify-between flex-wrap gap-4 text-[13px] text-white/50">
           <p>
             {f.copyright.replace("{year}", String(new Date().getFullYear()))}{" "}
             <strong className="text-white/55">eFoli</strong>
