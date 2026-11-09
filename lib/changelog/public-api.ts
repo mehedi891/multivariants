@@ -35,9 +35,12 @@ export type PublicChangelogEntry = {
   id: string;
   slug: string;
   title: string;
-  version: string;
-  labelName: string;
-  labelColor: string;
+  /** Display version ("2.4.0" → "v2.4.0"); undefined when the CMS sends none. */
+  version?: string;
+  /** Label text exactly as entered in the CMS (trimmed); undefined → no badge. */
+  labelName?: string;
+  /** CMS #rgb / #rrggbb badge background; undefined → the site's badge style. */
+  labelColor?: string;
   publishedAt: string;
   summary: string;
   contentHtml?: string;
@@ -96,10 +99,25 @@ function buildListUrlCandidates() {
 
 function normalizeColor(value: unknown) {
   const raw = String(value ?? "").trim();
-  if (!raw) return "#47C1BF";
-  if (/^#[0-9A-Fa-f]{6}$/.test(raw)) return raw;
-  if (/^[0-9A-Fa-f]{6}$/.test(raw)) return `#${raw}`;
-  return "#47C1BF";
+  return /^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(raw) ? raw : undefined;
+}
+
+/** Black or white, whichever contrasts more with a #rgb / #rrggbb background. */
+export function readableTextOn(hex: string): "#000000" | "#ffffff" {
+  const h = hex.slice(1);
+  const full = h.length === 3 ? [...h].map((c) => c + c).join("") : h;
+  const [r, g, b] = [0, 2, 4].map((i) => {
+    const c = parseInt(full.slice(i, i + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return (lum + 0.05) / 0.05 >= 1.05 / (lum + 0.05) ? "#000000" : "#ffffff";
+}
+
+function toVersionLabel(value: unknown) {
+  const version = String(value ?? "").trim();
+  if (!version) return undefined;
+  return /^\d/.test(version) ? `v${version}` : version;
 }
 
 function ensureISODate(value: unknown) {
@@ -138,14 +156,18 @@ function mapApiChangelog(raw: Record<string, unknown>): PublicChangelogEntry {
       : null;
   const content = String(raw.content ?? raw.contentHtml ?? raw.html ?? "");
   const title = String(raw.title ?? "Untitled update");
+  const labelName =
+    String(labelObject?.name ?? raw.labelName ?? "").trim() || undefined;
 
   return {
     id: String(raw.id ?? raw.slug ?? title),
     slug: String(raw.slug ?? slugify(title)),
     title,
-    version: String(raw.version ?? "v0.0.0"),
-    labelName: String(labelObject?.name ?? raw.labelName ?? "Update"),
-    labelColor: normalizeColor(labelObject?.color ?? raw.labelColor),
+    version: toVersionLabel(raw.version),
+    labelName,
+    labelColor: labelName
+      ? normalizeColor(labelObject?.color ?? raw.labelColor)
+      : undefined,
     publishedAt: ensureISODate(raw.publishedAt ?? raw.createdAt ?? raw.date),
     summary: String(raw.excerpt ?? "").trim() || summarizeContent(content),
     contentHtml: content.trim() || undefined,
@@ -203,7 +225,6 @@ function fallbackList(page: number, limit: number): PublicChangelogResult {
     title: item.title,
     version: item.version,
     labelName: item.tag,
-    labelColor: "#47C1BF",
     publishedAt: new Date(item.date).toISOString(),
     summary: item.summary,
     contentHtml: `<p>${item.summary}</p>${
@@ -231,9 +252,12 @@ function fallbackList(page: number, limit: number): PublicChangelogResult {
 export async function getPublicChangelogs({
   page,
   limit,
+  locale,
 }: {
   page: number;
   limit: number;
+  /** CMS locale for translated entries; omit for English. */
+  locale?: string;
 }): Promise<PublicChangelogResult> {
   try {
     const errors: string[] = [];
@@ -244,6 +268,7 @@ export async function getPublicChangelogs({
         url.searchParams.set("site", CHANGELOG_SITE);
         url.searchParams.set("page", String(page));
         url.searchParams.set("limit", String(limit));
+        if (locale) url.searchParams.set("locale", locale);
 
         const res = await fetch(url.toString(), {
           next: { revalidate: 60 },

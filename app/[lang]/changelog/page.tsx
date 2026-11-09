@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
-import { toLocale } from "@/i18n/config";
+import { defaultLocale, toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCommonContent } from "@/i18n/content";
 import { getChangelogContent } from "@/i18n/content";
@@ -10,7 +10,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import ApiEmptyState from "@/components/ApiEmptyState";
-import { getPublicChangelogs } from "@/lib/changelog/public-api";
+import { getPublicChangelogs, readableTextOn } from "@/lib/changelog/public-api";
 import CmsHtml from "@/components/CmsHtml";
 
 export async function generateMetadata({
@@ -77,18 +77,6 @@ function hasInlineImage(contentHtml?: string) {
   return /<img\b/i.test(contentHtml);
 }
 
-function hexToRgba(hex: string, alpha: number) {
-  const safeHex = hex.trim().replace("#", "");
-  if (!/^[0-9A-Fa-f]{6}$/.test(safeHex)) {
-    return `rgba(71, 193, 191, ${alpha})`;
-  }
-
-  const r = Number.parseInt(safeHex.slice(0, 2), 16);
-  const g = Number.parseInt(safeHex.slice(2, 4), 16);
-  const b = Number.parseInt(safeHex.slice(4, 6), 16);
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-
 export default async function ChangelogPage({
   params: routeParams,
   searchParams,
@@ -103,6 +91,7 @@ export default async function ChangelogPage({
   const { changelogs, totalPages, currentPage, error } = await getPublicChangelogs({
     page: requestedPage,
     limit: PAGE_SIZE,
+    locale: locale === defaultLocale ? undefined : locale,
   });
 
   return (
@@ -179,19 +168,29 @@ export default async function ChangelogPage({
                             <span className="rounded-full border border-white/25 bg-white/[0.06] px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white/70">
                               {formatDate(entry.publishedAt)}
                             </span>
-                            <span className="rounded-full border border-primary/40 bg-primary/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-primary-light">
-                              {entry.version}
-                            </span>
-                            <span
-                              className="rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide"
-                              style={{
-                                color: entry.labelColor,
-                                borderColor: hexToRgba(entry.labelColor, 0.55),
-                                backgroundColor: hexToRgba(entry.labelColor, 0.17),
-                              }}
-                            >
-                              {entry.labelName}
-                            </span>
+                            {entry.version && (
+                              <span className="rounded-full border border-primary/40 bg-primary/20 px-3 py-1 text-[11px] font-bold tracking-wide text-primary-light">
+                                {entry.version}
+                              </span>
+                            )}
+                            {entry.labelName && (
+                              <span
+                                className={`rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide ${
+                                  entry.labelColor ? "" : "border-accent/50 bg-accent/15 text-accent"
+                                }`}
+                                style={
+                                  entry.labelColor
+                                    ? {
+                                        backgroundColor: entry.labelColor,
+                                        borderColor: entry.labelColor,
+                                        color: readableTextOn(entry.labelColor),
+                                      }
+                                    : undefined
+                                }
+                              >
+                                {entry.labelName}
+                              </span>
+                            )}
                           </div>
 
                           <h2 className="mt-3 text-xl font-black leading-[1.3] text-white sm:text-2xl">
