@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Analytics from "@/components/Analytics";
+import Clarity from "@/components/Clarity";
 import LiveChat from "@/components/LiveChat";
 import { LocaleProvider } from "@/components/LocaleProvider";
 import PromoBanner from "@/components/PromoBanner";
@@ -196,6 +197,7 @@ export default async function RootLayout({
         )}
         <LocaleProvider locale={locale}>{children}</LocaleProvider>
         <Analytics />
+        <Clarity />
         <LiveChat />
       </body>
     </html>

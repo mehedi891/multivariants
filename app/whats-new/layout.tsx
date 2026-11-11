@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import Analytics from "@/components/Analytics";
+import Clarity from "@/components/Clarity";
 import "./whats-new.css";
 
 /**
@@ -65,6 +66,7 @@ export default function WhatsNewLayout({
       <body>
         {children}
         <Analytics />
+        <Clarity />
       </body>
     </html>
   );

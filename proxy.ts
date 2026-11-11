@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, isLocale } from "@/i18n/config";
+import { isProductionHost } from "@/lib/production-hosts";
 import { isWhatsNewOfferLive, whatsNewOffer } from "@/lib/whats-new-offer";
 
 /**
@@ -22,8 +23,6 @@ import { isWhatsNewOfferLive, whatsNewOffer } from "@/lib/whats-new-offer";
  *     stays clean. Prefixed locales (`/pt/pricing`) pass straight through.
  *     `/en/*` 308s to the unprefixed form so there is one canonical URL per page.
  */
-
-const INDEXABLE_HOSTS = new Set(["multivariants.com", "www.multivariants.com"]);
 
 /**
  * Request header carrying the resolved locale. `not-found.tsx` receives no
@@ -58,7 +57,8 @@ function withSeoHeaders(
   host: string,
   isDraftMode: boolean,
 ): NextResponse {
-  if (isDraftMode || !INDEXABLE_HOSTS.has(host)) {
+  // Only the production domain(s) may be indexed (see lib/production-hosts.ts).
+  if (isDraftMode || !isProductionHost(host)) {
     res.headers.set("X-Robots-Tag", "noindex, nofollow");
   }
   if (isDraftMode) {
