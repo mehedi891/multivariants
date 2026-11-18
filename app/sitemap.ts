@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPublicAcademySlugs } from "@/lib/academy/public-api";
 import { getPublicBlogSlugs } from "@/lib/blog/public-api";
 import { getPublicClientSlugs } from "@/lib/clients-showcase/public-api";
+import { getPublicLandingPages } from "@/lib/landing-pages/public-api";
 import { locales, localizePath } from "@/i18n/config";
 
 // Regenerate the sitemap every 15 min so new CMS content (blog posts, academy
@@ -40,6 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const docs = await getPublicAcademySlugs();
   const slugs = await getPublicBlogSlugs(1000);
   const clientSlugs = await getPublicClientSlugs(1000);
+  const landingPages = await getPublicLandingPages();
 
   // Static pages exist in every locale, so each expands to one <url> per
   // locale. CMS content (academy docs, blog posts, client stories) is authored
@@ -79,5 +81,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
+    // CMS landing pages at the site root — English only; noIndex pages are left out.
+    ...landingPages
+      .filter((page) => !page.noIndex)
+      .map((page) => ({
+        url: `${SITE_URL}/${page.slug}`,
+        lastModified: page.updatedAt ? new Date(page.updatedAt) : new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.7,
+      })),
   ];
 }

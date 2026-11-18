@@ -1,5 +1,22 @@
 import type { Dictionary } from "@/i18n/dictionaries";
-import { promo } from "@/lib/promo";
+import { localeMeta, type Locale } from "@/i18n/config";
+import { formatPromoEnd, isPromoLive, promo } from "@/lib/promo";
+
+/**
+ * The promo bar as part of the site header: nothing once the campaign is over.
+ * Rendered by the (site) layout, the 404 page, and landing pages that show the
+ * header. Pages render per request, so the bar disappears at `promo.endsAt`
+ * without a redeploy.
+ */
+export function SitePromoBanner({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+  if (!isPromoLive()) return null;
+  return (
+    <PromoBanner
+      copy={dict.promo}
+      endsLabel={dict.promo.endsOn.replace("{date}", formatPromoEnd(localeMeta[locale].hreflang))}
+    />
+  );
+}
 
 function Dot({ className = "" }: { className?: string }) {
   return (

@@ -12,12 +12,18 @@ type PreviewBannerProps = {
   locale?: string;
   /** Path to return to after leaving preview. */
   exitRedirect?: string;
+  /**
+   * Opaque dark background. The default translucent bar is made for the dark
+   * blog hero; CMS landing pages can start with any background.
+   */
+  solid?: boolean;
 };
 
 export default function PreviewBanner({
   status,
   locale,
   exitRedirect,
+  solid = false,
 }: PreviewBannerProps) {
   const exitHref = exitRedirect
     ? `/api/preview/exit?redirect=${encodeURIComponent(exitRedirect)}`
@@ -26,7 +32,9 @@ export default function PreviewBanner({
   return (
     <div
       role="status"
-      className="sticky top-0 z-[60] border-b border-amber-300/30 bg-amber-500/15 px-[5%] py-2.5 backdrop-blur-md"
+      className={`sticky top-0 z-[60] border-b border-amber-300/30 px-[5%] py-2.5 ${
+        solid ? "bg-zinc-900" : "bg-amber-500/15 backdrop-blur-md"
+      }`}
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <div className="flex flex-wrap items-center gap-2.5">

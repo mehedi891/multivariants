@@ -6,6 +6,7 @@ import {
   getPreviewSecret,
   isPreviewConfigured,
 } from "@/lib/blog/public-api";
+import { fetchLandingPage } from "@/lib/landing-pages/public-api";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -26,9 +27,10 @@ function safeEqual(a: string, b: string) {
  * The CMS may hand us the slug in several shapes:
  *   my-draft-post · /my-draft-post · /blog/my-draft-post
  *   https://multivariants.com/blog/my-draft-post
- * Reduce all of them to the bare slug and reject anything that escapes /blog.
+ * Reduce all of them to the bare slug and reject anything outside `parent`:
+ * "blog" for posts, none for landing pages (they live at the site root).
  */
-function normalizeSlug(raw: string | null) {
+function normalizeSlug(raw: string | null, parent?: string) {
   if (!raw) return null;
 
   let value = raw.trim();
@@ -51,12 +53,20 @@ function normalizeSlug(raw: string | null) {
     .filter(Boolean);
 
   const slug = segments.at(-1);
-  if (!slug || slug === "blog") return null;
-  // Guard against traversal or a path that is not a blog post.
+  if (!slug || slug === parent) return null;
+  // Guard against traversal or a path outside `parent`.
   if (slug.includes("..")) return null;
-  if (segments.length > 1 && segments.at(-2) !== "blog") return null;
+  if (segments.length > 1 && segments.at(-2) !== parent) return null;
 
   return slug;
+}
+
+/** Redirect into a preview. Preview responses are never cached or indexed. */
+function previewRedirect(path: string, req: NextRequest) {
+  const res = NextResponse.redirect(new URL(path, req.url), 307);
+  res.headers.set("Cache-Control", "no-store, max-age=0");
+  res.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return res;
 }
 
 export async function GET(req: NextRequest) {
@@ -82,14 +92,42 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Invalid preview token" }, { status: 401 });
   }
 
+  const isLanding = searchParams.get("type") === "landing";
   const slug = normalizeSlug(
     searchParams.get("slug") ??
       searchParams.get("path") ??
-      searchParams.get("uri")
+      searchParams.get("uri"),
+    isLanding ? undefined : "blog"
   );
 
   if (!slug) {
     return NextResponse.json({ error: "slug required" }, { status: 400 });
+  }
+
+  // CMS landing pages, served at /{slug}. English only, so no locale cookie.
+  // As with posts: confirm the draft exists first, then redirect to the slug
+  // the CMS returned (never the raw input).
+  if (isLanding) {
+    let page;
+    try {
+      page = await fetchLandingPage(slug, { preview: true });
+    } catch (error) {
+      console.warn(error instanceof Error ? error.message : String(error));
+      return NextResponse.json({ error: "CMS unavailable" }, { status: 502 });
+    }
+    if (!page) {
+      return NextResponse.json(
+        { error: `No landing page found for slug "${slug}"` },
+        { status: 404 }
+      );
+    }
+
+    const draft = await draftMode();
+    draft.enable();
+
+    const res = previewRedirect(`/${encodeURIComponent(page.slug)}`, req);
+    res.cookies.delete(PREVIEW_LOCALE_COOKIE);
+    return res;
   }
 
   const locale =
@@ -112,12 +150,7 @@ export async function GET(req: NextRequest) {
   const draft = await draftMode();
   draft.enable();
 
-  const target = new URL(`/blog/${encodeURIComponent(post.slug)}`, req.url);
-  const res = NextResponse.redirect(target, 307);
-
-  // Preview responses must never be cached or indexed.
-  res.headers.set("Cache-Control", "no-store, max-age=0");
-  res.headers.set("X-Robots-Tag", "noindex, nofollow");
+  const res = previewRedirect(`/blog/${encodeURIComponent(post.slug)}`, req);
 
   if (locale) {
     res.cookies.set(PREVIEW_LOCALE_COOKIE, locale, {

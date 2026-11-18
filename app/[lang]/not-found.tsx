@@ -2,6 +2,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { SitePromoBanner } from "@/components/PromoBanner";
 import { localeMeta, localizePath, toLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -12,6 +13,9 @@ import { getDictionary } from "@/i18n/dictionaries";
  * [...rest] catch-all — fell through to Next's bare error document: no navbar
  * or footer, and no <html lang>. It receives no props, so the language comes
  * from the header proxy.ts sets. Next injects `noindex` on 404s automatically.
+ *
+ * It renders outside the (site) layout (unknown URLs 404 from the landing-page
+ * route and the catch-all), so it brings the promo bar along with the navbar.
  */
 export default async function NotFound() {
   const locale = toLocale((await headers()).get("x-mv-locale") ?? "");
@@ -28,6 +32,7 @@ export default async function NotFound() {
 
   return (
     <div lang={localeMeta[locale].hreflang}>
+      <SitePromoBanner locale={locale} dict={dict} />
       <Navbar locale={locale} dict={dict} />
       <main
         id="main-content"

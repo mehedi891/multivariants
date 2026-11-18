@@ -6,10 +6,8 @@ import Analytics from "@/components/Analytics";
 import Clarity from "@/components/Clarity";
 import LiveChat from "@/components/LiveChat";
 import { LocaleProvider } from "@/components/LocaleProvider";
-import PromoBanner from "@/components/PromoBanner";
 import { getDictionary, type Dictionary } from "@/i18n/dictionaries";
 import { isLocale, locales, localeMeta, localizePath, type Locale } from "@/i18n/config";
-import { formatPromoEnd, isPromoLive } from "@/lib/promo";
 import { ogImageFor, ogLocaleFields } from "@/lib/seo";
 
 const inter = Inter({
@@ -184,17 +182,9 @@ export default async function RootLayout({
         <a href="#main-content" className="skip-link">
           {dict.common.skipToContent}
         </a>
-        {/* Pages render per request, so the bar disappears at `promo.endsAt`
-            without a redeploy. */}
-        {isPromoLive() && (
-          <PromoBanner
-            copy={dict.promo}
-            endsLabel={dict.promo.endsOn.replace(
-              "{date}",
-              formatPromoEnd(localeMeta[locale].hreflang),
-            )}
-          />
-        )}
+        {/* No header, footer or promo bar here: they belong to the page, so a
+            CMS landing page (./(landing)/[slug]) can leave them out. Regular
+            pages get them from ./(site)/layout.tsx and their own markup. */}
         <LocaleProvider locale={locale}>{children}</LocaleProvider>
         <Analytics />
         <Clarity />

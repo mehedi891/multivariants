@@ -4,7 +4,7 @@ import {
   type BlogPost,
 } from "@/lib/blog/posts-data";
 
-function normalizeEnvUrl(value: string | undefined) {
+export function normalizeEnvUrl(value: string | undefined) {
   const trimmed = value?.trim();
   if (!trimmed) return undefined;
   const unquoted =
