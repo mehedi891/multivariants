@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 
 /**
  * Renders CMS-authored HTML exactly as the editor saved it. Nothing is
@@ -49,6 +49,12 @@ export default function CmsHtml({ html, className = "" }: { html: string; classN
   // True only while hydrating server HTML, whose scripts the parser already ran.
   const hydrating = useSyncExternalStore(noopSubscribe, () => false, () => true);
   const scriptsRanFor = useRef<string | null>(hydrating ? html : null);
+  // React 19 compares `dangerouslySetInnerHTML` by object identity and rewrites
+  // innerHTML whenever it changes. A fresh object per render made the re-render
+  // right after hydration (from `hydrating` flipping) replace the server HTML:
+  // iframes reloaded, and whatever the already-run scripts had drawn (a
+  // countdown, an embedded form) was wiped. One object per `html` prevents that.
+  const innerHtml = useMemo(() => ({ __html: html }), [html]);
 
   useEffect(() => {
     if (!ref.current || scriptsRanFor.current === html) return;
@@ -60,7 +66,7 @@ export default function CmsHtml({ html, className = "" }: { html: string; classN
     <div
       ref={ref}
       className={`[&_iframe]:max-w-full ${className}`}
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={innerHtml}
     />
   );
 }
