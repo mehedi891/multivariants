@@ -49,6 +49,15 @@ const nextConfig: NextConfig = {
 
       // --- Batch 5: legacy /docs -> academy ----------------------------
       { source: "/docs", destination: "/academy", permanent: true },
+
+      // --- CMS landing pages -------------------------------------------
+      // CMS landing pages only live at the root (/{slug}), so the BFCM offer
+      // page moved from /whats-new/offer to /whats-new-offer. Already-sent
+      // links keep working; the query string (e.g. utm_*) is carried over.
+      // Temporary (307) on purpose: the offer is time-limited and noindex, so
+      // there is no ranking to pass on, and a permanent redirect would stay
+      // cached in browsers if the target changes when the deal ends.
+      { source: "/whats-new/offer", destination: "/whats-new-offer", permanent: false },
     ];
   },
 };

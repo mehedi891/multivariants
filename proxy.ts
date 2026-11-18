@@ -1,7 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, isLocale } from "@/i18n/config";
 import { isProductionHost } from "@/lib/production-hosts";
-import { isWhatsNewOfferLive, whatsNewOffer } from "@/lib/whats-new-offer";
 
 /**
  * Locale routing + staging noindex + Draft Mode guard.
@@ -46,10 +45,6 @@ const NON_LOCALIZED_ROUTES = new Set([
   "/llms.txt",
   "/robots.txt",
   "/sitemap.xml",
-  // Standalone English-only landing page with its own root layout
-  // (app/whats-new). /pt/whats-new has no translation and falls through to the
-  // [lang] catch-all 404. Its offer page (/whats-new/offer) is handled above.
-  "/whats-new",
 ]);
 
 function withSeoHeaders(
@@ -71,20 +66,6 @@ export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const host = (req.headers.get("host") ?? "").split(":")[0].toLowerCase();
   const isDraftMode = req.cookies.has("__prerender_bypass");
-
-  // /whats-new/offer — the landing page with the BFCM deal. Never indexed (the
-  // page says so too); once the deal ends it forwards to the plain page, so
-  // links already sent keep working.
-  if (pathname === whatsNewOffer.path) {
-    if (!isWhatsNewOfferLive()) {
-      const url = req.nextUrl.clone();
-      url.pathname = "/whats-new";
-      return NextResponse.redirect(url);
-    }
-    const res = NextResponse.next();
-    res.headers.set("X-Robots-Tag", "noindex, follow");
-    return withSeoHeaders(res, host, isDraftMode);
-  }
 
   // API routes, SEO route handlers and static files pass through untouched —
   // never locale-rewritten, but still noindexed on staging.
