@@ -92,6 +92,19 @@ export const getBlogContent = makeLoader<BlogContent>({
   pt: () => import("@/messages/blog/pt.json"),
 });
 
+// --- recipes (Spill The Sauce) ---
+// Recipe Contents reuse the blog's page UI: only the headings, meta and empty
+// state are overridden; the explorer/pagination strings come from the blog.
+type RecipeOverrides = Pick<BlogContent, "meta" | "badge" | "title" | "subtitle" | "empty">;
+const loadRecipeOverrides = makeLoader<RecipeOverrides>({
+  en: () => import("@/messages/recipes/en.json"),
+  pt: () => import("@/messages/recipes/pt.json"),
+});
+export async function getRecipeContent(locale: Locale): Promise<BlogContent> {
+  const [blog, recipes] = await Promise.all([getBlogContent(locale), loadRecipeOverrides(locale)]);
+  return { ...blog, ...recipes };
+}
+
 // --- changelog ---
 import type changelogEn from "@/messages/changelog/en.json";
 export type ChangelogContent = typeof changelogEn;

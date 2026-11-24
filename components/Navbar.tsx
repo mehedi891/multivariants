@@ -8,6 +8,7 @@ import BookDemoButton from "./BookDemoButton";
 import LocaleSwitcher from "./LocaleSwitcher";
 import { barePathOf, localizePath, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { RECIPES_PATH } from "@/lib/recipes/config";
 
 export default function Navbar({
   locale,
@@ -24,6 +25,8 @@ export default function Navbar({
     { bare: "/features", label: dict.nav.features },
     { bare: "/pricing", label: dict.nav.pricing },
     { bare: "/clients-showcase", label: dict.nav.clients },
+    // Recipe Contents (ticket z8tvbhymz4) — right after Clients.
+    { bare: RECIPES_PATH, label: dict.nav.spillTheSauce },
     { bare: "/contact", label: dict.nav.contact },
   ].map((i) => ({ ...i, href: localizePath(i.bare, locale) }));
 

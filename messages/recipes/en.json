@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "title": "Spill The Sauce – MultiVariants Setup Guides, Tips & Recipes",
+    "description": "Step-by-step setup recipes, tips and copy-paste solutions for bulk ordering and variant selling with MultiVariants on Shopify.",
+    "categoryTitle": "{category} Recipes",
+    "categoryDescription": "{category} recipes from Spill The Sauce — MultiVariants setup guides, tips and copy-paste solutions.",
+    "categoryOgTitle": "{category} Recipes – Spill The Sauce",
+    "pageSuffix": "– Page {page}",
+    "pageDescSuffix": "(Page {page})",
+    "ogTitle": "Spill The Sauce – MultiVariants"
+  },
+  "badge": "Spill The Sauce",
+  "title": "Spill The Sauce",
+  "subtitle": "Ready-to-use setup guides, tips and copy-paste solutions to get the most out of MultiVariants on your Shopify store. Filter by category to find what you need.",
+  "empty": {
+    "title": "No recipes available",
+    "descriptionCategory": "No recipes are published in this category yet.",
+    "descriptionAll": "We're preparing new recipes for this page.",
+    "helpText": "Try another category or check back soon."
+  }
+}

@@ -7,6 +7,8 @@ import {
   isPreviewConfigured,
 } from "@/lib/blog/public-api";
 import { fetchLandingPage } from "@/lib/landing-pages/public-api";
+import { getPublicRecipe } from "@/lib/recipes/public-api";
+import { RECIPES_PATH, RECIPES_SEGMENT } from "@/lib/recipes/config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -28,7 +30,8 @@ function safeEqual(a: string, b: string) {
  *   my-draft-post · /my-draft-post · /blog/my-draft-post
  *   https://multivariants.com/blog/my-draft-post
  * Reduce all of them to the bare slug and reject anything outside `parent`:
- * "blog" for posts, none for landing pages (they live at the site root).
+ * "blog" for posts, RECIPES_SEGMENT for Recipe Contents (`type=recipe`), none
+ * for landing pages (they live at the site root).
  */
 function normalizeSlug(raw: string | null, parent?: string) {
   if (!raw) return null;
@@ -93,11 +96,14 @@ export async function GET(req: NextRequest) {
   }
 
   const isLanding = searchParams.get("type") === "landing";
+  // Recipe Contents: the CMS also sends `base`, but our own folder
+  // (RECIPES_PATH) is authoritative and is what the redirect uses.
+  const isRecipe = searchParams.get("type") === "recipe";
   const slug = normalizeSlug(
     searchParams.get("slug") ??
       searchParams.get("path") ??
       searchParams.get("uri"),
-    isLanding ? undefined : "blog"
+    isLanding ? undefined : isRecipe ? RECIPES_SEGMENT : "blog"
   );
 
   if (!slug) {
@@ -138,11 +144,13 @@ export async function GET(req: NextRequest) {
   // Confirm the draft actually resolves before enabling draft mode, and
   // redirect to the slug the CMS returned rather than the raw input so a
   // crafted `slug` can't turn this into an open redirect.
-  const post = await getPublicBlogPost(slug, undefined, { preview: true, locale });
+  const post = isRecipe
+    ? await getPublicRecipe(slug, undefined, { preview: true, locale })
+    : await getPublicBlogPost(slug, undefined, { preview: true, locale });
 
   if (!post) {
     return NextResponse.json(
-      { error: `No post found for slug "${slug}"` },
+      { error: `No ${isRecipe ? "recipe" : "post"} found for slug "${slug}"` },
       { status: 404 }
     );
   }
@@ -150,7 +158,8 @@ export async function GET(req: NextRequest) {
   const draft = await draftMode();
   draft.enable();
 
-  const res = previewRedirect(`/blog/${encodeURIComponent(post.slug)}`, req);
+  const section = isRecipe ? RECIPES_PATH : "/blog";
+  const res = previewRedirect(`${section}/${encodeURIComponent(post.slug)}`, req);
 
   if (locale) {
     res.cookies.set(PREVIEW_LOCALE_COOKIE, locale, {
