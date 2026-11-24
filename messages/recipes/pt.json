@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "title": "Spill The Sauce – Guias de configuração, dicas e receitas do MultiVariants",
+    "description": "Receitas de configuração passo a passo, dicas e soluções prontas para copiar para pedidos em massa e venda de variantes com o MultiVariants na Shopify.",
+    "categoryTitle": "Receitas sobre {category}",
+    "categoryDescription": "Receitas sobre {category} do Spill The Sauce — guias de configuração, dicas e soluções prontas do MultiVariants.",
+    "categoryOgTitle": "Receitas sobre {category} – Spill The Sauce",
+    "pageSuffix": "– Página {page}",
+    "pageDescSuffix": "(Página {page})",
+    "ogTitle": "Spill The Sauce – MultiVariants"
+  },
+  "badge": "Spill The Sauce",
+  "title": "Spill The Sauce",
+  "subtitle": "Guias de configuração prontos para usar, dicas e soluções para copiar e colar para aproveitar ao máximo o MultiVariants na sua loja Shopify. Filtre por categoria para achar o que precisa.",
+  "empty": {
+    "title": "Nenhuma receita disponível",
+    "descriptionCategory": "Ainda não há receitas publicadas nesta categoria.",
+    "descriptionAll": "Estamos preparando novas receitas para esta página.",
+    "helpText": "Tente outra categoria ou volte em breve."
+  }
+}

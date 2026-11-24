@@ -15,9 +15,9 @@ export function normalizeEnvUrl(value: string | undefined) {
   return unquoted || undefined;
 }
 
-const CMS_API_BASE_URL =
+export const CMS_API_BASE_URL =
   normalizeEnvUrl(process.env.CMS_API_BASE_URL) ?? "https://admin.yourdomain.com";
-const BLOG_SITE = process.env.SITE_SLUG ?? process.env.BLOG_SITE ?? "multivariants";
+export const BLOG_SITE = process.env.SITE_SLUG ?? process.env.BLOG_SITE ?? "multivariants";
 const BLOG_API_PATH = normalizeEnvUrl(process.env.BLOG_API_PATH) ?? "/api/public/posts";
 // Default ON (like clients/changelog/partners/faq) so a transient CMS outage
 // serves local fallback content instead of hard-404ing live posts (C3) and
@@ -51,7 +51,7 @@ const POST_STATUSES: PostStatus[] = [
   "ARCHIVED",
 ];
 
-function toPostStatus(value: unknown): PostStatus | undefined {
+export function toPostStatus(value: unknown): PostStatus | undefined {
   const raw = String(value ?? "").trim().toUpperCase();
   return POST_STATUSES.find((status) => status === raw);
 }
@@ -98,17 +98,17 @@ export type PublicBlogListResult = {
   error?: string;
 };
 
-type BlogRequestHeaders = {
+export type BlogRequestHeaders = {
   cookie?: string | null;
   authorization?: string | null;
 };
 
-function toErrorMessage(error: unknown) {
+export function toErrorMessage(error: unknown) {
   if (error instanceof Error) return error.message;
   return String(error);
 }
 
-function logApiError(scope: string, error: unknown) {
+export function logApiError(scope: string, error: unknown) {
   const message = `[blog-api] ${scope}: ${toErrorMessage(error)}`;
   if (process.env.NODE_ENV !== "production") {
     console.warn(message);
@@ -119,7 +119,7 @@ function logApiError(scope: string, error: unknown) {
   }
 }
 
-async function parseJsonPayload(res: Response, scope: string) {
+export async function parseJsonPayload(res: Response, scope: string) {
   const contentType = res.headers.get("content-type") ?? "";
   const raw = await res.text();
   try {
@@ -190,7 +190,7 @@ function buildSinglePostUrlCandidates(slug: string) {
   return candidates;
 }
 
-function buildFetchInit(
+export function buildFetchInit(
   revalidateSeconds: number,
   requestHeaders?: BlogRequestHeaders,
   preview = false
@@ -234,7 +234,7 @@ function buildFetchInit(
   return { next: { revalidate: revalidateSeconds }, headers };
 }
 
-function asNumber(value: unknown, fallback: number) {
+export function asNumber(value: unknown, fallback: number) {
   const n = Number(value);
   if (Number.isFinite(n) && n > 0) return n;
   return fallback;
@@ -312,7 +312,7 @@ function localPostToListItem(post: BlogPost): PublicBlogListItem {
   };
 }
 
-function mapApiPostToListItem(raw: Record<string, unknown>): PublicBlogListItem {
+export function mapApiPostToListItem(raw: Record<string, unknown>): PublicBlogListItem {
   const categoryObject =
     typeof raw.category === "object" && raw.category !== null
       ? (raw.category as Record<string, unknown>)
@@ -372,7 +372,7 @@ function mapApiPostToListItem(raw: Record<string, unknown>): PublicBlogListItem 
   };
 }
 
-function normalizeListPayload(payload: unknown) {
+export function normalizeListPayload(payload: unknown) {
   if (Array.isArray(payload)) {
     return {
       posts: payload,
@@ -398,6 +398,8 @@ function normalizeListPayload(payload: unknown) {
   const posts =
     (Array.isArray(data.posts) && data.posts) ||
     (Array.isArray(root.posts) && root.posts) ||
+    // Recipe Contents (/api/public/recipes) — see lib/recipes/public-api.ts.
+    (Array.isArray(root.recipes) && root.recipes) ||
     (Array.isArray(data.items) && data.items) ||
     [];
 
@@ -415,7 +417,7 @@ function normalizeListPayload(payload: unknown) {
   return { posts, totalPages, currentPage, categories };
 }
 
-function deriveCategoryStats(items: PublicBlogListItem[]): BlogCategoryStat[] {
+export function deriveCategoryStats(items: PublicBlogListItem[]): BlogCategoryStat[] {
   const counter = new Map<string, BlogCategoryStat>();
   items.forEach((item) => {
     const key = item.categorySlug || item.category;

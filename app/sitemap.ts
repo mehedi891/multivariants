@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getPublicAcademySlugs } from "@/lib/academy/public-api";
 import { getPublicBlogSlugs } from "@/lib/blog/public-api";
+import { getPublicRecipeSlugs } from "@/lib/recipes/public-api";
+import { RECIPES_PATH } from "@/lib/recipes/config";
 import { getPublicClientSlugs } from "@/lib/clients-showcase/public-api";
 import { getPublicLandingPages } from "@/lib/landing-pages/public-api";
 import { locales, localizePath } from "@/i18n/config";
@@ -33,6 +35,7 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: "/privacy-policy", priority: 0.3, changeFrequency: "yearly" },
   { path: "/academy", priority: 0.8, changeFrequency: "weekly" },
   { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
+  { path: RECIPES_PATH, priority: 0.7, changeFrequency: "weekly" },
   { path: "/changelog", priority: 0.7, changeFrequency: "weekly" },
   { path: "/clients-showcase", priority: 0.8, changeFrequency: "weekly" },
 ];
@@ -40,6 +43,7 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const docs = await getPublicAcademySlugs();
   const slugs = await getPublicBlogSlugs(1000);
+  const recipeSlugs = await getPublicRecipeSlugs(1000);
   const clientSlugs = await getPublicClientSlugs(1000);
   const landingPages = await getPublicLandingPages();
 
@@ -64,6 +68,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...slugs.map((slug) => ({
       url: `${SITE_URL}/blog/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+    // Recipe Contents (Spill The Sauce) — English-only like blog posts.
+    ...recipeSlugs.map((slug) => ({
+      url: `${SITE_URL}${RECIPES_PATH}/${slug}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.7,
