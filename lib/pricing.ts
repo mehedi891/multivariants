@@ -16,7 +16,8 @@ export type LimitKey =
   | "discountSets"
   | "maxFileUpload"
   | "multiFileUpload"
-  | "fileStorage";
+  | "fileStorage"
+  | "fileRetention";
 
 /** Display order of limit rows, on the cards and in the comparison table. */
 export const LIMIT_KEYS: LimitKey[] = [
@@ -25,6 +26,7 @@ export const LIMIT_KEYS: LimitKey[] = [
   "maxFileUpload",
   "multiFileUpload",
   "fileStorage",
+  "fileRetention",
 ];
 
 type PlanSpec = {
@@ -35,7 +37,10 @@ type PlanSpec = {
   free?: boolean;
   monthly?: string;
   annual?: { amount: string; regular: string };
-  /** multiFileUpload is a file count; every other value is shown as written. */
+  /**
+   * multiFileUpload is a file count and fileRetention is a number of days
+   * (365 shows as "1 year"); every other value is shown as written.
+   */
   limits: Partial<Record<LimitKey, string | number>>;
 };
 
@@ -61,7 +66,13 @@ export const PLAN_SPECS: PlanSpec[] = [
     popular: true,
     monthly: "$29.99",
     annual: { amount: "$287.90", regular: "$359.88" },
-    limits: { rulesets: 90, discountSets: 20, maxFileUpload: "20 MB", fileStorage: "30 GB" },
+    limits: {
+      rulesets: 90,
+      discountSets: 20,
+      maxFileUpload: "20 MB",
+      fileStorage: "30 GB",
+      fileRetention: 90,
+    },
   },
   {
     id: "max",
@@ -74,6 +85,7 @@ export const PLAN_SPECS: PlanSpec[] = [
       maxFileUpload: "100 MB",
       multiFileUpload: 10,
       fileStorage: "100 GB",
+      fileRetention: 365,
     },
   },
 ];
@@ -83,9 +95,16 @@ export function formatLimit(
   value: string | number,
   t: PricingContent,
 ): string {
-  return key === "multiFileUpload"
-    ? t.limits.files.replace("{n}", String(value))
-    : String(value);
+  if (key === "multiFileUpload") return t.limits.files.replace("{n}", String(value));
+  if (key === "fileRetention") {
+    const days = Number(value);
+    if (days % 365 === 0) {
+      const years = days / 365;
+      return (years === 1 ? t.limits.year : t.limits.years).replace("{n}", String(years));
+    }
+    return t.limits.days.replace("{n}", String(days));
+  }
+  return String(value);
 }
 
 /** Translated copy for one plan. Only Max carries a "coming soon" list. */

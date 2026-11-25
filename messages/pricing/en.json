@@ -110,7 +110,11 @@
     "maxFileUpload": "Max file upload size",
     "multiFileUpload": "Multi-file upload",
     "fileStorage": "File storage",
-    "files": "{n} files"
+    "fileRetention": "Files stored for",
+    "files": "{n} files",
+    "days": "{n} days",
+    "year": "{n} year",
+    "years": "{n} years"
   },
   "comparison": {
     "badge": "Plan Comparison",

@@ -110,7 +110,11 @@
     "maxFileUpload": "Tamanho máx. de upload",
     "multiFileUpload": "Upload múltiplo",
     "fileStorage": "Armazenamento de arquivos",
-    "files": "{n} arquivos"
+    "fileRetention": "Arquivos guardados por",
+    "files": "{n} arquivos",
+    "days": "{n} dias",
+    "year": "{n} ano",
+    "years": "{n} anos"
   },
   "comparison": {
     "badge": "Comparativo de planos",
