@@ -135,8 +135,8 @@ function buildJsonLd(dict: Dictionary) {
         "@type": "AggregateOffer",
         priceCurrency: "USD",
         lowPrice: "0",
-        highPrice: "29.99",
-        offerCount: "3",
+        highPrice: "63.99",
+        offerCount: "4",
         description: dict.schema.offerDescription,
       },
       aggregateRating: {

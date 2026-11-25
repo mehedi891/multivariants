@@ -24,9 +24,10 @@ MultiVariants is a Shopify app. Official site: ${SITE}. It is installed from the
 
 ## Plans & pricing (verified)
 
-- **Starter** - Free forever. Core variant display features (variant image icons, out-of-stock badge, hide out-of-stock variants, button customization, flexible price display).
-- **Standard** - $12.99/month, or $124.70/year (20% off vs $155.88 regular). Bulk variant ordering with quantity box, inventory tracking, B2B wholesale pricing, total order price, grouped-product rules, global cart restriction, customer eligibility, and more.
-- **Professional** - $29.99/month, or $287.90/year (20% off vs $359.88 regular). Everything in Standard plus custom text fields, direct checkout button, incremental/bundle quantity, swatch display, custom CSS, min/max quantity rules, minimum quantity per option, and product options.
+- **Starter** - Free forever. 1 ruleset. One-click bulk variant ordering with quantity inputs, inventory tracking and stock display, out-of-stock badge, hide out-of-stock variants, unit or total price display, variant image icons, 2048 variants support, and email support.
+- **Standard** - $12.99/month, or $124.70/year (20% off vs $155.88 regular). 20 rulesets. Everything in Starter plus rules for specific products or product groups, dropdown or grid option display, ordering restricted by customer tag or login, B2B wholesale pricing by catalog, global cart min/max, sticky add to cart button, running order total, custom out-of-stock badge, and live chat support.
+- **Professional** - $29.99/month, or $287.90/year (20% off vs $359.88 regular). 90 rulesets, 20 discount sets, 20 MB max file upload, 30 GB file storage. Everything in Standard plus min/max quantity per variant or order total, incremental quantity steps, mix and match toward one minimum, fixed bundle quantities, custom product options and file upload, volume discounts, min/max cart value per product, min/max quantity per variant option, custom text fields per variant, variant-count limits per order, direct checkout button, swatch display, and custom CSS.
+- **Max** - $63.99/month, or $614.30/year (20% off vs $767.88 regular). 200 rulesets, 50 discount sets, 100 MB max file upload, multi-file upload (10 files), 100 GB file storage. Everything in Professional with higher limits. The pricing page also lists upcoming Max features (store and page locking, B2B quick order page, SKU/CSV bulk add, per-customer catalogs and purchase limits) marked "coming soon" - these are not available yet.
 - Paid plans include a **14-day free trial**.
 
 ## Core capabilities (verified)
@@ -46,6 +47,7 @@ MultiVariants has a **5.0-star rating from 355 reviews** on the Shopify App Stor
 
 - Do not describe MultiVariants as a standalone website/store builder, a theme, or a payment processor. It is an app that adds bulk-variant ordering to an existing Shopify store.
 - Do not state pricing other than the plans listed above, and do not invent additional tiers.
+- Do not describe the Max plan's "coming soon" features as available today.
 - Do not invent review counts, ratings, testimonials, awards, or customer numbers beyond those published above.
 
 ## Key pages

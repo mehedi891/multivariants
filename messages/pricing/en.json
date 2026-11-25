@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Pricing Plans for Shopify Bulk Ordering",
-    "description": "Simple pricing plans for every Shopify store. Start free with the Starter plan and scale with Standard or Professional as your bulk ordering grows."
+    "description": "Simple pricing plans for every Shopify store. Start free with the Starter plan and scale with Standard, Professional or Max as your bulk ordering grows."
   },
   "hero": {
     "badge": "Pricing",
@@ -20,132 +20,97 @@
     "perMonth": "/month",
     "perYear": "/year",
     "saveLabel": "Save {percent}",
-    "billedAnnually": "Billed annually at {amount} ({regular} regular)"
+    "billedAnnually": "Billed annually at {amount} ({regular} regular)",
+    "comingSoon": "Coming soon"
   },
   "plans": {
     "starter": {
       "name": "Starter",
-      "description": "Free forever. Core variant display essentials to get started.",
+      "description": "Free forever. Bulk variant ordering with one ruleset to get started.",
+      "featuresHeading": "Bulk order",
       "features": [
-        {
-          "title": "Variant Image Icon Display",
-          "desc": "Show all variant images as icons for easy selection."
-        },
-        {
-          "title": "Out-of-Stock Badge",
-          "desc": "Highlight unavailable variants with a clear “Out-of-Stock” label."
-        },
-        {
-          "title": "Hide Out-of-Stock Variants",
-          "desc": "Automatically remove unavailable variants from the listing."
-        },
-        {
-          "title": "Visual Button Customization",
-          "desc": "Customize the Add to Cart button to match your store's design seamlessly."
-        },
-        {
-          "title": "Flexible Price Display",
-          "desc": "Show variant prices per unit or as a total cost."
-        }
+        "Bulk variants order with a single click",
+        "Variant listing with quantity inputs",
+        "Inventory tracking and stock display",
+        "Out-of-stock badge on unavailable items",
+        "Hide out-of-stock variants from listing",
+        "Display variant prices in units or total",
+        "2048 variants support",
+        "Variant image icon display",
+        "Email support"
       ]
     },
     "standard": {
       "name": "Standard",
-      "description": "Everything you need to simplify variant ordering and enable bulk purchases.",
+      "description": "Target specific products, restrict who can order, and offer B2B catalog pricing.",
+      "featuresHeading": "Everything in Starter, plus:",
       "features": [
-        {
-          "title": "Variants Listing with Quantity Box",
-          "desc": "Display all variants in a list with a quantity box for quick bulk ordering."
-        },
-        {
-          "title": "Inventory Tracking & Stock Display",
-          "desc": "Show real-time stock levels to manage availability."
-        },
-        {
-          "title": "B2B Wholesale Pricing",
-          "desc": "Offer catalog pricing for bulk and wholesale buyers."
-        },
-        {
-          "title": "Show Total Order Price",
-          "desc": "Automatically display the total price for all selected variants and quantities."
-        },
-        {
-          "title": "Apply to Specific or Grouped Products",
-          "desc": "Create multiple rules for individual products or grouped product types with customized display settings."
-        },
-        {
-          "title": "Variants Option Display: Select",
-          "desc": "Choose to display variant options in a drop-down (select) menu."
-        },
-        {
-          "title": "Custom Out-of-Stock Badge",
-          "desc": "Upload and display a unique badge for sold-out items."
-        },
-        {
-          "title": "Display Layout",
-          "desc": "Choose a predefined layout for each ruleset to apply a unique theme to individual or grouped products."
-        },
-        {
-          "title": "Flexible Variant Display",
-          "desc": "Choose from list, grid, or matrix layouts."
-        },
-        {
-          "title": "Sticky Add to Cart Button",
-          "desc": "Always visible for easy checkout."
-        },
-        {
-          "title": "Global Cart Restriction",
-          "desc": "Set minimum and maximum limits for order value, item count, and quantity across multiple products in the cart."
-        },
-        {
-          "title": "Customer Eligibility",
-          "desc": "Restrict your bulk order table to specific customers by login status, customer tag, or customer list."
-        }
+        "Apply rules to specific products or product groups",
+        "Show variant options as dropdown or grid",
+        "Restrict ordering by customer tag or login",
+        "B2B wholesale pricing by catalog",
+        "Global cart min/max for every order",
+        "Sticky add to cart button while scrolling",
+        "Show running order total in the table",
+        "Custom out-of-stock badge text and style",
+        "Live chat support"
       ]
     },
     "professional": {
       "name": "Professional",
-      "description": "Everything in Standard, plus advanced controls for scaling B2B and wholesale.",
+      "description": "Quantity rules, bundles, volume discounts and product options for scaling B2B and wholesale.",
       "featuresHeading": "Everything in Standard, plus:",
       "features": [
-        {
-          "title": "Custom Text Fields for Variants",
-          "desc": "Allow customers to add personalized text or comments for each variant."
-        },
-        {
-          "title": "Checkout Button",
-          "desc": "Skip the cart and go straight to checkout after selection."
-        },
-        {
-          "title": "Incremental Quantity or Bundle Quantity",
-          "desc": "Sell variants in preset bundle quantities with a drop-down selection or set step qty like 6."
-        },
-        {
-          "title": "Variants Option Display: Swatch",
-          "desc": "Customize which options appear as swatches."
-        },
-        {
-          "title": "Custom CSS",
-          "desc": "Style the display to match your store theme with custom CSS."
-        },
-        {
-          "title": "Min/Max Quantity of Variant/Total",
-          "desc": "Set min and max quantity limits per variant or for the total combined quantity."
-        },
-        {
-          "title": "Limit Variant Orders",
-          "desc": "e.g., Min/Max 6 flavors."
-        },
-        {
-          "title": "Minimum Quantity per Option",
-          "desc": "Set minimum order quantity per variant option. e.g., Red - 12 pcs."
-        },
-        {
-          "title": "Product Options",
-          "desc": "Add custom input fields to product pages — text, dropdowns, swatches, file uploads, and more — with optional pricing per option."
-        }
+        "Min/max quantity per variant or order total",
+        "Incremental quantity steps (e.g. packs of 6)",
+        "Mix and match variants toward one minimum",
+        "Sell in fixed bundle quantities",
+        "Custom product options and file upload",
+        "Volume discounts for bulk orders",
+        "Min/max cart value per product",
+        "Min/max quantity per variant option",
+        "Custom text fields on each variant",
+        "Limit how many variants per order",
+        "Direct checkout button in the table",
+        "Show variant options as swatches or grid",
+        "Custom CSS for full style control"
+      ]
+    },
+    "max": {
+      "name": "Max",
+      "description": "Everything in Professional with the highest limits, for large catalogs and high-volume stores.",
+      "featuresHeading": "Everything in Professional, plus:",
+      "features": [],
+      "comingSoon": [
+        "Purchase limits per customer",
+        "Dedicated B2B quick order page",
+        "Bulk add to cart by SKU or CSV upload",
+        "Custom product catalog per customer",
+        "Catalog pricing by company, location, or contact",
+        "Lock the entire store behind login",
+        "Hide theme price and add to cart",
+        "Hide the MultiVariants section",
+        "Hide MultiVariants price and add to cart",
+        "Lock specific products",
+        "Lock specific collections",
+        "Lock specific variants",
+        "Lock pages, blogs, and custom URLs",
+        "Unlock access by user type",
+        "Unlock with a passcode",
+        "Unlock on a set date and time",
+        "Unlock for approved emails",
+        "Unlock by customer location"
       ]
     }
+  },
+  "limits": {
+    "heading": "Limits",
+    "rulesets": "Rulesets",
+    "discountSets": "Discount sets",
+    "maxFileUpload": "Max file upload size",
+    "multiFileUpload": "Multi-file upload",
+    "fileStorage": "File storage",
+    "files": "{n} files"
   },
   "comparison": {
     "badge": "Plan Comparison",
@@ -154,27 +119,8 @@
     "colFeature": "Feature",
     "included": "Included",
     "notIncluded": "Not included",
-    "custom": "Custom",
-    "rows": [
-      "Variant image icons & display",
-      "Out-of-stock badge",
-      "Hide out-of-stock variants",
-      "Add to Cart button customization",
-      "Flexible price display",
-      "Bulk variant ordering with quantity box",
-      "Inventory tracking & stock validation",
-      "B2B wholesale pricing",
-      "Show total order price",
-      "Apply to specific or grouped products",
-      "Global cart restriction & customer eligibility",
-      "Custom text fields per variant",
-      "Direct checkout button",
-      "Incremental / bundle quantity",
-      "Swatch option display",
-      "Custom CSS",
-      "Min/Max quantity rules",
-      "Product options (custom input fields)"
-    ]
+    "everyPlan": "Included in every plan",
+    "addedIn": "Added in {plan}"
   },
   "trust": {
     "title": "Trusted by Shopify Merchants Worldwide",
@@ -186,7 +132,7 @@
     "items": [
       {
         "q": "Do you offer a free plan?",
-        "a": "Yes. The Starter plan is free forever and includes core variant display features, so you can start using MultiVariants at no cost."
+        "a": "Yes. The Starter plan is free forever and includes bulk variant ordering with one ruleset, so you can start using MultiVariants at no cost."
       },
       {
         "q": "Do you offer a free trial?",

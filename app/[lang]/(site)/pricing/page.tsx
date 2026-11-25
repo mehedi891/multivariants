@@ -8,130 +8,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimateIn from "@/components/AnimateIn";
 import PricingPlans from "@/components/PricingPlans";
-
-type ComparisonCell = string | boolean;
-
-type ComparisonRow = {
-  feature: string;
-  starter: ComparisonCell;
-  standard: ComparisonCell;
-  professional: ComparisonCell;
-};
+import { LIMIT_KEYS, PLAN_SPECS, formatLimit, planCopy } from "@/lib/pricing";
 
 const appLink =
   "https://apps.shopify.com/multivariants?ref=efolillc&utm_source=multivariants&utm_medium=cta&utm_campaign=getapp";
 const demoLink = "https://multivariant.myshopify.com/collections/all";
-
-const comparisonRows: ComparisonRow[] = [
-  {
-    feature: "Variant image icons & display",
-    starter: true,
-    standard: true,
-    professional: true,
-  },
-  {
-    feature: "Out-of-stock badge",
-    starter: true,
-    standard: "custom",
-    professional: "custom",
-  },
-  {
-    feature: "Hide out-of-stock variants",
-    starter: true,
-    standard: true,
-    professional: true,
-  },
-  {
-    feature: "Add to Cart button customization",
-    starter: true,
-    standard: true,
-    professional: true,
-  },
-  {
-    feature: "Flexible price display",
-    starter: true,
-    standard: true,
-    professional: true,
-  },
-  {
-    feature: "Bulk variant ordering with quantity box",
-    starter: false,
-    standard: true,
-    professional: true,
-  },
-  {
-    feature: "Inventory tracking & stock validation",
-    starter: false,
-    standard: true,
-    professional: true,
-  },
-  {
-    feature: "B2B wholesale pricing",
-    starter: false,
-    standard: true,
-    professional: true,
-  },
-  {
-    feature: "Show total order price",
-    starter: false,
-    standard: true,
-    professional: true,
-  },
-  {
-    feature: "Apply to specific or grouped products",
-    starter: false,
-    standard: true,
-    professional: true,
-  },
-  {
-    feature: "Global cart restriction & customer eligibility",
-    starter: false,
-    standard: true,
-    professional: true,
-  },
-  {
-    feature: "Custom text fields per variant",
-    starter: false,
-    standard: false,
-    professional: true,
-  },
-  {
-    feature: "Direct checkout button",
-    starter: false,
-    standard: false,
-    professional: true,
-  },
-  {
-    feature: "Incremental / bundle quantity",
-    starter: false,
-    standard: false,
-    professional: true,
-  },
-  {
-    feature: "Swatch option display",
-    starter: false,
-    standard: false,
-    professional: true,
-  },
-  {
-    feature: "Custom CSS",
-    starter: false,
-    standard: false,
-    professional: true,
-  },
-  {
-    feature: "Min/Max quantity rules",
-    starter: false,
-    standard: false,
-    professional: true,
-  },
-  {
-    feature: "Product options (custom input fields)",
-    starter: false,
-    standard: false,
-    professional: true,
-  },
-];
 
 type PageProps = { params: Promise<{ lang: string }> };
 
@@ -152,38 +33,48 @@ export default async function PricingPage({ params }: PageProps) {
   const locale = toLocale(lang);
   const dict = await getDictionary(locale);
   const content = await getPricingContent(locale);
-  const renderComparisonCell = (value: ComparisonCell, emphasize = false) => {
-    if (typeof value === "boolean") {
-      if (value) {
-        return (
-          <span
-            className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-sm font-bold ${
-              emphasize
-                ? "bg-[#6e72ff]/25 text-[#aeb3ff]"
-                : "bg-accent/20 text-accent"
-            }`}
-            aria-label={content.comparison.included}
-          >
-            ✓
-          </span>
-        );
-      }
-      return (
-        <span
-          className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/45"
-          aria-label={content.comparison.notIncluded}
-        >
-          —
-        </span>
-      );
-    }
+  const plans = PLAN_SPECS.map((spec) => ({ spec, copy: planCopy(content, spec.id) }));
 
-    return (
-      <span className={emphasize ? "font-semibold text-[#c5c9ff]" : ""}>
-        {value === "custom" ? content.comparison.custom : value}
+  // Features are cumulative, so each plan's own list becomes one group of rows
+  // that is included in that plan and every plan above it.
+  const featureGroups = plans
+    .map(({ copy }, tier) => ({
+      tier,
+      label:
+        tier === 0
+          ? content.comparison.everyPlan
+          : content.comparison.addedIn.replace("{plan}", copy.name),
+      features: copy.features,
+    }))
+    .filter((group) => group.features.length > 0);
+
+  const limitRows = LIMIT_KEYS.map((key) => ({
+    key,
+    label: content.limits[key],
+    values: PLAN_SPECS.map((spec) => {
+      const value = spec.limits[key];
+      return value === undefined ? null : formatLimit(key, value, content);
+    }),
+  }));
+
+  const renderCheck = (included: boolean, emphasize = false) =>
+    included ? (
+      <span
+        className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-sm font-bold ${
+          emphasize ? "bg-[#6e72ff]/25 text-[#aeb3ff]" : "bg-accent/20 text-accent"
+        }`}
+        aria-label={content.comparison.included}
+      >
+        ✓
+      </span>
+    ) : (
+      <span
+        className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/45"
+        aria-label={content.comparison.notIncluded}
+      >
+        —
       </span>
     );
-  };
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -289,72 +180,156 @@ export default async function PricingPage({ params }: PageProps) {
                 </p>
               </div>
 
-              <ul className="mt-8 space-y-3 md:hidden">
-                {comparisonRows.map((row, index) => (
-                  <li key={content.comparison.rows[index] ?? row.feature}>
-                    <AnimateIn direction="up" delay={index * 35}>
-                      <article className="rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.03] p-4 shadow-[0_10px_24px_rgba(0,0,0,0.28)] backdrop-blur-xl">
-                        <p className="text-sm font-semibold text-white">
-                          {content.comparison.rows[index] ?? row.feature}
-                        </p>
-                        <dl className="mt-3 space-y-2.5 text-sm text-white/75">
-                          <div className="flex items-center justify-between gap-3">
-                            <dt className="text-white/60">{content.plans.starter.name}</dt>
-                            <dd>{renderComparisonCell(row.starter)}</dd>
-                          </div>
-                          <div className="flex items-center justify-between gap-3">
-                            <dt className="text-white/60">{content.plans.standard.name}</dt>
-                            <dd>{renderComparisonCell(row.standard)}</dd>
-                          </div>
-                          <div className="flex items-center justify-between gap-3">
-                            <dt className="font-medium text-[#c5c9ff]">{content.plans.professional.name}</dt>
-                            <dd>{renderComparisonCell(row.professional, true)}</dd>
-                          </div>
-                        </dl>
-                      </article>
-                    </AnimateIn>
-                  </li>
+              {/* Mobile: one card per group — every row in a group shares the same plans */}
+              <div className="mt-8 space-y-4 md:hidden">
+                {featureGroups.map((group) => (
+                  <article
+                    key={group.tier}
+                    className="rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.03] p-4 shadow-[0_10px_24px_rgba(0,0,0,0.28)] backdrop-blur-xl"
+                  >
+                    <h3 className="text-xs font-semibold uppercase tracking-wide text-accent">
+                      {group.label}
+                    </h3>
+                    <ul className="mt-3 flex flex-wrap gap-1.5">
+                      {plans.map(({ spec, copy }, planIdx) => {
+                        const included = planIdx >= group.tier;
+                        return (
+                          <li
+                            key={spec.id}
+                            className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                              included
+                                ? "bg-accent/15 text-accent"
+                                : "bg-white/[0.06] text-white/35 line-through"
+                            }`}
+                          >
+                            <span aria-hidden="true">{included ? "✓ " : ""}</span>
+                            {copy.name}
+                            <span className="sr-only">
+                              {": "}
+                              {included ? content.comparison.included : content.comparison.notIncluded}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                    <ul className="mt-4 space-y-2 border-t border-white/10 pt-4">
+                      {group.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2.5 text-sm text-white/80">
+                          <span className="text-white/35" aria-hidden="true">
+                            •
+                          </span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
                 ))}
-              </ul>
+
+                <article className="rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] to-white/[0.03] p-4 shadow-[0_10px_24px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+                  <h3 className="text-xs font-semibold uppercase tracking-wide text-accent">
+                    {content.limits.heading}
+                  </h3>
+                  <div className="mt-1 divide-y divide-white/10">
+                    {limitRows.map((row) => (
+                      <div key={row.key} className="py-3">
+                        <p className="text-sm font-semibold text-white">{row.label}</p>
+                        <dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
+                          {plans.map(({ spec, copy }, planIdx) => (
+                            <div key={spec.id} className="flex items-center justify-between gap-2">
+                              <dt className="text-white/55">{copy.name}</dt>
+                              <dd className="font-semibold text-white/85">
+                                {row.values[planIdx] ?? <span className="text-white/35">—</span>}
+                              </dd>
+                            </div>
+                          ))}
+                        </dl>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              </div>
 
               <div className="mt-8 hidden overflow-x-auto rounded-3xl border border-white/15 glass shadow-[0_18px_42px_rgba(0,0,0,0.35)] md:block">
                 <table className="w-full min-w-[760px] border-separate border-spacing-0 text-left">
                   <thead>
                     <tr className="text-sm uppercase tracking-wide text-white/55">
-                      <th className="border-b border-white/10 px-5 py-4 font-semibold sm:px-6">
+                      <th scope="col" className="border-b border-white/10 px-5 py-4 font-semibold sm:px-6">
                         {content.comparison.colFeature}
                       </th>
-                      <th className="border-b border-white/10 px-5 py-4 font-semibold sm:px-6">
-                        {content.plans.starter.name}
-                      </th>
-                      <th className="border-b border-white/10 px-5 py-4 font-semibold sm:px-6">
-                        {content.plans.standard.name}
-                      </th>
-                      <th className="border-b border-white/10 bg-[#6e72ff]/10 px-5 py-4 font-semibold text-[#c5c9ff] sm:px-6">
-                        {content.plans.professional.name}
-                      </th>
+                      {plans.map(({ spec, copy }) => (
+                        <th
+                          key={spec.id}
+                          scope="col"
+                          className={`w-[14%] border-b border-white/10 px-3 py-4 text-center font-semibold ${
+                            spec.popular ? "bg-[#6e72ff]/10 text-[#c5c9ff]" : ""
+                          }`}
+                        >
+                          {copy.name}
+                        </th>
+                      ))}
                     </tr>
                   </thead>
+                  {featureGroups.map((group) => (
+                    <tbody key={group.tier}>
+                      <tr>
+                        <th
+                          scope="colgroup"
+                          colSpan={plans.length + 1}
+                          className="border-b border-white/10 bg-white/[0.04] px-5 pb-2.5 pt-5 text-xs font-semibold uppercase tracking-wide text-accent sm:px-6"
+                        >
+                          {group.label}
+                        </th>
+                      </tr>
+                      {group.features.map((feature) => (
+                        <tr key={feature} className="transition-colors duration-200 hover:bg-white/[0.05]">
+                          <th
+                            scope="row"
+                            className="border-b border-white/10 px-5 py-3 text-sm font-medium text-white/85 sm:px-6 sm:text-[15px]"
+                          >
+                            {feature}
+                          </th>
+                          {plans.map(({ spec }, planIdx) => (
+                            <td
+                              key={spec.id}
+                              className={`border-b border-white/10 px-3 py-3 text-center ${
+                                spec.popular ? "bg-[#6e72ff]/8" : ""
+                              }`}
+                            >
+                              {renderCheck(planIdx >= group.tier, spec.popular)}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  ))}
                   <tbody>
-                    {comparisonRows.map((row, index) => (
-                      <tr
-                        key={content.comparison.rows[index] ?? row.feature}
-                        className={`transition-colors duration-200 hover:bg-white/[0.05] ${
-                          index % 2 === 0 ? "bg-white/[0.02]" : ""
-                        }`}
+                    <tr>
+                      <th
+                        scope="colgroup"
+                        colSpan={plans.length + 1}
+                        className="border-b border-white/10 bg-white/[0.04] px-5 pb-2.5 pt-5 text-xs font-semibold uppercase tracking-wide text-accent sm:px-6"
                       >
-                        <td className="border-b border-white/10 px-5 py-4 text-sm font-medium text-white/85 sm:px-6 sm:text-[15px]">
-                          {content.comparison.rows[index] ?? row.feature}
-                        </td>
-                        <td className="border-b border-white/10 px-5 py-4 text-sm text-white/70 sm:px-6 sm:text-[15px]">
-                          {renderComparisonCell(row.starter)}
-                        </td>
-                        <td className="border-b border-white/10 px-5 py-4 text-sm text-white/70 sm:px-6 sm:text-[15px]">
-                          {renderComparisonCell(row.standard)}
-                        </td>
-                        <td className="border-b border-white/10 bg-[#6e72ff]/8 px-5 py-4 text-sm text-white/80 sm:px-6 sm:text-[15px]">
-                          {renderComparisonCell(row.professional, true)}
-                        </td>
+                        {content.limits.heading}
+                      </th>
+                    </tr>
+                    {limitRows.map((row) => (
+                      <tr key={row.key} className="transition-colors duration-200 hover:bg-white/[0.05]">
+                        <th
+                          scope="row"
+                          className="border-b border-white/10 px-5 py-3 text-sm font-medium text-white/85 sm:px-6 sm:text-[15px]"
+                        >
+                          {row.label}
+                        </th>
+                        {plans.map(({ spec }, planIdx) => (
+                          <td
+                            key={spec.id}
+                            className={`border-b border-white/10 px-3 py-3 text-center text-sm sm:text-[15px] ${
+                              spec.popular ? "bg-[#6e72ff]/8 font-semibold text-[#c5c9ff]" : "text-white/75"
+                            }`}
+                          >
+                            {row.values[planIdx] ?? <span className="text-white/35">—</span>}
+                          </td>
+                        ))}
                       </tr>
                     ))}
                   </tbody>
