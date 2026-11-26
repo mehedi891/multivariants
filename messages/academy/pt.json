@@ -1,29 +1,152 @@
 {
   "meta": {
-    "title": "Academy – Guias de configuração e documentação",
-    "description": "Navegue pela documentação do MultiVariants por categoria. Aprenda sobre configuração, regras de quantidade, personalização de layout e integrações."
+    "title": "Central de Ajuda – Guias de configuração e tutoriais",
+    "description": "Guias curtos, passo a passo, para cada recurso do MultiVariants: instalação, limites de pedido, opções de produto, descontos, regras do carrinho e traduções.",
+    "topicTitle": "{topic} – Central de Ajuda",
+    "topicDescription": "Todos os guias do MultiVariants sobre {topic}, passo a passo."
   },
-  "badge": "Documentação",
-  "title": "MultiVariants Academy",
-  "subtitle": "Documentação de ajuda sobre configuração, restrições, fluxos de pedido em massa e integrações. Comece por uma categoria e abra qualquer guia.",
+  "root": "Central de Ajuda",
+  "home": "Início",
+  "breadcrumb": "Trilha de navegação",
+  "hero": {
+    "eyebrow": "Central de Ajuda",
+    "title": "Como podemos",
+    "titleAccent": "ajudar você a vender em massa?",
+    "subtitle": "Guias curtos, passo a passo, para cada recurso do MultiVariants."
+  },
+  "search": {
+    "label": "Pesquisar na Central de Ajuda",
+    "placeholder": "Pesquise guias, ex.: MOQ, product options, app block…",
+    "button": "Pesquisar",
+    "seeAll": "Ver todos os resultados",
+    "noQuickMatch": "Nenhum resultado rápido. Pesquisar em todos os guias",
+    "shortcut": "Pressione / para pesquisar",
+    "popular": "Populares:",
+    "chips": ["App block", "MOQ", "Product options", "Discount", "Cart restriction", "Language"]
+  },
+  "stats": {
+    "guideOne": "guia",
+    "guideOther": "guias",
+    "topicOne": "tema",
+    "topicOther": "temas",
+    "support": "suporte humano"
+  },
+  "quickStart": {
+    "eyebrow": "Comece aqui",
+    "titleOne": "Configure pedidos em massa em {n} passo",
+    "titleOther": "Configure pedidos em massa em {n} passos",
+    "steps": [
+      "Adicione o app à sua loja Shopify.",
+      "Mostre a tabela de pedido em massa nas páginas de produto.",
+      "Ative em um produto para começar.",
+      "Defina as quantidades que os clientes devem comprar."
+    ]
+  },
+  "topics": {
+    "eyebrow": "Navegue por tema",
+    "title": "Encontre o guia de que você precisa",
+    "subtitle": "Cada restrição, opção e configuração, organizada do jeito que você trabalha.",
+    "guideOne": "{n} guia",
+    "guideOther": "{n} guias",
+    "viewAllOne": "Ver {n} guia",
+    "viewAllOther": "Ver todos os {n} guias",
+    "sidebar": "Temas",
+    "otherTitle": "Outros guias",
+    "descriptions": {
+      "installation": "Instale o MultiVariants, adicione-o ao seu tema e configure seu primeiro conjunto de regras.",
+      "restriction-features": "Quantidades mínimas e máximas, valores de pedido, incrementos e quantidades em pacote.",
+      "product-options": "Adicione campos personalizados aos produtos, como texto, amostras, listas suspensas e envio de arquivos.",
+      "basic-configuration": "Encontre, organize e configure seus conjuntos de regras e como eles são exibidos.",
+      "discounts": "Descontos por volume em níveis que você pode reutilizar em vários conjuntos de regras.",
+      "general-settings": "Configurações da loja inteira para botões, totais, selos e redirecionamentos.",
+      "theme-adjustments-for-cart-page": "Aplique restrições no carrinho e corrija particularidades do tema.",
+      "trnaslation": "Altere os textos da loja e adicione novos idiomas.",
+      "translation": "Altere os textos da loja e adicione novos idiomas.",
+      "referral-program": "Indique lojistas e ganhe 20% de comissão para sempre.",
+      "other": "Respostas para dúvidas comuns e compatibilidade."
+    }
+  },
+  "popular": {
+    "eyebrow": "Mais lidos",
+    "title": "Guias populares"
+  },
+  "faq": {
+    "eyebrow": "Perguntas frequentes",
+    "title": "Respostas rápidas",
+    "items": [
+      {
+        "id": "no-code",
+        "question": "Preciso saber programar para usar o MultiVariants?",
+        "answer": "Não. Conjuntos de regras, restrições e opções de produto são configurados com formulários dentro do app. O CSS personalizado está disponível se você quiser, mas é opcional."
+      },
+      {
+        "id": "not-showing",
+        "question": "Por que o MultiVariants não aparece na minha página de produto?",
+        "answer": "Verifique se o app embed está ativo, se o status do conjunto de regras está como Enable e se o produto atende à condição Applies to do conjunto de regras. Se ainda não aparecer, fale com o suporte e verificaremos seu tema."
+      },
+      {
+        "id": "minimum-quantity",
+        "question": "Posso definir uma quantidade mínima de pedido?",
+        "answer": "Sim. Defina um mínimo ou máximo por variante ou para o produto inteiro, venda em incrementos fixos ou ofereça quantidades em pacote predefinidas."
+      },
+      {
+        "id": "quantity-discounts",
+        "question": "Posso oferecer descontos por quantidade?",
+        "answer": "Sim. Crie um conjunto de descontos em níveis e conecte-o aos seus conjuntos de regras, para que os preços caiam à medida que os clientes compram mais."
+      },
+      {
+        "id": "cart",
+        "question": "As restrições também funcionam no carrinho?",
+        "answer": "Sim. Aplique as restrições também à página do carrinho, para que os clientes não finalizem a compra abaixo ou acima dos seus limites."
+      },
+      {
+        "id": "free-plan",
+        "question": "Existe um plano gratuito?",
+        "answer": "Sim. O plano Starter é gratuito. Os planos pagos adicionam mais recursos e limites."
+      }
+    ]
+  },
+  "help": {
+    "eyebrow": "Ainda com dúvidas?",
+    "title": "Pessoas de verdade, prontas 24/7",
+    "body": "Converse com a gente no app ou deixe nossa equipe configurar seu primeiro conjunto de regras gratuitamente.",
+    "contact": "Falar com o suporte",
+    "setup": "Agendar configuração gratuita"
+  },
+  "article": {
+    "minRead": "{n} min de leitura",
+    "stepOne": "{n} passo",
+    "stepOther": "{n} passos",
+    "updated": "Atualizado em {date}",
+    "previous": "Anterior",
+    "next": "Próximo",
+    "pager": "Mais guias neste tema",
+    "inTopic": "Em {topic}",
+    "helpTitle": "Precisa de ajuda?",
+    "helpBody": "Nossa equipe responde 24/7 e pode configurar seu conjunto de regras gratuitamente.",
+    "helpCta": "Falar com o suporte",
+    "feedback": {
+      "question": "Este guia foi útil?",
+      "yes": "Sim",
+      "no": "Não",
+      "thanksYes": "Obrigado! Que bom que ajudou.",
+      "thanksNo": "Obrigado por nos contar. Vamos melhorar este guia."
+    }
+  },
+  "results": {
+    "metaTitle": "Pesquisar na Central de Ajuda",
+    "crumb": "Pesquisa",
+    "countOne": "{n} resultado para “{q}”",
+    "countOther": "{n} resultados para “{q}”",
+    "acrossOne": "Em {n} tema.",
+    "acrossOther": "Em {n} temas.",
+    "prompt": "Digite uma ou duas palavras para pesquisar em todos os guias.",
+    "empty": "Nenhum guia encontrado. Tente menos palavras ou",
+    "askTeam": "pergunte à nossa equipe"
+  },
   "empty": {
-    "title": "Ainda não há documentos",
-    "description": "Os guias da Academy aparecerão aqui assim que forem publicados.",
+    "title": "Ainda não há guias",
+    "description": "Os guias da Central de Ajuda aparecerão aqui assim que forem publicados.",
     "helpText": "Volte em instantes."
-  },
-  "explorer": {
-    "findDocsTitle": "Encontre a documentação mais rápido",
-    "findDocsSubtitle": "Pesquise em toda a documentação e depois filtre por categoria.",
-    "searchPlaceholder": "Pesquisar por título, tema ou palavra-chave...",
-    "allCategories": "Todas as categorias",
-    "topMatches": "Melhores resultados",
-    "results": "{count} resultados",
-    "noDocsTitle": "Nenhum documento encontrado",
-    "noDocsBody": "Tente outra palavra-chave ou mude os filtros de categoria.",
-    "clearFilters": "Limpar filtros",
-    "knowledgeGrid": "Base de conhecimento",
-    "visibleDocs": "{count} documentos visíveis",
-    "index": "Índice",
-    "filterPlaceholder": "Filtrar documentos..."
   }
 }

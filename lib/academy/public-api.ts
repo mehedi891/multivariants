@@ -1,5 +1,5 @@
 import type { AcademyCategory, AcademyDoc, AcademySection } from "@/lib/academy/docs-data";
-import { stripHtml as stripHtmlTags } from "@/lib/content-html";
+import { decodeHtmlEntities, stripHtml as stripHtmlTags } from "@/lib/content-html";
 import {
   getAcademyCategories,
   getAcademyDocBySlug,
@@ -24,6 +24,9 @@ const DOCS_SITE = process.env.SITE_SLUG ?? process.env.DOCS_SITE ?? process.env.
 // Default ON (see blog/public-api.ts) so CMS outages don't 404 live docs (C3)
 // or empty the sitemap (C11).
 const DOCS_API_FALLBACK_ENABLED = process.env.DOCS_API_FALLBACK_ENABLED !== "false";
+
+/** Slug of the synthetic topic that collects docs the CMS returns without a category. */
+export const OTHER_TOPIC_SLUG = "other";
 
 export type PublicAcademyDoc = AcademyDoc & {
   contentHtml?: string;
@@ -162,14 +165,25 @@ function cleanExcerpt(value: string | undefined) {
     .trim();
 }
 
+// CMS text fields can carry HTML entities left over from WordPress (e.g. a
+// title with "&#038;"). They are rendered as text, so decode them here.
+function decodeText(value: unknown) {
+  return decodeHtmlEntities(String(value ?? "")).trim();
+}
+
 function mapApiDocListItem(raw: Record<string, unknown>): AcademyDoc {
-  const excerpt = cleanExcerpt(String(raw.excerpt ?? raw.summary ?? raw.description ?? ""));
+  const excerpt = cleanExcerpt(decodeText(raw.excerpt ?? raw.summary ?? raw.description));
+  const minutes = Number(raw.readingTimeMinutes ?? raw.readTimeMinutes);
+  const updated = raw.updatedAt ?? raw.lastUpdated ?? raw.publishedAt;
   return {
     slug: String(raw.slug ?? ""),
-    title: String(raw.title ?? "Untitled Doc"),
+    title: decodeText(raw.title) || "Untitled Doc",
     excerpt,
     readTime: formatReadTime(raw.readingTimeMinutes ?? raw.readTimeMinutes ?? raw.readTime),
-    lastUpdated: formatUpdatedDate(raw.updatedAt ?? raw.lastUpdated ?? raw.publishedAt),
+    lastUpdated: formatUpdatedDate(updated),
+    readingMinutes: Number.isFinite(minutes) && minutes > 0 ? Math.round(minutes) : undefined,
+    updatedAt:
+      typeof updated === "string" && !Number.isNaN(Date.parse(updated)) ? updated : undefined,
     sections: [],
   };
 }
@@ -185,13 +199,13 @@ function mapApiCategory(raw: Record<string, unknown>): AcademyCategory | null {
     .filter((doc) => Boolean(doc.slug));
 
   const slug = String(raw.slug ?? "");
-  const title = String(raw.name ?? raw.title ?? slug);
+  const title = decodeText(raw.name ?? raw.title ?? slug);
   if (!slug || !title) return null;
 
   return {
     slug,
     title,
-    description: String(raw.description ?? ""),
+    description: decodeText(raw.description),
     docs,
   };
 }
@@ -236,7 +250,7 @@ function normalizeListPayload(payload: unknown) {
 
   if (uncategorizedDocs.length > 0) {
     categories.push({
-      slug: "other",
+      slug: OTHER_TOPIC_SLUG,
       title: "Other Guides",
       description: "",
       docs: uncategorizedDocs,
@@ -285,12 +299,9 @@ function mapApiSingleDoc(payload: unknown): PublicAcademyDoc | null {
     categorySlug:
       String(categoryObj?.slug ?? docRaw.categorySlug ?? "").trim() || undefined,
     categoryTitle:
-      String(categoryObj?.name ?? categoryObj?.title ?? docRaw.categoryName ?? "").trim() ||
-      undefined,
-    seoTitle:
-      String(docRaw.metaTitle ?? docRaw.seoTitle ?? "").trim() || undefined,
-    seoDescription:
-      String(docRaw.metaDescription ?? docRaw.seoDescription ?? "").trim() || undefined,
+      decodeText(categoryObj?.name ?? categoryObj?.title ?? docRaw.categoryName) || undefined,
+    seoTitle: decodeText(docRaw.metaTitle ?? docRaw.seoTitle) || undefined,
+    seoDescription: decodeText(docRaw.metaDescription ?? docRaw.seoDescription) || undefined,
   };
 }
 

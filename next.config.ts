@@ -44,8 +44,10 @@ const nextConfig: NextConfig = {
       // --- Batch 4: blog date archives (YYYY/MM) -> all posts -----------
       { source: "/blog/:year(\\d{4})/:month(\\d{2})", destination: "/blog", permanent: true },
 
-      // --- Batch 3: academy categories -> academy ----------------------
-      { source: "/academy-categories/:slug", destination: "/academy", permanent: true },
+      // --- Batch 3: academy categories -> Help Center topic pages -------
+      // The old WordPress topic slugs (installation, restriction-features,
+      // trnaslation, …) are the CMS category slugs, so each keeps its page.
+      { source: "/academy-categories/:slug", destination: "/academy/category/:slug", permanent: true },
 
       // --- Batch 5: legacy /docs -> academy ----------------------------
       { source: "/docs", destination: "/academy", permanent: true },

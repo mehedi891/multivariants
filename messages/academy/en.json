@@ -1,29 +1,152 @@
 {
   "meta": {
-    "title": "Academy – Setup Guides & Help Docs",
-    "description": "Browse MultiVariants help docs by category. Learn setup, quantity rules, layout customization, and integrations."
+    "title": "Help Center – Setup Guides & How-tos",
+    "description": "Short, step-by-step guides for every MultiVariants feature: installation, order limits, product options, discounts, cart rules and translations.",
+    "topicTitle": "{topic} – Help Center",
+    "topicDescription": "Every MultiVariants guide about {topic}, step by step."
   },
-  "badge": "Docs",
-  "title": "MultiVariants Academy",
-  "subtitle": "Help docs for setup, restrictions, bulk ordering workflows, and integrations. Start with a category and open any guide.",
+  "root": "Help Center",
+  "home": "Home",
+  "breadcrumb": "Breadcrumb",
+  "hero": {
+    "eyebrow": "Help Center",
+    "title": "How can we",
+    "titleAccent": "help you sell in bulk?",
+    "subtitle": "Short, step-by-step guides for every MultiVariants feature."
+  },
+  "search": {
+    "label": "Search the Help Center",
+    "placeholder": "Search guides, e.g. MOQ, product options, app block…",
+    "button": "Search",
+    "seeAll": "See all results",
+    "noQuickMatch": "No quick match. Search all guides",
+    "shortcut": "Press / to search",
+    "popular": "Popular:",
+    "chips": ["App block", "MOQ", "Product options", "Discount", "Cart restriction", "Language"]
+  },
+  "stats": {
+    "guideOne": "guide",
+    "guideOther": "guides",
+    "topicOne": "topic",
+    "topicOther": "topics",
+    "support": "human support"
+  },
+  "quickStart": {
+    "eyebrow": "Start here",
+    "titleOne": "Set up bulk ordering in {n} step",
+    "titleOther": "Set up bulk ordering in {n} steps",
+    "steps": [
+      "Add the app to your Shopify store.",
+      "Show the bulk order table on product pages.",
+      "Turn it on for one product to start.",
+      "Set the quantities customers must buy."
+    ]
+  },
+  "topics": {
+    "eyebrow": "Browse by topic",
+    "title": "Find the guide you need",
+    "subtitle": "Every restriction, option and setting, organised the way you work.",
+    "guideOne": "{n} guide",
+    "guideOther": "{n} guides",
+    "viewAllOne": "View {n} guide",
+    "viewAllOther": "View all {n} guides",
+    "sidebar": "Topics",
+    "otherTitle": "Other Guides",
+    "descriptions": {
+      "installation": "Install MultiVariants, add it to your theme and set up your first ruleset.",
+      "restriction-features": "Minimum and maximum quantities, order values, increments and bundle quantities.",
+      "product-options": "Add custom fields like text, swatches, dropdowns and file uploads to products.",
+      "basic-configuration": "Find, organise and configure your rulesets and how they display.",
+      "discounts": "Tiered volume discounts you can reuse across rulesets.",
+      "general-settings": "Store-wide settings for buttons, totals, badges and redirects.",
+      "theme-adjustments-for-cart-page": "Apply restrictions in the cart and fix theme quirks.",
+      "trnaslation": "Change storefront labels and add new languages.",
+      "translation": "Change storefront labels and add new languages.",
+      "referral-program": "Refer merchants and earn 20% commission for life.",
+      "other": "Answers to common questions and compatibility."
+    }
+  },
+  "popular": {
+    "eyebrow": "Most read",
+    "title": "Popular guides"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Quick answers",
+    "items": [
+      {
+        "id": "no-code",
+        "question": "Do I need to know code to use MultiVariants?",
+        "answer": "No. Rulesets, restrictions and product options are all set up with forms inside the app. Custom CSS is there if you want it, but it is optional."
+      },
+      {
+        "id": "not-showing",
+        "question": "Why isn’t MultiVariants showing on my product page?",
+        "answer": "Check that the app embed is active, the ruleset status is Enable, and the product matches the ruleset’s Applies to condition. If it still doesn’t show, contact support and we’ll check your theme."
+      },
+      {
+        "id": "minimum-quantity",
+        "question": "Can I set a minimum order quantity?",
+        "answer": "Yes. Set a minimum or maximum per variant or for the whole product, sell in fixed increments, or offer preset bundle quantities."
+      },
+      {
+        "id": "quantity-discounts",
+        "question": "Can I offer quantity discounts?",
+        "answer": "Yes. Create a tiered discount set and connect it to your rulesets, so prices drop as customers buy more."
+      },
+      {
+        "id": "cart",
+        "question": "Do restrictions work in the cart too?",
+        "answer": "Yes. Apply restrictions to the cart page as well, so customers can’t check out below or above your limits."
+      },
+      {
+        "id": "free-plan",
+        "question": "Is there a free plan?",
+        "answer": "Yes. The Starter plan is free. Paid plans add more features and limits."
+      }
+    ]
+  },
+  "help": {
+    "eyebrow": "Still stuck?",
+    "title": "Real humans, ready 24/7",
+    "body": "Chat with us in the app, or let our team set up your first ruleset for free.",
+    "contact": "Contact support",
+    "setup": "Book free setup"
+  },
+  "article": {
+    "minRead": "{n} min read",
+    "stepOne": "{n} step",
+    "stepOther": "{n} steps",
+    "updated": "Updated {date}",
+    "previous": "Previous",
+    "next": "Next",
+    "pager": "More guides in this topic",
+    "inTopic": "In {topic}",
+    "helpTitle": "Need a hand?",
+    "helpBody": "Our team replies 24/7 and can set up your ruleset for free.",
+    "helpCta": "Contact support",
+    "feedback": {
+      "question": "Was this guide helpful?",
+      "yes": "Yes",
+      "no": "No",
+      "thanksYes": "Thanks! Glad it helped.",
+      "thanksNo": "Thanks for telling us. We’ll improve this guide."
+    }
+  },
+  "results": {
+    "metaTitle": "Search the Help Center",
+    "crumb": "Search",
+    "countOne": "{n} result for “{q}”",
+    "countOther": "{n} results for “{q}”",
+    "acrossOne": "Across {n} topic.",
+    "acrossOther": "Across {n} topics.",
+    "prompt": "Type a word or two to search every guide.",
+    "empty": "No guides match. Try fewer words, or",
+    "askTeam": "ask our team"
+  },
   "empty": {
-    "title": "No docs available yet",
-    "description": "Academy guides will appear here once documents are published.",
+    "title": "No guides available yet",
+    "description": "Help Center guides will appear here once they’re published.",
     "helpText": "Please check back shortly."
-  },
-  "explorer": {
-    "findDocsTitle": "Find Docs Faster",
-    "findDocsSubtitle": "Search across all docs, then narrow by category.",
-    "searchPlaceholder": "Search docs by title, topic, or keyword...",
-    "allCategories": "All Categories",
-    "topMatches": "Top Matches",
-    "results": "{count} results",
-    "noDocsTitle": "No docs found",
-    "noDocsBody": "Try a different keyword or switch category filters.",
-    "clearFilters": "Clear Filters",
-    "knowledgeGrid": "Knowledge Grid",
-    "visibleDocs": "{count} visible docs",
-    "index": "Index",
-    "filterPlaceholder": "Filter docs..."
   }
 }
