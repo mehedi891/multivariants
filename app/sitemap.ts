@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getPublicAcademySlugs } from "@/lib/academy/public-api";
+import { getPublicAcademyCategories } from "@/lib/academy/public-api";
 import { getPublicBlogSlugs } from "@/lib/blog/public-api";
 import { getPublicRecipeSlugs } from "@/lib/recipes/public-api";
 import { RECIPES_PATH } from "@/lib/recipes/config";
@@ -41,7 +41,12 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const docs = await getPublicAcademySlugs();
+  const { categories: academyTopics } = await getPublicAcademyCategories();
+  const docs = academyTopics.flatMap((topic) => topic.docs.map((doc) => doc.slug)).filter(Boolean);
+  // Help Center topic pages: their page copy is translated, like /academy.
+  const topicPaths = academyTopics
+    .filter((topic) => topic.docs.length > 0)
+    .map((topic) => `/academy/category/${topic.slug}`);
   const slugs = await getPublicBlogSlugs(1000);
   const recipeSlugs = await getPublicRecipeSlugs(1000);
   const clientSlugs = await getPublicClientSlugs(1000);
@@ -60,7 +65,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: r.priority,
       })),
     ),
-    ...docs.map((docSlug) => ({
+    ...topicPaths.flatMap((path) =>
+      locales.map((locale) => ({
+        url: absUrl(path, locale),
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.6,
+      })),
+    ),
+    ...[...new Set(docs)].map((docSlug) => ({
       url: `${SITE_URL}/academy/${docSlug}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,

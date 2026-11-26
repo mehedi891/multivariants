@@ -21,6 +21,29 @@ module.exports = {
           alt: '#f9fafb',
           dark: '#0f1117',
         },
+        // Help Center (/academy) palette, from the Help Center redesign file.
+        hc: {
+          bg: '#080a1c',
+          panel: '#0d1030',
+          ink: '#e9eafb',
+          muted: '#9ea3c7',
+          // The design's #6f749c is ~4.4:1 on the page; lifted to pass WCAG AA.
+          dim: '#7a80a8',
+          line: 'rgba(255,255,255,0.09)',
+          'line-hover': 'rgba(120,140,255,0.45)',
+          indigo: '#5766fa',
+          cyan: '#1fe2e7',
+          orange: '#f2894e',
+          green: '#34d399',
+          link: '#8b97ff',
+          chip: '#aab4ff',
+        },
+      },
+      backgroundImage: {
+        'hc-grad': 'linear-gradient(231deg, #5766fa 20%, #1fe2e7 99%)',
+      },
+      boxShadow: {
+        hc: '0 8px 22px rgba(87,102,250,0.28)',
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],

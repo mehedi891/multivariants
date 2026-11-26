@@ -10,6 +10,10 @@ export type AcademyDoc = {
   excerpt: string;
   readTime: string;
   lastUpdated: string;
+  /** Reading time in whole minutes (CMS `readingTimeMinutes`), when known. */
+  readingMinutes?: number;
+  /** ISO timestamp of the last edit (CMS `updatedAt`), when known. */
+  updatedAt?: string;
   sections: AcademySection[];
 };
 

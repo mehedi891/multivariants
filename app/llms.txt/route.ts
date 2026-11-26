@@ -58,7 +58,7 @@ MultiVariants has a **5.0-star rating from 355 reviews** on the Shopify App Stor
 - [Pricing](${SITE}/pricing)
 - [FAQ](${SITE}/faq)
 - [Blog](${SITE}/blog)
-- [Docs](${SITE}/academy)
+- [Help Center](${SITE}/academy): step-by-step setup guides for every feature
 - [Contact](${SITE}/contact)
 - [Full sitemap](${SITE}/sitemap.xml)
 `;
